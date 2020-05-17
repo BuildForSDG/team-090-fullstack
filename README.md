@@ -1,4 +1,4 @@
-#Description 
+# Description 
 Repository for group 090's smart city project. Both front end and back end are included in this repository. 
 
 # About project
