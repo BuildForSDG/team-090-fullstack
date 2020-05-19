@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from cities_light.models import City, Region, Country
 
 # Create your models here.
 
@@ -34,7 +35,7 @@ class ServiceProvider(models.Model):
     description = models.TextField(max_length=200)
     years_of_experience = models.IntegerField()
     year_of_establishement = models.DateField(default=timezone.now)
-    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     supporting_document = models.FileField(upload_to='uploads/', null=True)
