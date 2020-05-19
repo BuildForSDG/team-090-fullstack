@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -20,3 +21,24 @@ class Service(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class ServiceProvider(models.Model):
+    """Model for service providers"""
+    business_name = models.CharField(max_length=50)
+    street_address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=15)
+    service_rendered = models.CharField(max_length=50)
+    service_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to='uploads/')
+    description = models.TextField(max_length=200)
+    years_of_experience = models.IntegerField()
+    year_of_establishement = models.DateField(default=timezone.now)
+    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    supporting_document = models.FileField(upload_to='uploads/', null=True)
+    rating = models.FloatField()
+
+    def __str__(self):
+        return f'{self.business_name}'
