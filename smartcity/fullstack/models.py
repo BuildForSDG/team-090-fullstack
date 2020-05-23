@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 from cities_light.models import City, Region, Country
 
 # Create your models here.
@@ -40,6 +41,7 @@ class ServiceProvider(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     supporting_document = models.FileField(upload_to='uploads/', null=True)
     rating = models.FloatField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.business_name}'
