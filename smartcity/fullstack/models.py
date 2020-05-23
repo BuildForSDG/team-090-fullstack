@@ -18,7 +18,7 @@ class Service(models.Model):
     """ Model for services rendered"""
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.Foreignkey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name}'
@@ -29,7 +29,7 @@ class ServiceProvider(models.Model):
     business_name = models.CharField(max_length=50)
     street_address = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
-    service_rendered = models.CharField(max_length=50)
+    service_rendered = models.ForeignKey(Service, on_delete=models.CASCADE)
     service_category = models.ForeignKey(Category, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to='uploads/')
     description = models.TextField(max_length=200)
