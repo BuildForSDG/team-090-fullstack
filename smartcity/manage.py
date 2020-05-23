@@ -4,6 +4,9 @@ import os
 import sys
 
 
+#dotenv.read_dotenv()
+
+
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartcity.settings')
     try:
