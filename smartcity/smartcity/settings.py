@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fullstack',
-    'cities_light'
+    'cities_light',
+    'phonenumber_field'
 ]
 
 MIDDLEWARE = [
