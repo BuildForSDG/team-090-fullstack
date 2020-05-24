@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from cities_light.models import City, Region, Country
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -45,3 +46,15 @@ class ServiceProvider(models.Model):
 
     def __str__(self):
         return f'{self.business_name}'
+
+
+class CustomerProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    phone_number = PhoneNumberField()
+    street_address = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.first_name}'
