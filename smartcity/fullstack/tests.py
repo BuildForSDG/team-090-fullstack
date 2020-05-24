@@ -49,3 +49,7 @@ class ModelTestCase(TestCase):
         service = Service.objects.get(name='Tailoring')
         self.assertEquals(service.name, 'Tailoring')
         self.assertEquals(service.price, 120)
+
+    def test_valid_service_provider_model(self):
+        service_provider = ServiceProvider.objects.get(name='Tailor1')
+        self.assertEquals(service_provider.name, 'Tailor1')
