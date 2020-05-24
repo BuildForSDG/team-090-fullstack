@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from fullstack import views as fullstack_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', fullstack_views.index),
+    path('', fullstack_views.login),
+    path('', fullstack_views.service_provider_profile),
+    path('', fullstack_views.customer_profile),
+    path('', fullstack_views.sign_up),
+    path('', fullstack_views.categories),
+
 ]
