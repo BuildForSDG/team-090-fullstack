@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Service, Category, ServiceProvider
+from .models import Service, Category, ServiceProvider, CustomerProfile
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -45,7 +45,21 @@ class ModelTestCase(TestCase):
                                        supporting_document='', rating=4,
                                        user=user)
 
+        CustomerProfile.objects.create(user=user,
+                                       country=country,
+                                       region=region,
+                                       city=city)
+
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
         self.assertEquals(service.name, 'Tailoring')
         self.assertEquals(service.price, 120)
+
+    def test_valid_service_provider_model(self):
+        service_provider = ServiceProvider.objects.get(business_name='Tailor1')
+        self.assertEquals(service_provider.business_name, 'Tailor1')
+
+    def test_customer_profile_model(self):
+        user = User.objects.get(first_name='Bello')
+        customer_profile = CustomerProfile(user=user)
+        self.assertEquals(customer_profile.user.first_name, 'Bello')
