@@ -58,3 +58,14 @@ class CustomerProfile(models.Model):
 
     def __str__(self):
         return f'{self.user.first_name}'
+
+
+class Subscription(models.Model):
+    """Model for service a customer subscribed for """
+    customer = models.ManyToManyField(CustomerProfile)
+    service_provider = models.ManyToManyField(ServiceProvider)
+    date = models.DateTimeField(default=timezone.now())
+
+    def __str__(self):
+        return f'''{self.customer} subscribed to
+        {self.service_provider.business_name}'''
