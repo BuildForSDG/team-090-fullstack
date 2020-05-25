@@ -62,8 +62,9 @@ class CustomerProfile(models.Model):
 
 class Subscription(models.Model):
     """Model for service a customer subscribed for """
-    customer = models.ManyToManyField(CustomerProfile)
-    service_provider = models.ManyToManyField(ServiceProvider)
+    customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
+    service_provider = models.ForeignKey(ServiceProvider,
+                                         on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -73,7 +74,8 @@ class Subscription(models.Model):
 
 class Suspension(models.Model):
     """ Model for suspended service providers due to offense"""
-    service_provider = models.ForeignKey(ServiceProvider)
+    service_provider = models.ForeignKey(ServiceProvider,
+                                         on_delete=models.CASCADE)
     suspension_start_date = models.DateTimeField(default=timezone.now)
     suspension_end_date = models.DateTimeField(default=timezone.now)
     suspension_reason = models.CharField(max_length=100)
@@ -83,7 +85,7 @@ class Suspension(models.Model):
         return f'''{self.service_provider.business_name} suspended from
         {self.suspension_start_date} to {self.suspension_end_date}'''
 
-    def supension_using_correct_date(self):
+    def suspension_using_correct_date(self):
         return self.suspension_start_date < self.suspension_end_date
 
     def suspension_is_over(self):
