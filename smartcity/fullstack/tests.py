@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Service, Category, ServiceProvider, CustomerProfile
+from .models import Service, Category, ServiceProvider, CustomerProfile, Subscription
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -30,7 +30,8 @@ class ModelTestCase(TestCase):
         service = Service.objects.create(name='Tailoring',
                                          price=120, category=category)
 
-        ServiceProvider.objects.create(business_name='Tailor1',
+        service_provider = ServiceProvider.objects.create(
+                                       business_name='Tailor1',
                                        street_address='Adress1',
                                        phone='080333333404',
                                        service_rendered=service,
@@ -45,10 +46,14 @@ class ModelTestCase(TestCase):
                                        supporting_document='', rating=4,
                                        user=user)
 
-        CustomerProfile.objects.create(user=user,
-                                       country=country,
-                                       region=region,
-                                       city=city)
+        customer_profile = CustomerProfile.objects.create(user=user,
+                                                          country=country,
+                                                          region=region,
+                                                          city=city)
+
+        Subscription.objects.create(customer=customer_profile,
+                                    service_provider=service_provider,
+                                    date=timezone.now())
 
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
@@ -61,5 +66,18 @@ class ModelTestCase(TestCase):
 
     def test_customer_profile_model(self):
         user = User.objects.get(first_name='Bello')
-        customer_profile = CustomerProfile(user=user)
+        customer_profile = CustomerProfile.objects.get(user=user)
         self.assertEquals(customer_profile.user.first_name, 'Bello')
+
+    def test_valid_subscription_model(self):
+        service_provider = ServiceProvider.objects.get(business_name='Tailor1')
+        subcription = Subscription.objects.get(
+                        service_provider=service_provider)
+        self.assertEquals(subcription.service_provider.bussiness_name, 'Bello')
+
+    def test_invalid_subscription_model(self):
+        service_provider = ServiceProvider.objects.get(business_name='Tailor1')
+        subscription = Subscription.objects.get(
+                        service_provider=service_provider)
+        self.assertEquals(subscription.service_provider.bussiness_name,
+                          'Tailor1')
