@@ -73,7 +73,7 @@ class Subscription(models.Model):
 
 class Suspension(models.Model):
     """ Model for suspended service providers due to offense"""
-    service_provider = models.ManyToManyField(ServiceProvider)
+    service_provider = models.ForeignKey(ServiceProvider)
     suspension_start_date = models.DateTimeField(default=timezone.now)
     suspension_end_date = models.DateTimeField(default=timezone.now)
     suspension_reason = models.CharField(max_length=100)
