@@ -1,4 +1,4 @@
-"""Urls of the fullstack app are contained here"""
+"""Urls of the fullstack app are contained here."""
 
 from django.urls import path
 from . import views
