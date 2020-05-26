@@ -14,16 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from fullstack import views as fullstack_views
+from django.urls import path, include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', fullstack_views.index),
-    path('', fullstack_views.login),
-    path('', fullstack_views.service_provider_profile),
-    path('', fullstack_views.customer_profile),
-    path('', fullstack_views.sign_up),
-    path('', fullstack_views.categories),
-
+    path('', include('fullstack.urls'))
 ]
