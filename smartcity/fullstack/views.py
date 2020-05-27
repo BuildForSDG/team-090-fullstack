@@ -1,7 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
 
 # Create your views here.
 
+def home(request):
+    context = {}
+    return render(request, 'fullstack/home.html', context)
 
 def index(request):
     """View function for the index page."""
@@ -10,7 +15,11 @@ def index(request):
 
 def login(request):
     """View function for the login page."""
-    return render(request, '.html', {})
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('fullstack:home'))
+    else:
+        context = {}
+    return render(request, 'fullstack/login.html', context)
 
 
 def service_provider_profile(request):
