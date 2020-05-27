@@ -3,20 +3,22 @@
 {%block nav-items%}{%endblock%}
 
 {%block content%}
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-weight-normal text-left" style="margin:200px">
+    <div class="col-xl-4 col-lg-4 col-sm-12"></div>
+    <div class="col-xl-4 col-lg-4 col-sm-12 text-weight-normal text-left lead" style="margin: 5%;">
         <form action="{% url 'fullstack:login'%}" method="POST">
             {%csrf_token%}
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email">Email</label>
                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter email">
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">Password</label>
                 <input class="form-control form-control-lg" type="password" name="password"  placeholder="Enter password">
             </div>
                 <button class="btn btn-primary" type="submit">Send</button>
         </form>
         <p class="text-break"><a class="text-decoration-none" href="{% url 'fullstack:signup' %}">Signup</a> if you have not.</p>
     </div>
+    <div class="col-xl-4 col-lg-4 col-sm-12"></div>
 {%endblock%}
 
