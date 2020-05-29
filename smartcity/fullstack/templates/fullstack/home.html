@@ -1,2 +1,50 @@
-{%extends 'base.html'%}
-{%load static%}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block header %}
+    <div class="jumbotron" style="padding-bottom: 0; margin: 0;">
+        <h1 class="text-center cityLogo">Need a service in a location?</h1>
+        <p class=" text-center text-weight-normal lead">Make your search in your current or another location.</p>
+    </div>
+{% endblock %}
+{% block content %}
+    <!--Categories-->
+    <div class="col-xl-2 col-lg-2 col-sm-0">
+        <div style="border-right: 1px solid grey;">
+            <div >
+                <p class="bg-dark text-light text-weight-normal lead">Categories</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8 col-lg-8 col-sm-12 bg-grey">
+        <div  class=" text-weight-normal lead" style="margin: 10% 20% 0 20%; border-bottom: 1px solid grey;">
+        <form action="{% url 'fullstack:search'%}" method="POST" class="form">
+         <div class="row" style="border-bottom: 1px solid rgb(153, 153, 168); margin: 5%; text-align: center;">
+            <div class="col-xl-4 col-lg-4 col-sm-4">
+                <div class="form-group">
+                    <!--label for="country">Country</label-->
+                    <input class="form-control form-control-sm" name="country" type="search" placeholder="Country">
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-sm-4">
+                <div class="form-group">
+                    <!--label for="city">City</label-->
+                    <input class="form-control form-control-sm" name="city"  type="search" placeholder="City">
+                </div>
+            </div>
+        </div>
+            <div class="form-group">
+                <input class="form-control form-control-lg" type="search" name="search" placeholder="Enter service">
+            </div>
+        </form>
+        </div>
+    </div>
+    <!--Services-->
+    <div class="col-xl-2 col-lg-2 col-sm-0">
+            <div style="border-left: 1px solid grey;">
+                <div >
+                    <p class="bg-dark text-light text-weight-normal lead">Services</p>
+                </div>
+            </div>
+    </div>
+{% endblock %}

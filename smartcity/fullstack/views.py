@@ -45,3 +45,7 @@ def categories(request):
 def reviews_and_ratings(request):
     """View function for the customers review and ratings page."""
     return render(request, '.html', {})
+
+
+def search(request):
+    pass
