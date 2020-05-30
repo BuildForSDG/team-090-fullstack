@@ -4,5 +4,5 @@ python:
 install: 
   - pip install -r requirements.txt
 script: 
-  - python manage.py test
-  - flake8
+  - python smartcity/manage.py test
+  - flake8 smartcity/fullstack/views.py
