@@ -12,4 +12,5 @@ urlpatterns = [
     path('customerprofile/', views.customer_profile, name='customerprofile'),
     path('signup/', views.sign_up, name='signup'),
     path('categories/', views.categories, name='categories'),
+    path('search/', views.search, name='search')
 ]

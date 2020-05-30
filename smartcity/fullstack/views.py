@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 # Create your views here.
 
+
 def home(request):
     context = {}
     return render(request, 'fullstack/home.html', context)
+
 
 def index(request):
     """View function for the index page."""
@@ -45,3 +47,7 @@ def categories(request):
 def reviews_and_ratings(request):
     """View function for the customers review and ratings page."""
     return render(request, '.html', {})
+
+
+def search(request):
+    pass
