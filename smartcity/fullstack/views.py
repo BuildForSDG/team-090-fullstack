@@ -66,7 +66,7 @@ def customer_registration(request):
             messages.success(
                 request, f"Hello {username}, Welcome to Smart City"
             )
-            return redirect('fullstack/login.html')
+            return redirect('fullstack:login')
     else:
         form = CustomerRegistration()
         return render(request, 'registration.html', {'form': form})
