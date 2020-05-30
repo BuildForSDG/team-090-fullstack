@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import *
-from cities_light.models import City, Region, Country
+from .models import (Service, Category, Suspension,
+                     Subscription, ServiceProvider, CustomerProfile)
+# from cities_light.models import City, Region, Country
 
 # Register your models here.
 
