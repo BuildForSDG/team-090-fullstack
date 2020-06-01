@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fullstack',
     'cities_light',
-    'phonenumber_field'
+    'phonenumber_field',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# Settings for django-bootstrap3
+BOOTSTRAP4 = {
+ 'include_jquery': True,
+ }
