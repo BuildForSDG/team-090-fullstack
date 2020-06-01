@@ -1,6 +1,12 @@
 {%extends 'base.html' %}
 
-{%block nav-items%}{%endblock%}
+{%block nav-items%}
+<li class="nav-item">
+        <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+            <div class="btn btn-primary">Home</div>
+        </a>
+</li>
+{%endblock%}
 
 {%block content%}
     <div class="col-xl-4 col-lg-4 col-sm-12"></div>
