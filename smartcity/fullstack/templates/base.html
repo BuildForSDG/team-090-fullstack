@@ -9,7 +9,7 @@
     <!--link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}"-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{% static 'script/script.js'%}"></script>
-    <title>{%block title%}{%endblock%}</title>
+    <title>{%block title%}CityServices{%endblock%}</title>
     {% bootstrap_css %}
     (% bootstrap_javascript %)
 </head>
@@ -21,7 +21,14 @@
         </a>
         <!-- Links -->
         <ul class="navbar-nav text-dark">
-            {%block nav-items%}{%endblock%}    
+            {%block nav-items%}
+            <li href="#">Home</li>
+            <li href="#">Categories</li>
+            <li href="#">Service Providers </li>
+            <li href="#">Customer's Profile</li>
+            <li href="#">Reviews and Ratings</li>
+            <li href="#">Subscription</li>
+            {%endblock%}    
         </ul>
     </nav>
     <div class="container-fluid">
