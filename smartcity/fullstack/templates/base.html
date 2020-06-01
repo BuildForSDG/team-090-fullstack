@@ -19,10 +19,47 @@
         <a class="navbar-brand" href="#"> 
             <h1 class="cityLogo">C<span>ityServices</span></h1>
         </a>
+        <!--Nav button-->
+        <button class="navbar-toggler text-dark" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <!-- Links -->
-        <ul class="navbar-nav text-dark">
-            {%block nav-items%}{%endblock%}    
-        </ul>
+        <div class="collapse navbar-collapse text-right" id="collapsibleNavbar" style="text-align: right;">
+            <ul class="navbar-nav navbar-right" style="text-align: right;">
+                {%block nav-items%}{%endblock%} 
+                {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:choice' %}">
+                        <div class="btn btn-primary">Profile</div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:logout' %}">
+                        <div class="btn btn-primary">Logout</div>
+                    </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link text-decoration-none" href="{% url 'fullstack:customer_profile' %}">
+                            <div class="btn btn-light">Hello, {{user.username}}</div>
+                        </a>
+                    </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:login' %}">
+                        <div class="btn btn-primary">Login</div>
+                    </a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:signup' %}">
+                        <div class="btn btn-primary">Sign up</div>
+                    </a>
+                </li>
+                
+                {% endif %}
+                   
+            </ul>
+        </div>
     </nav>
     <div class="container-fluid">
         <!--header-->
