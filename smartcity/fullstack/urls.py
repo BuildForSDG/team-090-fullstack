@@ -2,15 +2,27 @@
 
 from django.urls import path
 from . import views
+from smartcity import settings
+from django.conf.urls.static import  static
 
 app_name = 'fullstack'
 urlpatterns = [
     path('', views.home, name='home'),
     path('index/', views.index, name='index'),
     path('login/', views.login, name='login'),
-    path('providerprofile/', views.service_provider_profile, name='providerprofile'),
-    path('customerprofile/', views.customer_profile, name='customerprofile'),
+    path('logout/', views.logout, name='logout'),
+    path('providerprofile/<int:service_provider_id>', views.service_provider_profile, name='providerprofile'),
+    path('customerprofile/', views.customer_profile, name='customer_profile'),
     path('signup/', views.sign_up, name='signup'),
     path('categories/', views.categories, name='categories'),
-    path('search/', views.search, name='search')
+    path('search/', views.search, name='search'),
+    path('profilechoice/', views.profile_choice, name='choice'),
+    path('createproviderprofile/', views.create_service_provider_profile, name='create_provider_p'),
+    path('createcustomerprofile/', views.create_customer_profile, name='create_customer_p'),
+    path('editprofile/<int:user_id>/',views.edit_profile, name='edit_profile'),
+    path('reviewandrating/<int:service_provider_id>/', views.reviews_and_ratings, name='reviews_and_ratings')
 ]
+
+if settings.DEBUG:
+     urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+     urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

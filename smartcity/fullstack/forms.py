@@ -3,13 +3,13 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 # from cities_light.models import Country, Region, City
-from .models import ServiceProvicer, CustomerProfile
+from .models import ServiceProvider, CustomerProfile
 
 
 class ServiceProviderProfileForm(ModelForm):
     class Meta:
         """Generate fields from ServiceProvider model"""
-        model = ServiceProvicer
+        model = ServiceProvider
         exclude = ['rating', 'user']
 
 
