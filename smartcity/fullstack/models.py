@@ -28,21 +28,21 @@ class Service(models.Model):
 
 class ServiceProvider(models.Model):
     """Model for service providers"""
-    business_name = models.CharField(max_length=50)
+    business_name = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
     service_rendered = models.ForeignKey(Service, on_delete=models.CASCADE)
     service_category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='uploads/')
+    picture = models.ImageField(upload_to='images/')
     description = models.TextField(max_length=200)
     years_of_experience = models.IntegerField()
     year_of_establishement = models.DateField(default=timezone.now)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    supporting_document = models.FileField(upload_to='uploads/', null=True)
-    rating = models.FloatField()
+    supporting_document = models.FileField(upload_to='documents/')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    approval = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.business_name}'
@@ -55,6 +55,7 @@ class CustomerProfile(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to='images/', blank=True, null=True)
 
     def __str__(self):
         return f'{self.user.first_name}'
