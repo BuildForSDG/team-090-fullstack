@@ -4,7 +4,7 @@ python:
 install: 
   - pip install -r requirements.txt
 script: 
-  - python /manage.py test
+  - python smartcity/manage.py test
   - flake8 smartcity/fullstack/views.py && flake8 smartcity/fullstack/models.py 
   - flake8 smartcity/fullstack/forms.py
   - flake8 smartcity/fullstack/admin.py
