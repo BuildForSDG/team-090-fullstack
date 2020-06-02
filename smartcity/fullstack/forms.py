@@ -23,24 +23,29 @@ class CustomerProfileForm(ModelForm):
 class CustomerRegistration(UserCreationForm):
     """Customer registration"""
     username = forms.CharField(
-        max_length=100, required=True, help_text="Enter User name"
+        max_length=100, required=True, help_text=""
+    )
+
+    first_name = forms.CharField(
+        max_length=100, required=True, help_text=""
+    )
+    last_name = forms.CharField(
+        max_length=100, required=True, help_text=""
     )
     email = forms.EmailField(
-        max_length=250, required=True, help_text="Please enter your email"
-    )
-    password = forms.CharField(
-        max_length=32, widget=forms.PasswordInput
+        max_length=250, required=True, help_text=""
     )
 
     class Meta:
         model = User
         fields = (
-            'username', 'email', 'password1', 'password2'
-        )
+            'username', 'first_name', 'last_name',
+            'email', 'password1', 'password2',)
 
-    def save_email(self, commit=True):
+    '''def save_email(self, commit=True):
         user = super(CustomerRegistration, self).save(commit=False)
         User.email = self.cleaned_data['email']
         if commit:
             user.save()
         return user
+    '''
