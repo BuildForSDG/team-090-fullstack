@@ -9,8 +9,8 @@ app_name = 'fullstack'
 urlpatterns = [
     path('', views.home, name='home'),
     path('index/', views.index, name='index'),
-    path('login/', views.login, name='login'),
-    path('logout/', views.logout, name='logout'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.logout_user, name='logout'),
     path('providerprofile/<int:service_provider_id>', views.service_provider_profile, name='providerprofile'),
     path('customerprofile/', views.customer_profile, name='customer_profile'),
     path('signup/', views.sign_up, name='signup'),
@@ -20,7 +20,8 @@ urlpatterns = [
     path('createproviderprofile/', views.create_service_provider_profile, name='create_provider_p'),
     path('createcustomerprofile/', views.create_customer_profile, name='create_customer_p'),
     path('editprofile/<int:user_id>/',views.edit_profile, name='edit_profile'),
-    path('reviewandrating/<int:service_provider_id>/', views.reviews_and_ratings, name='reviews_and_ratings')
+    path('reviewandrating/<int:service_provider_id>/', views.reviews_and_ratings, name='reviews_and_ratings'),
+    path('registration/', views.customer_registration, name='registration')
 ]
 
 if settings.DEBUG:
