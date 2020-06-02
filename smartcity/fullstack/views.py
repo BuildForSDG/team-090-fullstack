@@ -91,13 +91,13 @@ def create_customer_profile(request):
 
 
 def create_service_provider_profile(request):
+    """Create returns empty registration form or save filled form"""
     template_name = 'fullstack/provider_profile.html'
     if request.method == 'POST':
         form = ServiceProviderProfileForm(request.POST, request.FILES)
         if form.is_valid():
             provider_profile = form.save(commit=False)
             provider_profile.user = request.user
-            provider_profile.rating = 0
             provider_profile.save()
             context = {'service_provider': provider_profile}
             return render(request, template_name, context)
