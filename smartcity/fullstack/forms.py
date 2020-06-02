@@ -10,7 +10,7 @@ class ServiceProviderProfileForm(ModelForm):
     class Meta:
         """Generate fields from ServiceProvider model"""
         model = ServiceProvider
-        exclude = ['rating', 'user']
+        exclude = ['approval', 'user']
 
 
 class CustomerProfileForm(ModelForm):
