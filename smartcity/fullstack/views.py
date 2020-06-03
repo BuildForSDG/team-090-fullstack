@@ -62,47 +62,49 @@ def customer_profile(request):
     template_name = 'fullstack/customer_profile.html'
     # user_profile = CustomerProfile.objects.get(user.id=request.user.id)
     services_provided = None
-    user_profile =None
+    user_profile = None
     services_subscribed = None
     try:
         user_profile = CustomerProfile.objects.get(user_id=request.user.id)
-        services_provided = ServiceProvider.objects.filter(user_id=request.user.id)
+        services_provided = ServiceProvider.objects.filter(
+            user_id=request.user.id)
     except CustomerProfile.DoesNotExist:
         user_profile = None
-        services = None
+        services_provided = None
     except ServiceProvider.DoesNotExist:
         services_provided = None
     else:
         try:
-            services = Subscription.objects.filter(
+            services_provided = Subscription.objects.filter(
                                      customer_id=user_profile.user.id)
         except Subscription.DoesNotExist:
-            services = None
+            services_subscribed = None
     context = {'user_profile': user_profile, 'services': services_subscribed,
-              'services_provided': services_provided}
+               'services_provided': services_provided}
     return render(request, template_name, context)
 
 
 def create_customer_profile(request):
-    template_name = 'fullstack/customer_profile.html'
-    context = None
+    """Returns empty or populated form for editing"""
+    template_name = 'fullstack/customer_profile_form.html'
+    user_profile = None
+    try:
+        user_profile = CustomerProfile.objects.get(user_id=request.user.id)
+    except CustomerProfile.DoesNotExist:
+        user_profile = None
     if request.method == 'POST':
         form = CustomerProfileForm(request.POST, request.FILES)
+        if user_profile:
+            user_profile.picture = request.FILES['picture']
+            form = CustomerProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
-            user_profile = form.save(commit=False)
-            user_profile.user = request.user
-            user_profile.save()
-            context = {'user_profile': user_profile}
-            return render(request, template_name, context)
+            user_profile_form = form.save(commit=False)
+            user_profile_form.user = request.user
+            user_profile_form.save()
+            return redirect('fullstack:customer_profile')
     else:
-        user_profile = None
-        try:
-            user_profile = CustomerProfile.objects.get(user_id=request.user.id)
-        except CustomerProfile.DoesNotExist:
-            user_profile = None
         form = CustomerProfileForm(instance=user_profile)
         context = {'form': form}
-        template_name = 'fullstack/customer_profile_form.html'
         return render(request, template_name, context)
     return HttpResponseRedirect(reverse('fullstack:create_customer_p'))
 
