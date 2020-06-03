@@ -28,21 +28,20 @@
             <ul class="navbar-nav navbar-right" style="text-align: right;">
                 {%block nav-items%}{%endblock%} 
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:choice' %}">
-                        <div class="btn btn-primary">Profile</div>
+                <li class="nav-item ">
+                    <a class="nav-link text-decoration-none" href="{% url 'fullstack:customer_profile' %}">
+                        <div class="btn btn-primary lead">My account</div>
                     </a>
-                </li>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:logout' %}">
                         <div class="btn btn-primary">Logout</div>
                     </a>
-                 </li>
-                 <li class="nav-item ">
-                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:customer_profile' %}">
-                         <div class="btn btn-light">Hello, {{user.username}}!</div>
-                     </a>
-                 </li>
+                </li>
+                <li class="nav-item">
+                    <p class="lead text-success">Hello, {{user.username}}</p>
+                </li>
+
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:login' %}">
