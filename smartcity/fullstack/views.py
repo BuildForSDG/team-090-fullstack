@@ -2,11 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
-from .models import ServiceProvider, CustomerProfile
+from .models import ServiceProvider, CustomerProfile, Subscription
 from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm)
 from .forms import CustomerRegistration
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 
 # Create your views here.
 
@@ -21,13 +21,19 @@ def index(request):
     return render(request, 'base.html', {})
 
 
-def login(request):
-    """View function for the login page."""
-    if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('fullstack:home'))
-    else:
-        context = {}
-    return render(request, 'fullstack/login.html', context)
+def user_login(request):
+    """Authenticate user login credentials."""
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('fullstack:home'))
+        messages.error(request, 'Either username or password is wrong!')
+        return redirect('fullstack:login')
+    template_name = 'fullstack/login.html'
+    return render(request, template_name, {})
 
 
 def edit_profile(request, user_id):
@@ -56,7 +62,12 @@ def customer_profile(request):
     template_name = 'fullstack/customer_profile.html'
     # user_profile = CustomerProfile.objects.get(user.id=request.user.id)
     user_profile = get_object_or_404(CustomerProfile, user_id=request.user.id)
-    context = {'user_profile': user_profile}
+    try:
+        services = get_object_or_404(Subscription,
+                                     customer_id=user_profile.user.id)
+    except Subscription.DoesNotExist:
+        services = None
+    context = {'user_profile': user_profile, 'services': services}
     return render(request, template_name, context)
 
 
@@ -80,13 +91,13 @@ def create_customer_profile(request):
 
 
 def create_service_provider_profile(request):
+    """Create returns empty registration form or save filled form"""
     template_name = 'fullstack/provider_profile.html'
     if request.method == 'POST':
         form = ServiceProviderProfileForm(request.POST, request.FILES)
         if form.is_valid():
             provider_profile = form.save(commit=False)
             provider_profile.user = request.user
-            provider_profile.rating = 0
             provider_profile.save()
             context = {'service_provider': provider_profile}
             return render(request, template_name, context)
@@ -118,19 +129,13 @@ def customer_registration(request):
     if request.method == "POST":
         form = CustomerRegistration(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=password)
-            # logs in user upon successful authentication.
-            login(request, user)
-            messages.success(
-                request, "Hello {username}, welcome to Smart City!"
-            )
-            return redirect('fullstack:login')
+            form.save()
+            template_name = 'fullstack/success.html'
+            return render(request, template_name, {})
+
     else:
         form = CustomerRegistration()
-        return render(request, 'registration.html', {'form': form})
+    return render(request, 'fullstack/registration.html', {'form': form})
 
 
 def logout_user(request):

@@ -8,14 +8,14 @@
     <!--About service provider--->
     <div class="col-xl-8 col-lg-8 col-sm-12">
         <div class="jumbotron text-success lead">
-            <img src="{{service_provier.image.url}}" alt="{{service_provider.bussiness_name}}">
+            <img src="{{service_provider.image.url}}" alt="{{service_provider.bussiness_name}}">
             <h2>{{service_provider.bussiness_name}}</h2>
             <p>{{service_provider.street_address}}</p>
             <h4>Established {{service_provider.years_of_establishement}}</h4>
             <hr>
             <div class="bg-dark text-warning lead">
                 <p>Service cost: {{service_provider.price}}</p>
-                <p>Customer Ratings : {{service_provider.rating}}</p>
+                <!--p>Customer Ratings : {{service_provider.rating}}</p-->
                 <p>Customer joining rate(CJT): {{joining_rate}}</p>
                 <p>Customer leaving rate (CLR): {{leaving_rate}}</p>
                 <p>Years in Bussiness: {{service_provider.years_of_experienced}}</p>       
@@ -34,6 +34,5 @@
     </div>
     <!--Right sidebar-->
     <div class="col-xl-2 col-lg-2 col-sm-12">
-        
-        </div>
+    </div>
 {%endblock%}

@@ -8,27 +8,25 @@
 </li>
 {%endblock%}
 {% block content %}
-
-<div class="col-xl-4 col-lg-4 col-sm-12">    
+    <!--Left sidebar-->
+    <div class="col-xl-4 col-lg-4 col-sm-12">
     </div>
-    <!--About service provider--->
+    <!--Registration form--->
     <div class="col-xl-4 col-lg-4 col-sm-12" style="margin-top: 10%;" >
         <div class="jumbotron" style="padding:0">
             <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0,0,10px,0;">
-                <h4>Service Provider Profile </h4>
+                <h4>Registration </h4>
             </div>
-            <form action="{% url 'fullstack:create_provider_p' %}" method="POST" class="form" style="margin: 20px;" enctype="multipart/form-data">
+            <form action="{% url 'fullstack:registration' %}" method="POST" class="form" style="margin: 20px;">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                
                 {% buttons %}
-                    <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Save</button>
+                    <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Send</button>
                 {% endbuttons %}
             </form>
         </div>
     </div>
     <!--Right sidebar-->
-    <div class="col-xl-4 col-lg-4 col-sm-12">    
+    <div class="col-xl-4 col-lg-4 col-sm-12">
     </div>
 {% endblock %}
-    

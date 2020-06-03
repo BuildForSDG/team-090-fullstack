@@ -8,7 +8,6 @@
 </li>
 {%endblock%}
 {%block content%}
-
     <!--Left sidebar-->
     <div class="col-xl-2 col-lg-2 col-sm-12">    
     </div>
@@ -18,21 +17,28 @@
             <div class="jumbotron bg-primary text-light text-center" style="margin: 0;">
                 <img src="{{user_profile.image.url}}" alt="{{user_profile.user.first_name}}">
                 <h2>{{user_profile.user.username}}</h2>
+                <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
+                    <p><i class="fa fa-home" aria-hidden="true"> {{user_profile.street_address}}</i></p>
+                    <p><i class="fa fa-phone" aria-hidden="true"> {{user_profile.phone_number}}</i></p>
+                </div>
+                <p class="text-success"><i class="fa fa-edit" aria-hidden="true"> Edit profile</i></p>
             </div>
-            <hr>
-            <div class="text-primary lead" style="margin: 5%;padding-bottom: 5%;">
-                <p><i class="fa fa-home" aria-hidden="true"> {{user_profile.street_address}}</i></p>
-                <p><i class="fa fa-phone" aria-hidden="true"> {{user_profile.phone_number}}</i></p>
+            <div class="text-primary text-center" style="margin: 5%;padding-bottom: 5%;">
+                <p class="text-normal lead text-center bold">My services</p>
+                <hr>
+                {% if services %}
+                    <ul>
+                    {% for service in services %}
+                        <li class="text-normal lead">{{service}}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                <p>You have not subscribed to any service.</p>
+                {% endif %}
             </div>
-            
         </div>
-        <div class="btn btn-large btn-primary" style="margin:0">
-                <a class="text-decoration-none text-light" href="{% url 'fullstack:edit_profile' user.id %}">Edit profile</a>
-        </div>
-        
     </div>
     <!--Right sidebar-->
     <div class="col-xl-2 col-lg-2 col-sm-12">
-        
-        </div>
+    </div>
 {%endblock%}

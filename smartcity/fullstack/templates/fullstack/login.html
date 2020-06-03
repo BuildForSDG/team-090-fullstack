@@ -14,16 +14,21 @@
         <form action="{% url 'fullstack:login'%}" method="POST">
             {%csrf_token%}
             <div class="form-group">
-                <label for="email">Email</label>
-                <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter email">
+                <label for="username">Username</label>
+                <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input class="form-control form-control-lg" type="password" name="password"  placeholder="Enter password">
             </div>
+            <div class="form-group text-danger">
+                {% for message in messages %}
+                    {{message}}
+                {%endfor%}
+            </div>
                 <button class="btn btn-primary" type="submit">Send</button>
         </form>
-        <p class="text-break"><a class="text-decoration-none" href="{% url 'fullstack:signup' %}">Signup</a> if you have not.</p>
+        <p class="text-break"><a class="text-decoration-none" href="{% url 'fullstack:registration' %}">Signup</a> if you have not.</p>
     </div>
     <div class="col-xl-4 col-lg-4 col-sm-12"></div>
 {%endblock%}
