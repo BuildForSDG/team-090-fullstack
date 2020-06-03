@@ -61,13 +61,25 @@ def customer_profile(request):
     """View function for the customer's profile page."""
     template_name = 'fullstack/customer_profile.html'
     # user_profile = CustomerProfile.objects.get(user.id=request.user.id)
-    user_profile = get_object_or_404(CustomerProfile, user_id=request.user.id)
+    services_provided = None
+    user_profile =None
+    services_subscribed = None
     try:
-        services = get_object_or_404(Subscription,
-                                     customer_id=user_profile.user.id)
-    except Subscription.DoesNotExist:
+        user_profile = CustomerProfile.objects.get(user_id=request.user.id)
+        services_provided = ServiceProvider.objects.filter(user_id=request.user.id)
+    except CustomerProfile.DoesNotExist:
+        user_profile = None
         services = None
-    context = {'user_profile': user_profile, 'services': services}
+    except ServiceProvider.DoesNotExist:
+        services_provided = None
+    else:
+        try:
+            services = Subscription.objects.filter(
+                                     customer_id=user_profile.user.id)
+        except Subscription.DoesNotExist:
+            services = None
+    context = {'user_profile': user_profile, 'services': services_subscribed,
+              'services_provided': services_provided}
     return render(request, template_name, context)
 
 
@@ -83,7 +95,12 @@ def create_customer_profile(request):
             context = {'user_profile': user_profile}
             return render(request, template_name, context)
     else:
-        form = CustomerProfileForm()
+        user_profile = None
+        try:
+            user_profile = CustomerProfile.objects.get(user_id=request.user.id)
+        except CustomerProfile.DoesNotExist:
+            user_profile = None
+        form = CustomerProfileForm(instance=user_profile)
         context = {'form': form}
         template_name = 'fullstack/customer_profile_form.html'
         return render(request, template_name, context)
