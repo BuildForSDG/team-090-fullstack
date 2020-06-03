@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4%}
 {%block nav-items%}
+{% load static %}
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
         <div class="btn btn-primary">Home</div>
@@ -15,8 +16,10 @@
     <div class="col-xl-8 col-lg-8 col-sm-12">
         <div class="jumbotron text-light lead" style="margin-top: 10%; padding: 0;">
             <div class="jumbotron bg-primary text-light text-center" style="margin: 0;">
-                {% if user_profile %}
-                <img src="{{user_profile.image.url}}" alt="{{user_profile.user.first_name}}">
+                {% if user_profile.picture %}
+                <img class="rounded-circle" src="{{user_profile.picture.url}}" alt="">
+                {% else %}
+                 <img class="rounded-circle" src="{% static 'images/avatar.jpg' %}" alt="">
                 {% endif %}
                 <h2>{{user.username}}</h2>
                 <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
