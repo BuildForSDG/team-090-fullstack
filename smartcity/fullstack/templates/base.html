@@ -9,7 +9,7 @@
     <!--link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}"-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="{% static 'script/script.js'%}"></script>
-    <title>{%block title%}CityServices{%endblock%}</title>
+    <title>{%block title%}Smart Cities{%endblock%}</title>
     {% bootstrap_css %}
     (% bootstrap_javascript %)
 </head>
@@ -17,7 +17,7 @@
     <nav class="navbar navbar-expand-sm bg-light text-dark fixed-top header-div" >
         <!--logo-->
         <a class="navbar-brand" href="#"> 
-            <h1 class="cityLogo">C<span>ityServices</span></h1>
+            <h1 class="cityLogo">S<span>mart Cities</span></h1>
         </a>
         <!--Nav button-->
         <button class="navbar-toggler text-dark" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -41,6 +41,7 @@
                 <li class="nav-item">
                     <p class="lead text-success">Hello, {{user.username}}</p>
                 </li>
+
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:login' %}">

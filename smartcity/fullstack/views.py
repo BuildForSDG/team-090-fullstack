@@ -151,6 +151,7 @@ def customer_registration(request):
             form.save()
             template_name = 'fullstack/success.html'
             return render(request, template_name, {})
+
     else:
         form = CustomerRegistration()
     return render(request, 'fullstack/registration.html', {'form': form})
