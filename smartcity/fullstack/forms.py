@@ -41,11 +41,3 @@ class CustomerRegistration(UserCreationForm):
         fields = (
             'username', 'first_name', 'last_name',
             'email', 'password1', 'password2',)
-
-    '''def save_email(self, commit=True):
-        user = super(CustomerRegistration, self).save(commit=False)
-        User.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
-    '''
