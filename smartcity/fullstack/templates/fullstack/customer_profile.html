@@ -15,16 +15,28 @@
     <div class="col-xl-8 col-lg-8 col-sm-12">
         <div class="jumbotron text-light lead" style="margin-top: 10%; padding: 0;">
             <div class="jumbotron bg-primary text-light text-center" style="margin: 0;">
+                {% if user_profile %}
                 <img src="{{user_profile.image.url}}" alt="{{user_profile.user.first_name}}">
-                <h2>{{user_profile.user.username}}</h2>
+                {% endif %}
+                <h2>{{user.username}}</h2>
                 <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
+                    {% if user_profile %}
                     <p><i class="fa fa-home" aria-hidden="true"> {{user_profile.street_address}}</i></p>
                     <p><i class="fa fa-phone" aria-hidden="true"> {{user_profile.phone_number}}</i></p>
+                    {% endif %}
+                    <p><i class="fa fa-email" aria-hidden="true"> {{user.email}}</i></p>
                 </div>
-                <p class="text-success"><i class="fa fa-edit" aria-hidden="true"> Edit profile</i></p>
+                
+                <p class="text-success">
+                    <i class="fa fa-edit" aria-hidden="true">
+                        <a class="text-success lead text-decoration-none" href="{% url 'fullstack:create_customer_p' %}">Edit profile</a>
+                    </i>
+                </p>
+                
             </div>
             <div class="text-primary text-center" style="margin: 5%;padding-bottom: 5%;">
-                <p class="text-normal lead text-center bold">My services</p>
+                <!--Services subscribed by customer-->
+                <p class="text-normal lead text-center bold">Subscribed services</p>
                 <hr>
                 {% if services %}
                     <ul>
@@ -35,6 +47,26 @@
                 {% else %}
                 <p>You have not subscribed to any service.</p>
                 {% endif %}
+                 <!--Subscribe to a service-->
+                 <div class="btn btn-primary text-light lead" style="margin-bottom: 5%;">
+                    <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Subscribe to a service</a>
+                </div>
+                <!--Services offered -->
+                <p class="text-normal lead text-center bold">Services I provide</p>
+                <hr>
+                {% if services_provided %}
+                    <ul>
+                    {% for service_provided in services_provided %}
+                        <li class="text-normal lead">{{service_provided}}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                <p>You are not providing any service</p>
+                {% endif %}
+                <!--New service link-->
+                <div class="btn btn-primary text-light lead" style="margin-bottom: 5%;">
+                    <a class="text-decoration-none text-light lead" href="{% url 'fullstack:create_provider_p' %}">Provide a service</a>
+                </div>
             </div>
         </div>
     </div>
