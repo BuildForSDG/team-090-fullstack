@@ -55,7 +55,7 @@ class CustomerProfile(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to='images/', blank=True, null=True)
+    picture = models.ImageField(upload_to='images/', blank=True)
 
     def __str__(self):
         return f'{self.user.first_name}'
