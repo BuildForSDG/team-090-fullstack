@@ -125,7 +125,7 @@ def customer_registration(request):
             # logs in user upon successful authentication.
             login(request, user)
             messages.success(
-                request, f"Hello {username}, Welcome to Smart City"
+                request, "Hello {username}, welcome to Smart City!"
             )
             return redirect('fullstack:login')
     else:
