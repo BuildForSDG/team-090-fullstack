@@ -85,7 +85,7 @@ def customer_profile(request):
 
 
 def create_customer_profile(request):
-    """Returns empty or populated form for editing"""
+    """Returns empty or populated form for editing."""
     template_name = 'fullstack/customer_profile_form.html'
     user_profile = None
     try:
@@ -110,7 +110,7 @@ def create_customer_profile(request):
 
 
 def create_service_provider_profile(request):
-    """Create returns empty registration form or save filled form"""
+    """Create returns empty registration form or save filled form."""
     template_name = 'fullstack/provider_profile.html'
     if request.method == 'POST':
         form = ServiceProviderProfileForm(request.POST, request.FILES)
