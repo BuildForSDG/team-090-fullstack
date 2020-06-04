@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
-from .models import ServiceProvider, CustomerProfile, Subscription
+from .models import (ServiceProvider, CustomerProfile, 
+                     Subscription, Suspension)
 from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm)
 from .forms import CustomerRegistration
@@ -48,12 +49,24 @@ def profile_choice(request):
     return render(request, template_name, context)
 
 
-def service_provider_profile(request, service_provider_id):
+def service_provider_profile(request, service_provided_id):
     """View function for the service provider's profile page."""
-    template_name = 'fullstack/service_profile.html'
-    service_provider = get_object_or_404(ServiceProvider,
-                                         pk=service_provider_id)
-    context = {'service_provider': service_provider}
+    template_name = 'fullstack/provider_profile.html'
+    suspension = None
+    subscription = None
+    try:
+        subscription = Subscription.objects.filter(service_provider_id=service_provided_id)
+        suspension = Suspension.objects.get(service_provider_id=service_provided_id)
+    except Subscription.DoesNotExist:
+        subscription = None
+    except Suspension.DoesNotExist:
+        suspension = None
+    user_profile = CustomerProfile.objects.get(user_id=request.user.id)
+    service_provided = ServiceProvider.objects.get(
+                            id=service_provided_id)
+    context = {'service_provided': service_provided,
+                'user_profile': user_profile, 'suspension': suspension,
+                'subscription': subscription}
     return render(request, template_name, context)
 
 
@@ -75,7 +88,7 @@ def customer_profile(request):
         services_provided = None
     else:
         try:
-            services_provided = Subscription.objects.filter(
+            services_subscribed = Subscription.objects.filter(
                                      customer_id=user_profile.user.id)
         except Subscription.DoesNotExist:
             services_subscribed = None
@@ -119,7 +132,7 @@ def create_service_provider_profile(request):
             provider_profile.user = request.user
             provider_profile.save()
             context = {'service_provider': provider_profile}
-            return render(request, template_name, context)
+            return redirect('fullstack:customer_profile')
     else:
         form = ServiceProviderProfileForm()
         context = {'form': form}
