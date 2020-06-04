@@ -1,4 +1,6 @@
 import pycountry
+
+
 def get_currencies_tuple():
     c_alpa = [x.alpha_3 for x in list(pycountry.currencies)[0:]]
     c_name = [x.name for x in list(pycountry.currencies)[0:]]
