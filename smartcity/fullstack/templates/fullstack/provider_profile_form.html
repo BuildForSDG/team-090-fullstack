@@ -17,6 +17,17 @@
             <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0,0,10px,0;">
                 <h4>Service Provider Profile </h4>
             </div>
+            <!--Render this form is request is from edit_service_provider_profile view-->
+            {% if service_provided_id %}
+            <form action="{% url 'fullstack:edit_provider_profile' service_provided_id %}" method="POST" class="form" style="margin: 20px;" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                
+                {% buttons %}
+                    <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Save</button>
+                {% endbuttons %}
+            </form>
+            {% else %}
             <form action="{% url 'fullstack:create_provider_p' %}" method="POST" class="form" style="margin: 20px;" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form %}
@@ -25,6 +36,7 @@
                     <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Save</button>
                 {% endbuttons %}
             </form>
+            {% endif %}
         </div>
     </div>
     <!--Right sidebar-->
