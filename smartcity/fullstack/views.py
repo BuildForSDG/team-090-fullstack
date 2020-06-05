@@ -13,10 +13,40 @@ from cities_light.models import City, Region, Country
 # Create your views here.
 
 
+def get_country_region_city_ids_from_user(user_id):
+    """ Returns country, region and city ids from user profile"""
+    user_profile = CustomerProfile.objects.get(user_id=user_id)
+    results = [user_profile.country_id,
+               user_profile.region_id,
+               user_profile.city_id]
+    return results
+
+
+def get_service_from_location(keyword, country_id, region_id, city_id):
+    """Returns services based on keyword, and user's country,
+       region and city ids."""
+    results = None
+    try:
+        results = ServiceProvider.objects.filter(
+            business_name__icontains=keyword,
+            country_id=country_id,
+            region_id=region_id,
+            city_id=city_id)
+        if not results:
+            results = ServiceProvider.objects.filter(
+                description__icontains=keyword,
+                country_id=country_id,
+                region_id=region_id,
+                city_id=city_id)
+    except CustomerProfile.DoesNotExist:
+        results = None
+    return results
+
+
 def home(request):
     """ Returns context with coutries, regions and cities."""
     template_name = 'fullstack/home.html'
-    country = Country.objects.all() 
+    country = Country.objects.all()
     region = Region.objects.all()
     city = City.objects.all()
     context = {'countries': country, 'regions': region, 'cities': city}
@@ -206,4 +236,21 @@ def logout_user(request):
 
 
 def search(request):
-    pass
+    """ Returns a service from search key-word."""
+    results = None
+    template_name = 'fullstack/home.html'
+    if request.method == 'POST':
+        keyword = request.POST['keyword']
+        if 'city' in request.POST:
+            country_id = request.POST['country']
+            region_id = request.POST['region']
+            city_id = request.POST['city']
+        elif request.user.is_authenticated:
+            ids = get_country_region_city_ids_from_user(
+                request.user.id)
+            country_id, region_id, city_id = ids
+        if country_id and region_id and city_id:
+            results = get_service_from_location(
+                keyword, country_id, region_id, city_id)
+    context = {'results': results}
+    return render(request, template_name, context)
