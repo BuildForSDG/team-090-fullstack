@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
-from .models import (ServiceProvider, CustomerProfile, 
+from .models import (ServiceProvider, CustomerProfile,
                      Subscription, Suspension)
 from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm)
@@ -55,8 +55,10 @@ def service_provider_profile(request, service_provided_id):
     suspension = None
     subscription = None
     try:
-        subscription = Subscription.objects.filter(service_provider_id=service_provided_id)
-        suspension = Suspension.objects.get(service_provider_id=service_provided_id)
+        subscription = Subscription.objects.filter(
+            service_provider_id=service_provided_id)
+        suspension = Suspension.objects.get(
+            service_provider_id=service_provided_id)
     except Subscription.DoesNotExist:
         subscription = None
     except Suspension.DoesNotExist:
@@ -65,8 +67,8 @@ def service_provider_profile(request, service_provided_id):
     service_provided = ServiceProvider.objects.get(
                             id=service_provided_id)
     context = {'service_provided': service_provided,
-                'user_profile': user_profile, 'suspension': suspension,
-                'subscription': subscription}
+               'user_profile': user_profile, 'suspension': suspension,
+               'subscription': subscription}
     return render(request, template_name, context)
 
 
@@ -108,7 +110,8 @@ def create_customer_profile(request):
     if request.method == 'POST':
         form = CustomerProfileForm(request.POST, request.FILES)
         if user_profile:
-            user_profile.picture = request.FILES['picture']
+            if 'picture' in request.FILES:
+                user_profile.picture = request.FILES['picture']
             form = CustomerProfileForm(request.POST, instance=user_profile)
         if form.is_valid():
             user_profile_form = form.save(commit=False)
@@ -120,6 +123,26 @@ def create_customer_profile(request):
         context = {'form': form}
         return render(request, template_name, context)
     return HttpResponseRedirect(reverse('fullstack:create_customer_p'))
+
+
+def edit_service_provider_profile(request, service_provided_id):
+    service_provided = ServiceProvider.objects.get(
+                            id=service_provided_id)
+    template_name = 'fullstack/provider_profile_form.html'
+    if request.method == 'POST':
+        if 'picture' in request.FILES:
+            service_provided.picture = request.FILES['picture']
+        if 'supporting_document' in request.FILES:
+            service_provided.supporting_document = request.FILES[
+                'supporting_document']
+        form = ServiceProviderProfileForm(request.POST,
+                                          instance=service_provided)
+        if form.is_valid():
+            form.save()
+            return redirect('fullstack:provider_profile', service_provided_id)
+    form = ServiceProviderProfileForm(instance=service_provided)
+    context = {'form': form, 'service_provided_id': service_provided_id}
+    return render(request, template_name, context)
 
 
 def create_service_provider_profile(request):
