@@ -8,13 +8,19 @@ from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm)
 from .forms import CustomerRegistration
 from django.contrib.auth import authenticate, logout, login
+from cities_light.models import City, Region, Country
 
 # Create your views here.
 
 
 def home(request):
-    context = {}
-    return render(request, 'fullstack/home.html', context)
+    """ Returns context with coutries, regions and cities."""
+    template_name = 'fullstack/home.html'
+    country = Country.objects.all() 
+    region = Region.objects.all()
+    city = City.objects.all()
+    context = {'countries': country, 'regions': region, 'cities': city}
+    return render(request, template_name, context)
 
 
 def index(request):
