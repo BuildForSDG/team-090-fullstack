@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block header %}
-    <div class="jumbotron" style="padding-bottom: 0; margin: 0;">
+    <div class="jumbotron" style="padding-top: 0; margin: 0;">
         <h1 class="text-center cityLogo">Need services in a specific location?</h1>
         <p class=" text-center text-weight-normal lead">Search your current location or look up different one...</p>
     </div>
@@ -17,27 +17,58 @@
     </div>
 
     <div class="col-xl-8 col-lg-8 col-sm-12 bg-grey">
+        <div class="row">
         <div  class=" text-weight-normal lead" style="margin: 10% 20% 0 20%; border-bottom: 1px solid grey;">
         <form action="{% url 'fullstack:search'%}" method="POST" class="form">
+            {% csrf_token %}
          <div class="row" style="border-bottom: 1px solid rgb(153, 153, 168); margin: 5%; text-align: center;">
             <div class="col-xl-4 col-lg-4 col-sm-4">
                 <div class="form-group">
                     <!--label for="country">Country</label-->
-                    <input class="form-control form-control-md" name="country" type="search" placeholder="Enter country...">
+                    <select name="country" class="form-control form-control-md">
+                            <option value="" disabled selected hidden>Country</option>
+                        {% for country in countries %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-sm-4">
                 <div class="form-group">
-                    <!--label for="city">City</label-->
-                    <input class="form-control form-control-md" name="city"  type="search" placeholder="Enter city...">
+                    <select name="region" class="form-control form-control-md">
+                            <option value="" disabled selected hidden>State</option>
+                        {% for region in regions %}
+                            <option value="{{region.id}}">{{region.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-sm-4">
+                <div class="form-group">
+                    <select name="city" class="form-control form-control-md" aria-placeholder="City">
+                            <option value="" disabled selected hidden>City</option>
+                        {% for city in cities %}
+                            <option value="{{city.id}}">{{city.name}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>
             <div class="form-group">
-                <input class="form-control form-control-lg" type="search" name="search" placeholder="Enter service">
+                <input class="form-control form-control-lg" type="search" name="keyword" placeholder="Enter service">
             </div>
         </form>
+        </div><!--End of form row-->
         </div>
+            <div class="row">
+                {% if results %}
+                    {% for result in results %}
+                        <p> {{result.business_name}}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No service matched your search.</p>
+                {% endif %}
+            </div>
     </div>
     <!--Services-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
