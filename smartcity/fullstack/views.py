@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
@@ -15,10 +15,14 @@ from cities_light.models import City, Region, Country
 
 def get_country_region_city_ids_from_user(user_id):
     """ Returns country, region and city ids from user profile"""
-    user_profile = CustomerProfile.objects.get(user_id=user_id)
-    results = [user_profile.country_id,
-               user_profile.region_id,
-               user_profile.city_id]
+    results = None
+    try:
+        user_profile = CustomerProfile.objects.get(user_id=user_id)
+        results = [user_profile.country_id,
+                user_profile.region_id,
+                user_profile.city_id]
+    except CustomerProfile.DoesNotExist:
+        results = None
     return results
 
 
@@ -238,6 +242,9 @@ def logout_user(request):
 def search(request):
     """ Returns a service from search key-word."""
     results = None
+    country_id = None
+    region_id = None
+    city_id = None
     template_name = 'fullstack/home.html'
     if request.method == 'POST':
         keyword = request.POST['keyword']
@@ -247,10 +254,22 @@ def search(request):
             city_id = request.POST['city']
         elif request.user.is_authenticated:
             ids = get_country_region_city_ids_from_user(
-                request.user.id)
-            country_id, region_id, city_id = ids
+                    request.user.id)
+            if ids is not None:
+                country_id, region_id, city_id = ids
         if country_id and region_id and city_id:
             results = get_service_from_location(
                 keyword, country_id, region_id, city_id)
-    context = {'results': results}
+    country = Country.objects.all()
+    region = Region.objects.all()
+    city = City.objects.all()
+    context = {'services': results, 'countries': country,
+               'regions': region, 'cities': city}
+    return render(request, template_name, context)
+
+
+def service_details(request, service_id):
+    template_name = 'fullstack/service_details.html'
+    service_provided = get_object_or_404(ServiceProvider, pk=service_id)
+    context = {'service_provided': service_provided}
     return render(request, template_name, context)
