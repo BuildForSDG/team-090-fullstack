@@ -3,14 +3,28 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from .models import (ServiceProvider, CustomerProfile,
-                     Subscription, Suspension)
+                     Subscription, Suspension, Service, Category)
 from .forms import (ServiceProviderProfileForm,
-                    CustomerProfileForm)
+                    CustomerProfileForm, RatingAndReviewForm)
 from .forms import CustomerRegistration
 from django.contrib.auth import authenticate, logout, login
 from cities_light.models import City, Region, Country
+from django.utils import timezone
 
 # Create your views here.
+
+
+def get_subscribed_services(user_id):
+    services_subscribed = None
+    try: 
+        customer_profile = CustomerProfile.objects.get(user_id=user_id)
+        services_subscribed = Subscription.objects.filter(
+            customer_id=customer_profile.id)
+    except CustomerProfile.DoesNotExist:
+        return None
+    except Subscription.DoesNotExist:
+        return None
+    return services_subscribed
 
 
 def get_country_region_city_ids_from_user(user_id):
@@ -47,13 +61,29 @@ def get_service_from_location(keyword, country_id, region_id, city_id):
     return results
 
 
+def get_services_and_categories():
+    try:
+        categories = Category.objects.all()
+        services = Service.objects.all()
+    except Category.DoesNotExist:
+        categories = None
+    except Service.DoesNotExist:
+        services = None
+    return categories, services
+
+
 def home(request):
     """ Returns context with coutries, regions and cities."""
     template_name = 'fullstack/home.html'
+    services = None
+    categories = None
     country = Country.objects.all()
     region = Region.objects.all()
     city = City.objects.all()
-    context = {'countries': country, 'regions': region, 'cities': city}
+    categories, services = get_services_and_categories()
+    context = {'countries': country, 'regions': region,
+               'cities': city, 'services_list': services, 
+               'categories': categories}
     return render(request, template_name, context)
 
 
@@ -119,22 +149,21 @@ def customer_profile(request):
     services_provided = None
     user_profile = None
     services_subscribed = None
+
     try:
         user_profile = CustomerProfile.objects.get(user_id=request.user.id)
         services_provided = ServiceProvider.objects.filter(
             user_id=request.user.id)
+        services_subscribed = Subscription.objects.filter(
+                                customer_id=user_profile.id)
     except CustomerProfile.DoesNotExist:
         user_profile = None
         services_provided = None
     except ServiceProvider.DoesNotExist:
         services_provided = None
-    else:
-        try:
-            services_subscribed = Subscription.objects.filter(
-                                     customer_id=user_profile.user.id)
-        except Subscription.DoesNotExist:
+    except Subscription.DoesNotExist:
             services_subscribed = None
-    context = {'user_profile': user_profile, 'services': services_subscribed,
+    context = {'user_profile': user_profile, 'services_subscribed': services_subscribed,
                'services_provided': services_provided}
     return render(request, template_name, context)
 
@@ -245,6 +274,7 @@ def search(request):
     country_id = None
     region_id = None
     city_id = None
+    services_subscribed = None
     template_name = 'fullstack/home.html'
     if request.method == 'POST':
         keyword = request.POST['keyword']
@@ -257,19 +287,41 @@ def search(request):
                     request.user.id)
             if ids is not None:
                 country_id, region_id, city_id = ids
+            services_subscribed = get_subscribed_services(request.user.id)
         if country_id and region_id and city_id:
             results = get_service_from_location(
                 keyword, country_id, region_id, city_id)
     country = Country.objects.all()
     region = Region.objects.all()
     city = City.objects.all()
+    categories_list, services_list = get_services_and_categories()
     context = {'services': results, 'countries': country,
-               'regions': region, 'cities': city}
+               'regions': region, 'cities': city,
+               'services_subscribed': services_subscribed,
+               'services_list': services_list, 
+               'categories': categories_list}
     return render(request, template_name, context)
 
 
 def service_details(request, service_id):
     template_name = 'fullstack/service_details.html'
-    service_provided = get_object_or_404(ServiceProvider, pk=service_id)
+    service_provided = get_object_or_404(
+        ServiceProvider, pk=service_id)
     context = {'service_provided': service_provided}
     return render(request, template_name, context)
+
+
+def subscribe(request, service_id):
+    """Subscribe a customer for a service."""
+    if request.user.is_authenticated:
+        try:
+            customer = CustomerProfile.objects.get(user_id=request.user.id)
+        except CustomerProfile.DoesNotExist:
+            return render(request, 'fullstack/profile_error.html')
+        finally:
+            if not Subscription.objects.filter(customer_id=customer.id).exists():
+                subscription = Subscription.objects.create(
+                    customer_id=customer.id, service_provider_id=service_id,
+                    date=timezone.now())
+        return redirect('fullstack:customer_profile')
+             
