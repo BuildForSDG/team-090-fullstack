@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
 from .models import (ServiceProvider, CustomerProfile,
-                     Subscription, Suspension, Service, Category)
+                     Subscription, Suspension, Service,
+                     Category, RatingAndReview)
 from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm, RatingAndReviewForm)
 from .forms import CustomerRegistration
@@ -16,7 +17,7 @@ from django.utils import timezone
 
 def get_subscribed_services(user_id):
     services_subscribed = None
-    try: 
+    try:
         customer_profile = CustomerProfile.objects.get(user_id=user_id)
         services_subscribed = Subscription.objects.filter(
             customer_id=customer_profile.id)
@@ -33,8 +34,8 @@ def get_country_region_city_ids_from_user(user_id):
     try:
         user_profile = CustomerProfile.objects.get(user_id=user_id)
         results = [user_profile.country_id,
-                user_profile.region_id,
-                user_profile.city_id]
+                   user_profile.region_id,
+                   user_profile.city_id]
     except CustomerProfile.DoesNotExist:
         results = None
     return results
@@ -82,7 +83,7 @@ def home(request):
     city = City.objects.all()
     categories, services = get_services_and_categories()
     context = {'countries': country, 'regions': region,
-               'cities': city, 'services_list': services, 
+               'cities': city, 'services_list': services,
                'categories': categories}
     return render(request, template_name, context)
 
@@ -124,21 +125,27 @@ def service_provider_profile(request, service_provided_id):
     template_name = 'fullstack/provider_profile.html'
     suspension = None
     subscription = None
+    ratings_and_reviews = None
     try:
         subscription = Subscription.objects.filter(
             service_provider_id=service_provided_id)
         suspension = Suspension.objects.get(
             service_provider_id=service_provided_id)
+        ratings_and_reviews = RatingAndReview.objects.filter(
+            service_provider_id=service_provided_id)
     except Subscription.DoesNotExist:
         subscription = None
     except Suspension.DoesNotExist:
         suspension = None
+    except RatingAndReview.DoesNotExist:
+        ratings_and_reviews = None
     user_profile = CustomerProfile.objects.get(user_id=request.user.id)
     service_provided = ServiceProvider.objects.get(
                             id=service_provided_id)
     context = {'service_provided': service_provided,
                'user_profile': user_profile, 'suspension': suspension,
-               'subscription': subscription}
+               'subscriptions': subscription,
+               'ratings': ratings_and_reviews}
     return render(request, template_name, context)
 
 
@@ -162,8 +169,9 @@ def customer_profile(request):
     except ServiceProvider.DoesNotExist:
         services_provided = None
     except Subscription.DoesNotExist:
-            services_subscribed = None
-    context = {'user_profile': user_profile, 'services_subscribed': services_subscribed,
+        services_subscribed = None
+    context = {'user_profile': user_profile,
+               'services_subscribed': services_subscribed,
                'services_provided': services_provided}
     return render(request, template_name, context)
 
@@ -243,9 +251,36 @@ def categories(request):
     return render(request, '.html', {})
 
 
-def reviews_and_ratings(request, provider_id):
+def reviews_and_ratings(request, service_id):
     """View function for the customers review and ratings page."""
-    return render(request, '.html', {})
+    template_name = 'fullstack/rating_error.html'
+    rating = None
+    review = None
+    customer = None
+    if request.method == 'POST':
+        rating = request.POST['rating']
+        review = request.POST['review']
+        if request.user.is_authenticated:
+            try:
+                customer = CustomerProfile.objects.get(user_id=request.user.id)
+                service_provider = ServiceProvider.objects.get(id=service_id)
+                if not RatingAndReview.objects.filter(
+                        customer_id=customer.id,
+                        service_provider_id=service_provider.id).exists():
+                    RatingAndReview.objects.create(
+                        customer=customer, service_provider=service_provider,
+                        rating=rating, review=review)
+                else:
+                    form = RatingAndReviewForm(
+                        request.POST, instance=RatingAndReview.objects.get(
+                            customer_id=customer.id,
+                            service_provider_id=service_id))
+                    form.save()
+            except CustomerProfile.DoesNotExist:
+                return render(request, template_name, {})
+        else:
+            return render(request, template_name, {})
+    return redirect('fullstack:service_details', service_id=service_id)
 
 
 def customer_registration(request):
@@ -298,30 +333,53 @@ def search(request):
     context = {'services': results, 'countries': country,
                'regions': region, 'cities': city,
                'services_subscribed': services_subscribed,
-               'services_list': services_list, 
+               'services_list': services_list,
                'categories': categories_list}
     return render(request, template_name, context)
 
 
 def service_details(request, service_id):
     template_name = 'fullstack/service_details.html'
+    rating_and_review = None
+    customer_review = None
+    form = RatingAndReviewForm()
     service_provided = get_object_or_404(
         ServiceProvider, pk=service_id)
-    context = {'service_provided': service_provided}
+    try:
+        rating_and_review = RatingAndReview.objects.filter(
+            service_provider_id=service_id)
+    except RatingAndReview.DoesNotExist:
+        rating_and_review = None
+        '''if user is login and has profile, get his submitted review'''
+    if request.user.is_authenticated:
+        try:
+            customer = CustomerProfile.objects.get(user_id=request.user.id)
+            customer_review = RatingAndReview.objects.get(
+                customer_id=customer.id, service_provider_id=service_id)
+            form = RatingAndReviewForm(instance=customer_review)
+        except CustomerProfile.DoesNotExist:
+            customer_review = None
+        except RatingAndReview.DoesNotExist:
+            customer_review = None
+    context = {'service_provided': service_provided,
+               'form': form, 'ratings': rating_and_review,
+               'customer_review_and_rating': customer_review}
     return render(request, template_name, context)
 
 
 def subscribe(request, service_id):
     """Subscribe a customer for a service."""
+    customer = None
     if request.user.is_authenticated:
         try:
             customer = CustomerProfile.objects.get(user_id=request.user.id)
         except CustomerProfile.DoesNotExist:
             return render(request, 'fullstack/profile_error.html')
-        finally:
-            if not Subscription.objects.filter(customer_id=customer.id).exists():
-                subscription = Subscription.objects.create(
-                    customer_id=customer.id, service_provider_id=service_id,
-                    date=timezone.now())
+        try:
+            Subscription.objects.get(customer_id=customer.id)
+        except Subscription.DoesNotExist:
+            Subscription.objects.create(
+                customer_id=customer.id, service_provider_id=service_id,
+                date=timezone.now())
         return redirect('fullstack:customer_profile')
-             
+    return render(request, 'fullstack/profile_error.html')
