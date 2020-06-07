@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import Service, Category, ServiceProvider, CustomerProfile, Subscription, Suspension
+from .models import (Service, Category, ServiceProvider,
+                     CustomerProfile, Subscription, Suspension)
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
