@@ -9,20 +9,19 @@ from .models import (ServiceProvider,
 
 class ServiceProviderProfileForm(ModelForm):
     class Meta:
-        """Generate fields from ServiceProvider model"""
+        """Generate fields from ServiceProvider model."""
         model = ServiceProvider
         exclude = ['approval', 'user']
 
 
 class CustomerProfileForm(ModelForm):
     class Meta:
-        """Generate fields from CustomerProfile model"""
+        """Generate fields from CustomerProfile model."""
         model = CustomerProfile
         exclude = ['user']
 
 
 class CustomerRegistration(UserCreationForm):
-
     """Customer registration."""
     username = forms.CharField(
         max_length=100, required=True, help_text=""
@@ -46,7 +45,6 @@ class CustomerRegistration(UserCreationForm):
 
 
 class RatingAndReviewForm(ModelForm):
-
     """Generate review and rating form model."""
     class Meta:
         model = RatingAndReview
