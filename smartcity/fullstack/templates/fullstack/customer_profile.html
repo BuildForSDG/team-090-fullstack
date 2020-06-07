@@ -38,20 +38,34 @@
             </div>
             </div>
             <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="text-primary text-center" style="margin: 0%;padding-bottom: 5%;">
+            <div class="text-primary text-center" style="margin-top: 5%;padding-bottom: 5%;">
                     <!--Services subscribed by customer-->
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <p class="text-normal lead text-center bold">Subscribed services</p>
-                    <hr>
-                    {% if services %}
-                        <ul>
-                        {% for service in services %}
-                            <li class="text-normal lead">{{service}}</li>
+                    <p class="text-normal lead text-center bold bg-warning">Subscribed services</p>
+            
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                    {% if services_subscribed %}
+                        <div class="row" style="margin-bottom: 5%;">
+                        {% for service_subscribed in services_subscribed %}
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="card">
+                                    <img src="{{service_subscribed.service_provider.picture.url}}" class="card-img-top rounded-circle">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-dark">{{service_subscribed.service_provider.business_name|title}}</h4>
+                                        <p class="card-text">{{service_subscribed.service_provider.description}}</p>
+                                        <hr>
+                                        <li class="fa fa-map-marker"> {{service_subscribed.service_provider.street_address}}</li>
+                                        <p class="text-warning">{{service_subscribed.service_provider.price}} {{service_subscribed.service_provider.currency}}</p>
+                                        <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service_subscribed.id %}">Details</a>
+                                    </div>
+                                </div>
+                            </div>
                         {% endfor %}
-                        </ul>
+                        </div>
                     {% else %}
-                        <p>You have not subscribed to any service.</p>
+                        <p>You have not subscribed to any service</p>
                     {% endif %}
+                    </div>
                     <!--Subscribe to a service-->
                     <div class="btn btn-primary text-light lead" style="margin-bottom: 5%;">
                         <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Subscribe to a service</a>
@@ -63,8 +77,7 @@
             <div class="text-primary text-center" style="margin-bottom: 5%;padding-bottom: 5%;" >
                     <!--Services offered -->
                     <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <p class="text-normal lead text-center bold">Services I provide</p>
-                        <hr>
+                        <p class="text-normal lead text-center bold bg-warning">Services I provide</p>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     {% if services_provided %}
