@@ -29,7 +29,7 @@ def get_subscribed_services(user_id):
 
 
 def get_country_region_city_ids_from_user(user_id):
-    """Returns country, region and city ids from user profile"""
+    """Returns country, region and city ids from user profile."""
     results = None
     try:
         user_profile = CustomerProfile.objects.get(user_id=user_id)
