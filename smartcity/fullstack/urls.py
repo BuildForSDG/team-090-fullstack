@@ -11,7 +11,7 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_user, name='logout'),
-    path('providerprofile/<int:service_provider_id>', views.service_provider_profile, name='providerprofile'),
+    path('providerprofile/<int:service_provided_id>/', views.service_provider_profile, name='provider_profile'),
     path('customerprofile/', views.customer_profile, name='customer_profile'),
     path('signup/', views.sign_up, name='signup'),
     path('categories/', views.categories, name='categories'),
@@ -20,8 +20,11 @@ urlpatterns = [
     path('createproviderprofile/', views.create_service_provider_profile, name='create_provider_p'),
     path('createcustomerprofile/', views.create_customer_profile, name='create_customer_p'),
     path('editprofile/<int:user_id>/',views.edit_profile, name='edit_profile'),
-    path('reviewandrating/<int:service_provider_id>/', views.reviews_and_ratings, name='reviews_and_ratings'),
-    path('registration/', views.customer_registration, name='registration')
+    path('reviewandrating/<int:service_id>/', views.reviews_and_ratings, name='rating'),
+    path('registration/', views.customer_registration, name='registration'),
+    path('editproviderprofile/<int:service_provided_id>/', views.edit_service_provider_profile, name='edit_provider_profile'),
+    path('servicedetails/<int:service_id>/', views.service_details, name='service_details'),
+    path('subscribe/<int:service_id>/', views.subscribe, name='subscribe')
 ]
 
 if settings.DEBUG:
