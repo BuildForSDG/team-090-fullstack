@@ -42,8 +42,7 @@ def get_country_region_city_ids_from_user(user_id):
 
 
 def get_service_from_location(keyword, country_id, region_id, city_id):
-    """Returns services based on keyword, and user's country,
-       region and city ids."""
+    """Returns services based on keyword,user's country,region and city"""
     results = None
     try:
         results = ServiceProvider.objects.filter(
@@ -74,7 +73,7 @@ def get_services_and_categories():
 
 
 def home(request):
-    """ Returns context with coutries, regions and cities."""
+    """Returns context with coutries, regions and cities."""
     template_name = 'fullstack/home.html'
     services = None
     categories = None
@@ -304,7 +303,7 @@ def logout_user(request):
 
 
 def search(request):
-    """ Returns a service from search key-word."""
+    """Returns a service from search key-word."""
     results = None
     country_id = None
     region_id = None
@@ -350,7 +349,7 @@ def service_details(request, service_id):
             service_provider_id=service_id)
     except RatingAndReview.DoesNotExist:
         rating_and_review = None
-        '''if user is login and has profile, get his submitted review'''
+        # if user is login and has profile, get his submitted review
     if request.user.is_authenticated:
         try:
             customer = CustomerProfile.objects.get(user_id=request.user.id)

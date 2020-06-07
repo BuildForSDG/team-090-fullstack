@@ -22,7 +22,8 @@ class CustomerProfileForm(ModelForm):
 
 
 class CustomerRegistration(UserCreationForm):
-    """Customer registration"""
+
+    """Customer registration."""
     username = forms.CharField(
         max_length=100, required=True, help_text=""
     )
@@ -45,7 +46,8 @@ class CustomerRegistration(UserCreationForm):
 
 
 class RatingAndReviewForm(ModelForm):
-    """Generate review and rating form model"""
+
+    """Generate review and rating form model."""
     class Meta:
         model = RatingAndReview
         fields = ['rating', 'review']
