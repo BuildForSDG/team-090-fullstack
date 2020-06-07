@@ -14,14 +14,14 @@
     {% bootstrap_javascript %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm bg-light text-dark fixed-top header-div" >
+    <nav class="bg-primary navbar navbar-expand-sm text-dark fixed-top header-div navbar-light" style="padding: 0;" >
         <!--logo-->
-        <a class="navbar-brand" href="#"> 
-            <h1 class="cityLogo">S<span>mart Cities</span></h1>
+        <a class="navbar-brand" href="{% url 'fullstack:home' %}" > 
+            <h3 class="cityLogo">S<span>martCities</span></h3>
         </a>
         <!--Nav button-->
-        <button class="navbar-toggler text-dark" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon "></span>
         </button>
         <!-- Links -->
         <div class="collapse navbar-collapse text-right" id="collapsibleNavbar" style="text-align: right;">
@@ -41,7 +41,6 @@
                 <li class="nav-item">
                     <p class="lead text-success">Hello, {{user.username}}</p>
                 </li>
-
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:login' %}">
@@ -53,13 +52,11 @@
                         <div class="btn btn-primary">Sign up</div>
                     </a>
                 </li>
-                
-                {% endif %}
-                   
+                {% endif %}  
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top:7%;">
         <!--header-->
         <div class="page-header text-primary">
             {%block header%}{%endblock%}
