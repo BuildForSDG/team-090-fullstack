@@ -1,81 +1,134 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block header %}
-    <div class="jumbotron" style="padding-top: 0; margin: 0;">
-        <h1 class="text-center cityLogo">Need services in a specific location?</h1>
+    <div class="jumbotron bg-light" style="padding: 0; margin: 0;">
+        <h6 class="text-center cityLogo text-warning">Need services in a specific location?</h6>
         <p class=" text-center text-weight-normal lead">Search your current location or look up different one...</p>
     </div>
 {% endblock %}
 {% block content %}
     <!--Categories-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
-        <div style="border-right: 1px solid grey;">
-            <div >
-                <p class="bg-dark text-light text-weight-normal lead">Categories</p>
+        <div style="border: 1px solid grey; margin-bottom: 2%;">
+            <div class="row" >
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <p class="bg-dark text-light text-weight-normal lead">Categories</p>
+                    {% for category in categories %}
+                        <p class="text-center lead text-primary">{{category.name|title}}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-sm-12">
+        <!--Search Form-->
+        <div class="row" style="border-bottom: 0px solid rgb(153, 153, 168); margin-left: 15%; margin-right: 15%; text-align: center;">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <form action="{% url 'fullstack:search'%}" method="POST" class="form">
+                    {% csrf_token %}
+                    <!--Country, Region and City row-->
+                    <!--div class="row" style="border-bottom: 1px solid rgb(153, 153, 168); margin: 5%; text-align: center;"-->
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                            <div class="form-group">
+                                <select name="country" class="form-control form-control-md">
+                                        <option value="" disabled selected hidden>Country</option>
+                                    {% for country in countries %}
+                                        <option value="{{country.id}}">{{country.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                            <div class="form-group">
+                                <select name="region" class="form-control form-control-md">
+                                        <option value="" disabled selected hidden>State</option>
+                                    {% for region in regions %}
+                                        <option value="{{region.id}}">{{region.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                            <div class="form-group">
+                                <select name="city" class="form-control form-control-md" aria-placeholder="City">
+                                        <option value="" disabled selected hidden>City</option>
+                                    {% for city in cities %}
+                                        <option value="{{city.id}}">{{city.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Search bar row-->
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-sm-12">
+                            <div class="form-group">
+                                <input class="form-control form-control-lg" type="search" name="keyword" placeholder="Enter service">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> 
+        <!--Search Results-->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12" style="text-align: center; margin-bottom: 10%;">
+
+                {% if services %}
+                <h6 class="text-primary lead text-center" style="margin-bottom: 0%;"><u>Results</u></h6><hr>
+                    {% for service in services %}
+                        {% if service is services_subscribed %}
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card">
+                                <p class="card-text text-success">Subscribed</p>
+                                <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
+                                <div class="card-body">
+                                    <h4 class="card-title text-dark">{{service.business_name|title}}</h4>
+                                    <p class="card-text">{{service.description}}</p>
+                                    <hr>
+                                    <li class="fa fa-map-marker"> {{service.street_address}}</li>
+                                    <p class="text-warning">{{service.price}} {{service.currency}}</p>
+                                    <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service.id %}">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card">
+                                <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
+                                <div class="card-body">
+                                    <h4 class="card-title text-dark">{{service.business_name|title}}</h4>
+                                    <p class="card-text">{{service.description}}</p>
+                                    <hr>
+                                    <li class="fa fa-map-marker"> {{service.street_address}}</li>
+                                    <p class="text-warning">{{service.price}} {{service.currency}}</p>
+                                    <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service.id %}">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-danger lead">No service matched your search.</p>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <div class="col-xl-8 col-lg-8 col-sm-12 bg-grey">
-        <div class="row">
-        <div  class=" text-weight-normal lead" style="margin: 10% 20% 0 20%; border-bottom: 1px solid grey;">
-        <form action="{% url 'fullstack:search'%}" method="POST" class="form">
-            {% csrf_token %}
-         <div class="row" style="border-bottom: 1px solid rgb(153, 153, 168); margin: 5%; text-align: center;">
-            <div class="col-xl-4 col-lg-4 col-sm-4">
-                <div class="form-group">
-                    <!--label for="country">Country</label-->
-                    <select name="country" class="form-control form-control-md">
-                            <option value="" disabled selected hidden>Country</option>
-                        {% for country in countries %}
-                            <option value="{{country.id}}">{{country.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-sm-4">
-                <div class="form-group">
-                    <select name="region" class="form-control form-control-md">
-                            <option value="" disabled selected hidden>State</option>
-                        {% for region in regions %}
-                            <option value="{{region.id}}">{{region.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-sm-4">
-                <div class="form-group">
-                    <select name="city" class="form-control form-control-md" aria-placeholder="City">
-                            <option value="" disabled selected hidden>City</option>
-                        {% for city in cities %}
-                            <option value="{{city.id}}">{{city.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-        </div>
-            <div class="form-group">
-                <input class="form-control form-control-lg" type="search" name="keyword" placeholder="Enter service">
-            </div>
-        </form>
-        </div><!--End of form row-->
-        </div>
-            <div class="row">
-                {% if results %}
-                    {% for result in results %}
-                        <p> {{result.business_name}}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>No service matched your search.</p>
-                {% endif %}
-            </div>
-    </div>
     <!--Services-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
-            <div style="border-left: 1px solid grey;">
-                <div >
-                    <p class="bg-dark text-light text-weight-normal lead">Services</p>
+        <div style="border: 1px solid grey; margin-bottom: 2%;">
+            <div class="row" >
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                        <p class="bg-dark text-light text-weight-normal lead">Services</p>
+                        {% for service in services_list %}
+                            <p class="text-center lead text-primary">{{service.name|title}}</p>
+                        <hr>
+                    {% endfor %}
                 </div>
             </div>
+        </div>
     </div>
 {% endblock %}
