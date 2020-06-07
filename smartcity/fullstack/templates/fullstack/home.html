@@ -80,7 +80,7 @@
                 <h6 class="text-primary lead text-center" style="margin-bottom: 0%;"><u>Results</u></h6><hr>
                     {% for service in services %}
                         {% if service is services_subscribed %}
-                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="col-xl-3 col-lg-3 col-sm-6">
                             <div class="card">
                                 <p class="card-text text-success">Subscribed</p>
                                 <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         {% else %}
-                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="col-xl-3 col-lg-3 col-sm-6">
                             <div class="card">
                                 <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
                                 <div class="card-body">
