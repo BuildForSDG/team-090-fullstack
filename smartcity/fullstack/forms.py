@@ -3,7 +3,8 @@ from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 # from cities_light.models import Country, Region, City
-from .models import ServiceProvider, CustomerProfile
+from .models import (ServiceProvider,
+                     CustomerProfile, RatingAndReview)
 
 
 class ServiceProviderProfileForm(ModelForm):
@@ -41,3 +42,10 @@ class CustomerRegistration(UserCreationForm):
         fields = (
             'username', 'first_name', 'last_name',
             'email', 'password1', 'password2',)
+
+
+class RatingAndReviewForm(ModelForm):
+    """Generate review and rating form model"""
+    class Meta:
+        model = RatingAndReview
+        fields = ['rating', 'review']
