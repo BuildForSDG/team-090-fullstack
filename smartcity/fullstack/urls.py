@@ -20,9 +20,11 @@ urlpatterns = [
     path('createproviderprofile/', views.create_service_provider_profile, name='create_provider_p'),
     path('createcustomerprofile/', views.create_customer_profile, name='create_customer_p'),
     path('editprofile/<int:user_id>/',views.edit_profile, name='edit_profile'),
-    path('reviewandrating/<int:service_provider_id>/', views.reviews_and_ratings, name='reviews_and_ratings'),
+    path('reviewandrating/<int:service_id>/', views.reviews_and_ratings, name='rating'),
     path('registration/', views.customer_registration, name='registration'),
-    path('editproviderprofile/<int:service_provided_id>/', views.edit_service_provider_profile, name='edit_provider_profile')
+    path('editproviderprofile/<int:service_provided_id>/', views.edit_service_provider_profile, name='edit_provider_profile'),
+    path('servicedetails/<int:service_id>/', views.service_details, name='service_details'),
+    path('subscribe/<int:service_id>/', views.subscribe, name='subscribe')
 ]
 
 if settings.DEBUG:
