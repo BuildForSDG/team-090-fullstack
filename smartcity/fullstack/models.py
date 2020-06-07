@@ -7,6 +7,11 @@ from .my_currency import get_currencies_tuple
 
 
 CURRENCY = get_currencies_tuple()
+RATINGS = [
+    ('Poor', 'Poor'),
+    ('Good', 'Good'),
+    ('Excellent', 'Excellent')
+]
 # Create your models here.
 
 
@@ -110,3 +115,18 @@ class Suspension(models.Model):
 
     def suspension_is_over(self):
         return self.suspension_end_date <= timezone.now
+
+
+class RatingAndReview(models.Model):
+    """ Model for customer's ratings and reviews."""
+    customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
+    service_provider = models.ForeignKey(ServiceProvider,
+                                         on_delete=models.CASCADE)
+    rating = models.CharField(max_length=50, choices=RATINGS,
+                              default=RATINGS[1])
+    review = models.TextField(max_length=100)
+    date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'''{self.service_provider.name} is rated
+        {self.rating} by {self.customer.user.username}'''
