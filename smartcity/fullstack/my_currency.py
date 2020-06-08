@@ -1,4 +1,4 @@
-import package.module pycountry
+import pycountry
 
 
 def get_currencies_tuple():

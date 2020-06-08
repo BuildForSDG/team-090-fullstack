@@ -30,8 +30,12 @@
                     <p><i class="fa fa-map-marker" aria-hidden="true"> {{service_provided.street_address}}</i></p>
                     <p><i class="fa fa-phone" aria-hidden="true"> {{service_provided.phone}}</i></p>
                     <p><i class="fa fa-email" aria-hidden="true"> {{user.email}}</i></p>
-                    
-                </div>  
+                </div>
+                <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-sm-12">
+                            <div id="servicemap" style="width: 100%; height:200px; border: 2px solid blue; border-radius: 10px;"></div> 
+                        </div>
+                </div>
             </div>
         </div>
 
@@ -130,7 +134,7 @@
             </div>
     
             <!--Rating and reviews submited-->
-            <div class="row" style="margin: 10%;">
+                <div class="row" style="margin: 10%;">
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         {% for rating in ratings %}
                             <div class="col-xl-12 col-lg-12 col-sm-12">
