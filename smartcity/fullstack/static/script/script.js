@@ -28,6 +28,8 @@ function showPosition(position) {
       case error.UNKNOWN_ERROR:
         x.innerHTML = "An unknown error occurred."
         break;
+    default:
+        x.innerHTML = " ";
     }
   }
 getLocation();
@@ -35,13 +37,12 @@ if(my_latitute == 0 ){
     my_latitute = 11.83537;
     my_longitude = 13.15166;
 }
-cont = document.getElementById('map');
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg';
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
 center: [my_latitute, my_longitude],
-zoom: 13
+zoom: 4
 });
  
 map.addControl(
@@ -52,15 +53,23 @@ mapboxgl: mapboxgl
 );
 
 var marker = new mapboxgl.Marker().setLngLat([my_longitude,my_latitute]).addTo(map);
-var popup = new mapboxgl.Popup({ closeOnClick: false })
-.setLngLat([my_longitude,my_latitute])
-.setHTML('User')
-.addTo(map);
+//var popup = new mapboxgl.Popup({ closeOnClick: false })
+//.setLngLat([my_longitude,my_latitute])
+//.setHTML('User')
+//.addTo(map);
 
 //Map for service
 var map2 = new mapboxgl.Map({
-    container: 'servicemap', // container id
+    container: 'smap', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    center: [-74.5, 40], // starting position [lng, lat]
-    zoom: 9 // starting zoom
+    center: [my_longitude, my_latitute], // starting position [lng, lat]
+    zoom: 4 // starting zoom
     });
+
+map2.addControl(
+    new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl
+    })
+);
+var marker = new mapboxgl.Marker().setLngLat([-74.5,40]).addTo(map2);
