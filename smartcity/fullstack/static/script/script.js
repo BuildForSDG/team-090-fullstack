@@ -1,6 +1,10 @@
-var my_latitute = 0;
-var my_longitude = 0;
-x = document.getElementById('error');
+var myLatitude = 0;
+var myLongitude = 0;
+function showPosition(position) {
+  myLatitude = position.coords.latitude;
+  myLongitude = position.coords.longitude; 
+}
+var x = document.getElementById("error");
 function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -9,39 +13,34 @@ function getLocation() {
     }
   }
   
-  
-function showPosition(position) {
-    my_latitute = position.coords.latitude;
-    my_longitude = position.coords.longitude; 
-  }
   function showError(error) {
     switch(error.code) {
       case error.PERMISSION_DENIED:
-        x.innerHTML = "User denied the request for Geolocation."
+        x.innerHTML = "User denied the request for Geolocation.";
         break;
       case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
+        x.innerHTML = "Location information is unavailable.";
         break;
       case error.TIMEOUT:
-        x.innerHTML = "The request to get user location timed out."
+        x.innerHTML = "The request to get user location timed out.";
         break;
       case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
+        x.innerHTML = "An unknown error occurred.";
         break;
     default:
         x.innerHTML = " ";
     }
   }
 getLocation();
-if(my_latitute == 0 ){
-    my_latitute = 11.83537;
-    my_longitude = 13.15166;
+if(myLatitude === 0 ){
+    myLatitude = 11.83537;
+    myLongitude = 13.15166;
 }
-mapboxgl.accessToken = 'pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg';
+mapboxgl.accessToken = " ";
 var map = new mapboxgl.Map({
-container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
-center: [my_latitute, my_longitude],
+container: "map",
+style: "mapbox://styles/mapbox/streets-v11",
+center: [myLatitude, myLongitude],
 zoom: 4
 });
  
@@ -52,17 +51,17 @@ mapboxgl: mapboxgl
 })
 );
 
-var marker = new mapboxgl.Marker().setLngLat([my_longitude,my_latitute]).addTo(map);
+var marker = new mapboxgl.Marker().setLngLat([myLongitude,myLatitude]).addTo(map);
 //var popup = new mapboxgl.Popup({ closeOnClick: false })
-//.setLngLat([my_longitude,my_latitute])
+//.setLngLat([myLongitude,myLatitude])
 //.setHTML('User')
 //.addTo(map);
 
 //Map for service
 var map2 = new mapboxgl.Map({
-    container: 'smap', // container id
-    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-    center: [my_longitude, my_latitute], // starting position [lng, lat]
+    container: "smap", // container id
+    style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
+    center: [myLongitude, myLatitude], // starting position [lng, lat]
     zoom: 4 // starting zoom
     });
 
@@ -72,4 +71,4 @@ map2.addControl(
     mapboxgl: mapboxgl
     })
 );
-var marker = new mapboxgl.Marker().setLngLat([-74.5,40]).addTo(map2);
+var marker2 = new mapboxgl.Marker().setLngLat([-74.5,40]).addTo(map2);

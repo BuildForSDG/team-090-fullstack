@@ -1,7 +1,6 @@
 .cityLogo{
     font-size: 30px;
-    color: rgba(0, 0, 0, 1);
-    /*text-shadow: 3px 5px rgba(0,0,0,0.2), 3px 6px rgba(0, 0, 0, 0.19);*/
+    color:  rgba(0, 0, 0, 1);
     font-family: 'Black Ops One', cursive;
     padding: 0;
 }
@@ -25,9 +24,9 @@ hr{
     margin: 0;
 
 }
-h1,h2,h3,h4,h5,h6{
-    font-family: 'Piedra', cursive;
+h1, h2, h3, h4, h5, h6 {
+        font-family: 'Piedra', cursive;
 }
-p, li, div{
-    font-family: 'Bellota', cursive;
+p, li, div {
+        font-family: 'Bellota', cursive;
 }
