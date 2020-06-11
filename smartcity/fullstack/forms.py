@@ -9,7 +9,7 @@ from .models import (ServiceProvider,
 
 class ServiceProviderProfileForm(ModelForm):
     class Meta:
-        
+
         """Generate fields from ServiceProvider model."""
         model = ServiceProvider
         exclude = ['approval', 'user']

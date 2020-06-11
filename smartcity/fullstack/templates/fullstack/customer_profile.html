@@ -3,8 +3,13 @@
 {% load static %}
 {%block nav-items%}
 <li class="nav-item">
-    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
         <div class="btn btn-primary">Home</div>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+        <div class="btn btn-primary">Service</div>
     </a>
 </li>
 {%endblock%}
@@ -16,9 +21,9 @@
     <div class="col-xl-8 col-lg-8 col-sm-12">
              <!--About service provider--->
             <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="jumbotron bg-primary text-light text-center" style="margin: 0;">
+            <div class="jumbotron bg-primary text-light text-center" style="margin: 1%;">
                 {% if user_profile.picture %}
-                    <img class="rounded-circle" src="{{user_profile.picture.url}}" alt="">
+                    <img class="rounded-circle" src="{{user_profile.picture.url}}" alt="" style="width: 50%; height: 50%;">
                 {% else %}
                     <img class="rounded-circle" src="{% static 'images/avatar.jpg' %}" alt="">
                 {% endif %}
@@ -32,7 +37,7 @@
                 </div> 
                 <p class="text-success">
                     <i class="fa fa-edit" aria-hidden="true">
-                        <a class="text-success lead text-decoration-none" href="{% url 'fullstack:create_customer_p' %}">Edit profile</a>
+                        <a class="text-warning lead text-decoration-none" href="{% url 'fullstack:create_customer_p' %}">Edit profile</a>
                     </i>
                 </p>   
             </div>
@@ -41,7 +46,7 @@
             <div class="text-primary text-center" style="margin-top: 5%;padding-bottom: 5%;">
                     <!--Services subscribed by customer-->
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <p class="text-normal lead text-center bold bg-warning">Subscribed services</p>
+                    <h5 class="text-normal lead text-center bold bg-warning">Subscribed services</h5>
             
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     {% if services_subscribed %}
@@ -77,7 +82,7 @@
             <div class="text-primary text-center" style="margin-bottom: 5%;padding-bottom: 5%;" >
                     <!--Services offered -->
                     <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <p class="text-normal lead text-center bold bg-warning">Services I provide</p>
+                        <h5 class="text-normal lead text-center bold bg-warning">Services provided</h5>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     {% if services_provided %}

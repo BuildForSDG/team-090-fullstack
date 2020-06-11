@@ -7,8 +7,8 @@ from django.conf.urls.static import  static
 
 app_name = 'fullstack'
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('index/', views.index, name='index'),
+    path('home/', views.home, name='home'),
+    path('', views.index, name='index'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('providerprofile/<int:service_provided_id>/', views.service_provider_profile, name='provider_profile'),
@@ -24,7 +24,7 @@ urlpatterns = [
     path('registration/', views.customer_registration, name='registration'),
     path('editproviderprofile/<int:service_provided_id>/', views.edit_service_provider_profile, name='edit_provider_profile'),
     path('servicedetails/<int:service_id>/', views.service_details, name='service_details'),
-    path('subscribe/<int:service_id>/', views.subscribe, name='subscribe')
+    path('subscribe/<int:service_id>/', views.subscribe, name='subscribe'),
 ]
 
 if settings.DEBUG:
