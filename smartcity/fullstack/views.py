@@ -334,7 +334,7 @@ def search(request):
             services_subscribed = get_subscribed_services(request.user.id)
             # get users profile
             try:
-               customer_profile = CustomerProfile.objects.get(
+                customer_profile = CustomerProfile.objects.get(
                   user_id=request.user.id)
             except CustomerProfile.DoesNotExist:
                 customer_profile = None
