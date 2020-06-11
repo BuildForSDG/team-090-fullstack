@@ -77,19 +77,26 @@ def home(request):
     template_name = 'fullstack/home.html'
     services = None
     categories = None
+    customer_profile  = None
+    if request.user.is_authenticated:
+        try:
+            customer_profile = CustomerProfile.objects.get(user_id=request.user.id)
+        except CustomerProfile.DoesNotExist:
+            customer_profile = None
     country = Country.objects.all()
     region = Region.objects.all()
     city = City.objects.all()
     categories, services = get_services_and_categories()
     context = {'countries': country, 'regions': region,
                'cities': city, 'services_list': services,
-               'categories': categories}
+               'categories': categories,
+               'customer_profile': customer_profile}
     return render(request, template_name, context)
 
 
 def index(request):
     """View function for the index page."""
-    return render(request, 'base.html', {})
+    return render(request, 'fullstack/landing.html', {})
 
 
 def user_login(request):
@@ -298,7 +305,7 @@ def customer_registration(request):
 
 def logout_user(request):
     logout(request)
-    messages.info(request, "Successfully logged out!")
+    # messages.info(request, "Successfully logged out!")
     return redirect('fullstack:home')
 
 
@@ -309,6 +316,8 @@ def search(request):
     region_id = None
     city_id = None
     services_subscribed = None
+    keyword = None
+    customer_profile = None
     template_name = 'fullstack/home.html'
     if request.method == 'POST':
         keyword = request.POST['keyword']
@@ -322,6 +331,11 @@ def search(request):
             if ids is not None:
                 country_id, region_id, city_id = ids
             services_subscribed = get_subscribed_services(request.user.id)
+            # get users profile
+            try:
+                customer_profile = CustomerProfile.objects.get(user_id=request.user.id)
+            except CustomerProfile.DoesNotExist:
+                customer_profile = None
         if country_id and region_id and city_id:
             results = get_service_from_location(
                 keyword, country_id, region_id, city_id)
@@ -333,7 +347,8 @@ def search(request):
                'regions': region, 'cities': city,
                'services_subscribed': services_subscribed,
                'services_list': services_list,
-               'categories': categories_list}
+               'categories': categories_list,
+               'keyword': keyword, 'customer_profile': customer_profile}
     return render(request, template_name, context)
 
 
