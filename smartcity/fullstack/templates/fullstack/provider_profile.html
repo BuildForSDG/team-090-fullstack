@@ -3,10 +3,16 @@
 {% load static %}
 {%block nav-items%}
 <li class="nav-item">
-    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
         <div class="btn btn-primary">Home</div>
     </a>
 </li>
+
+<li class="nav-item">
+        <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+            <div class="btn btn-primary">Service</div>
+        </a>
+    </li>
 {%endblock%}
 {% block content %}
     <!--Left sidebar-->
@@ -16,10 +22,10 @@
     <div class="col-xl-8 col-lg-8 col-sm-12">
         <!--About service provider--->
         <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="jumbotron bg-primary text-light text-center" style="margin-top: 10%;">
+            <div class="jumbotron bg-primary text-light text-center" style="margin: 1%;">
                 <img class="rounded-circle " src="{{service_provided.picture.url}}" alt="">
                 <h2>{{service_provided.business_name}}</h2>
-                <p class="text-info lead">Established in {{service_provided.year_of_establishement}}</p>
+                <p class="text-dark lead">Established in {{service_provided.year_of_establishement}}</p>
                 <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
                     <p class="text-normal lead">{{service_provided.description}}</p>
                     {% if service_provided.currency %}

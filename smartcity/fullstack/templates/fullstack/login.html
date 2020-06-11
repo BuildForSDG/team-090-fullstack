@@ -10,8 +10,8 @@
 
 {%block content%}
     <div class="col-xl-4 col-lg-4 col-sm-12"></div>
-    <div class="col-xl-4 col-lg-4 col-sm-12 text-weight-normal text-left lead" style="margin: 5%;">
-        <form action="{% url 'fullstack:login'%}" method="POST">
+    <div class="col-xl-4 col-lg-4 col-sm-12 text-weight-normal text-left text-light lead" style="margin: 5%;">
+        <form action="{% url 'fullstack:login'%}" method="POST" class="form">
             {%csrf_token%}
             <div class="form-group">
                 <label for="username">Username</label>
@@ -28,7 +28,8 @@
             </div>
                 <button class="btn btn-primary" type="submit">Send</button>
         </form>
-        <p class="text-break"><a class="text-decoration-none" href="{% url 'fullstack:registration' %}">Signup</a> if you have not.</p>
+        <hr style="margin: 2%;">
+        <p class="text-light"><a class="text-decoration-none" href="{% url 'fullstack:registration' %}">Sign up</a> if you have not registered.</p>
     </div>
     <div class="col-xl-4 col-lg-4 col-sm-12"></div>
 {%endblock%}

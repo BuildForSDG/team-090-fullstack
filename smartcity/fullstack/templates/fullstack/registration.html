@@ -2,18 +2,23 @@
 {% load bootstrap4 %}
 {%block nav-items%}
 <li class="nav-item">
-    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
         <div class="btn btn-primary">Home</div>
     </a>
 </li>
+<li class="nav-item">
+        <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+            <div class="btn btn-primary">Service</div>
+        </a>
+    </li>
 {%endblock%}
 {% block content %}
     <!--Left sidebar-->
     <div class="col-xl-4 col-lg-4 col-sm-12">
     </div>
     <!--Registration form--->
-    <div class="col-xl-4 col-lg-4 col-sm-12" style="margin-top: 10%;" >
-        <div class="jumbotron" style="padding:0">
+    <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 1%;" >
+        <div class="text-light lead" style="padding:0">
             <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0,0,10px,0;">
                 <h4>Registration </h4>
             </div>
@@ -24,6 +29,8 @@
                     <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Send</button>
                 {% endbuttons %}
             </form>
+            <hr style="margin: 2%;">
+        <p class="text-light"><a class="text-decoration-none" href="{% url 'fullstack:login' %}">Log in</a> if you have registered.</p>
         </div>
     </div>
     <!--Right sidebar-->
