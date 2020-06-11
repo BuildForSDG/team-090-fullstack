@@ -77,10 +77,11 @@ def home(request):
     template_name = 'fullstack/home.html'
     services = None
     categories = None
-    customer_profile  = None
+    customer_profile = None
     if request.user.is_authenticated:
         try:
-            customer_profile = CustomerProfile.objects.get(user_id=request.user.id)
+            customer_profile = CustomerProfile.objects.get(
+              user_id=request.user.id)
         except CustomerProfile.DoesNotExist:
             customer_profile = None
     country = Country.objects.all()
@@ -333,7 +334,8 @@ def search(request):
             services_subscribed = get_subscribed_services(request.user.id)
             # get users profile
             try:
-                customer_profile = CustomerProfile.objects.get(user_id=request.user.id)
+               customer_profile = CustomerProfile.objects.get(
+                  user_id=request.user.id)
             except CustomerProfile.DoesNotExist:
                 customer_profile = None
         if country_id and region_id and city_id:
