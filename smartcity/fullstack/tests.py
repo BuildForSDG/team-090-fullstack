@@ -16,6 +16,7 @@ CURRENCY = get_currencies_tuple()
 class ModelTestCase(TestCase):
 
     """Test case for models."""
+
     def setUp(self):
         user = User.objects.create(first_name='Bello',
                                    last_name='Shehu',
@@ -65,10 +66,10 @@ class ModelTestCase(TestCase):
                                     date=timezone.now())
         Document.objects.create(name='CAC')
         RatingAndReview.objects.create(customer=customer_profile,
-                        service_provider=service_provider,
-                        rating='Good',
-                        review='Good service and respectfull',
-                        date=timezone.now())
+                                       service_provider=service_provider,
+                                       rating='Good',
+                                       review='Good service and respectfull',
+                                       date=timezone.now())
 
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
@@ -124,7 +125,7 @@ class ModelTestCase(TestCase):
     def test_valid_document(self):
         document = Document.objects.get(name='CAC')
         self.assertEquals(document.name, 'CAC')
-    
+
     def test_invalid_document(self):
         document = Document.objects.get(name='CAC')
         self.assertNotEquals(document.name, 'SSCE')
@@ -137,12 +138,13 @@ class ModelTestCase(TestCase):
         )
         self.assertEquals(rating_and_review.customer.user.first_name, 'Bello')
         self.assertEquals(rating_and_review.rating, 'Good')
-    
+
     def test_invalid_ratingreview(self):
         user = User.objects.get(first_name='Bello')
         customer = CustomerProfile.objects.get(user=user)
         rating_and_review = RatingAndReview.objects.get(
             customer_id=customer.id
         )
-        self.assertNotEquals(rating_and_review.customer.user.first_name, 'Bashir')
+        self.assertNotEquals(rating_and_review.customer.user.first_name,
+                             'Bashir')
         self.assertNotEquals(rating_and_review.rating, 'Poor')
