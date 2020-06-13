@@ -5,11 +5,14 @@ from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
+from .my_currency import get_currencies_tuple
+
+CURRENCY = get_currencies_tuple()
 # Create your tests here.
 
 
 class ModelTestCase(TestCase):
-
+    """Test case for models."""
     def setUp(self):
         user = User.objects.create(first_name='Bello',
                                    last_name='Shehu',
@@ -30,7 +33,7 @@ class ModelTestCase(TestCase):
                                            document_required=True)
 
         service = Service.objects.create(name='Tailoring',
-                                         price=120, category=category)
+                                         category=category)
 
         service_provider = ServiceProvider.objects.create(
                             business_name='Tailor1',
@@ -39,13 +42,14 @@ class ModelTestCase(TestCase):
                             service_rendered=service,
                             service_category=category,
                             picture='image.jpg',
+                            price=200.00,
                             description='Dress for both genders',
                             years_of_experience=12,
                             year_of_establishement=timezone.now().date(),
                             region=region,
                             city=city,
                             country=country,
-                            supporting_document='', rating=4,
+                            supporting_document='',
                             user=user)
 
         customer_profile = CustomerProfile.objects.create(user=user,
@@ -60,7 +64,6 @@ class ModelTestCase(TestCase):
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
         self.assertEquals(service.name, 'Tailoring')
-        self.assertEquals(service.price, 120)
 
     def test_valid_service_provider_model(self):
         service_provider = ServiceProvider.objects.get(business_name='Tailor1')
