@@ -1,15 +1,21 @@
 from django.test import TestCase
 from .models import (Service, Category, ServiceProvider,
-                     CustomerProfile, Subscription, Suspension)
+                     CustomerProfile, Subscription,
+                     Suspension, Document,
+                     RatingAndReview)
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
+from .my_currency import get_currencies_tuple
+
+CURRENCY = get_currencies_tuple()
 # Create your tests here.
 
 
 class ModelTestCase(TestCase):
 
+    """Test case for models."""
     def setUp(self):
         user = User.objects.create(first_name='Bello',
                                    last_name='Shehu',
@@ -30,7 +36,7 @@ class ModelTestCase(TestCase):
                                            document_required=True)
 
         service = Service.objects.create(name='Tailoring',
-                                         price=120, category=category)
+                                         category=category)
 
         service_provider = ServiceProvider.objects.create(
                             business_name='Tailor1',
@@ -39,13 +45,14 @@ class ModelTestCase(TestCase):
                             service_rendered=service,
                             service_category=category,
                             picture='image.jpg',
+                            price=200.00,
                             description='Dress for both genders',
                             years_of_experience=12,
                             year_of_establishement=timezone.now().date(),
                             region=region,
                             city=city,
                             country=country,
-                            supporting_document='', rating=4,
+                            supporting_document='',
                             user=user)
 
         customer_profile = CustomerProfile.objects.create(user=user,
@@ -56,11 +63,16 @@ class ModelTestCase(TestCase):
         Subscription.objects.create(customer=customer_profile,
                                     service_provider=service_provider,
                                     date=timezone.now())
+        Document.objects.create(name='CAC')
+        RatingAndReview.objects.create(customer=customer_profile,
+                                       service_provider=service_provider,
+                                       rating='Good',
+                                       review='Good service and respectfull',
+                                       date=timezone.now())
 
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
         self.assertEquals(service.name, 'Tailoring')
-        self.assertEquals(service.price, 120)
 
     def test_valid_service_provider_model(self):
         service_provider = ServiceProvider.objects.get(business_name='Tailor1')
@@ -108,3 +120,30 @@ class ModelTestCase(TestCase):
         suspension = Suspension.objects.get(
                         service_provider=service_provider)
         self.assertIs(suspension.suspension_using_correct_date(), False)
+
+    def test_valid_document(self):
+        document = Document.objects.get(name='CAC')
+        self.assertEquals(document.name, 'CAC')
+
+    def test_invalid_document(self):
+        document = Document.objects.get(name='CAC')
+        self.assertNotEquals(document.name, 'SSCE')
+
+    def test_valid_ratingreview(self):
+        user = User.objects.get(first_name='Bello')
+        customer = CustomerProfile.objects.get(user=user)
+        rating_and_review = RatingAndReview.objects.get(
+            customer_id=customer.id
+        )
+        self.assertEquals(rating_and_review.customer.user.first_name, 'Bello')
+        self.assertEquals(rating_and_review.rating, 'Good')
+
+    def test_invalid_ratingreview(self):
+        user = User.objects.get(first_name='Bello')
+        customer = CustomerProfile.objects.get(user=user)
+        rating_and_review = RatingAndReview.objects.get(
+            customer_id=customer.id
+        )
+        self.assertNotEquals(rating_and_review.customer.user.first_name,
+                             'Bashir')
+        self.assertNotEquals(rating_and_review.rating, 'Poor')
