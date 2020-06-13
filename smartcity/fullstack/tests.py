@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import (Service, Category, ServiceProvider,
-                     CustomerProfile, Subscription, Suspension)
+                     CustomerProfile, Subscription,
+                     Suspension, Document)
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -60,6 +61,7 @@ class ModelTestCase(TestCase):
         Subscription.objects.create(customer=customer_profile,
                                     service_provider=service_provider,
                                     date=timezone.now())
+        Document.objects.create(name='CAC')
 
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
@@ -111,3 +113,11 @@ class ModelTestCase(TestCase):
         suspension = Suspension.objects.get(
                         service_provider=service_provider)
         self.assertIs(suspension.suspension_using_correct_date(), False)
+
+    def test_valid_document(self):
+        document = Document.objects.get(name='CAC')
+        self.assertEquals(document.name, 'CAC')
+    
+    def test_invalid_document(self):
+        document = Document.objects.get(name='CAC')
+        self.assertNotEquals(document.name, 'SSCE')
