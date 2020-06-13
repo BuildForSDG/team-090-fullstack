@@ -16,7 +16,6 @@ CURRENCY = get_currencies_tuple()
 class ModelTestCase(TestCase):
 
     """Test case for models."""
-
     def setUp(self):
         user = User.objects.create(first_name='Bello',
                                    last_name='Shehu',
