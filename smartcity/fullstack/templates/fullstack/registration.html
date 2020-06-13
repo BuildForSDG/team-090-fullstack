@@ -14,13 +14,13 @@
 {%endblock%}
 {% block content %}
     <!--Left sidebar-->
-    <div class="col-xl-4 col-lg-4 col-sm-12">
+    <div class="col-xl-4 col-lg-4 col-sm-0">
     </div>
     <!--Registration form--->
-    <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 1%;" >
-        <div class="text-light lead" style="padding:0">
-            <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0,0,10px,0;">
-                <h4>Registration </h4>
+    <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 1% 0 1% 0;" >
+        <div class="text-light lead" style="padding:0; margin: 0;">
+            <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0 0 0 0;">
+                <h4>Sign Up </h4>
             </div>
             <form action="{% url 'fullstack:registration' %}" method="POST" class="form" style="margin: 20px;">
                 {% csrf_token %}
@@ -35,5 +35,11 @@
     </div>
     <!--Right sidebar-->
     <div class="col-xl-4 col-lg-4 col-sm-12">
+        <div class="jumbotron bg-primary text-center text-light" style="margin: 3% 0 1% 0; padding: 10px;">
+            <p class="text-center text-weight-bold"><h4>Login</h4><br>
+                <h6>with</h6>
+            <li class="fa fa-facebook-square fa-lg bg-dark" aria-hidden="True"></li>
+            <a  class="lead text-light" href="{% url 'social:begin' 'facebook' %}"> Facebook</a>
+        </div>
     </div>
 {% endblock %}
