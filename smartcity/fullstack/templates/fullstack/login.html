@@ -28,9 +28,16 @@
             </div>
                 <button class="btn btn-primary" type="submit">Send</button>
         </form>
+        <br>
+        <p class="text-center text-weight-bold"><strong>OR</strong></p>
+        <div class="jumbotron bg-primary text-center text-light" style="margin: 1% 0 1% 0;padding: 0;">
+            <p class="text-center text-weight-bold"><h4>Login</h4><br>
+                <h6>with</h6>
+            <li class="fa fa-facebook-square fa-lg bg-dark" aria-hidden="True"></li>
+            <a  class="lead text-light" href="{% url 'social:begin' 'facebook' %}"> Facebook</a>
+        </div>
         <hr style="margin: 2%;">
-        <p class="text-light"><a class="text-decoration-none" href="{% url 'fullstack:registration' %}">Sign up</a> if you have not registered.</p>
+        <p class="text-light"><a class="text-decoration-none text-warning" href="{% url 'fullstack:registration' %}">Sign up</a> </p>
     </div>
     <div class="col-xl-4 col-lg-4 col-sm-12"></div>
 {%endblock%}
-
