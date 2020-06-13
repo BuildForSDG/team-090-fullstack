@@ -1,7 +1,8 @@
 from django.test import TestCase
 from .models import (Service, Category, ServiceProvider,
                      CustomerProfile, Subscription,
-                     Suspension, Document)
+                     Suspension, Document,
+                     RatingAndReview)
 from cities_light.models import City, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -62,6 +63,11 @@ class ModelTestCase(TestCase):
                                     service_provider=service_provider,
                                     date=timezone.now())
         Document.objects.create(name='CAC')
+        RatingAndReview.objects.create(customer=customer_profile,
+                        service_provider=service_provider,
+                        rating='Good',
+                        review='Good service and respectfull',
+                        date=timezone.now())
 
     def test_valid_service_model(self):
         service = Service.objects.get(name='Tailoring')
@@ -121,3 +127,22 @@ class ModelTestCase(TestCase):
     def test_invalid_document(self):
         document = Document.objects.get(name='CAC')
         self.assertNotEquals(document.name, 'SSCE')
+
+    def test_valid_ratingreview(self):
+        user = User.objects.get(first_name='Bello')
+        customer = CustomerProfile.objects.get(user=user)
+        rating_and_review = RatingAndReview.objects.get(
+            customer_id=customer.id
+        )
+        self.assertEquals(rating_and_review.customer.user.first_name, 'Bello')
+        self.assertEquals(rating_and_review.rating, 'Good')
+    
+    def test_invalid_ratingreview(self):
+        user = User.objects.get(first_name='Bello')
+        customer = CustomerProfile.objects.get(user=user)
+        rating_and_review = RatingAndReview.objects.get(
+            customer_id=customer.id
+        )
+        self.assertNotEquals(rating_and_review.customer.user.first_name, 'Bashir')
+        self.assertNotEquals(rating_and_review.rating, 'Poor')
+    
