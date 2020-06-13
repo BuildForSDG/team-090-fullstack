@@ -91,8 +91,6 @@ class CustomerProfile(models.Model):
 
 
 class Subscription(models.Model):
-
-    """Model for service a customer subscribed for."""
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     service_provider = models.ForeignKey(ServiceProvider,
                                          on_delete=models.CASCADE)
