@@ -115,8 +115,8 @@ AUTHENTICATION_BACKENDS=(
     'django.contrib.auth.backends.ModelBackend'
 )
 # Facebook app keys
-SOCIAL_AUTH_FACEBOOK_KEY = '305683073771231'
-SOCIAL_AUTH_FACEBOOK_SECRET = '62e2e8f0973fbacb768a6c60f337def0'
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FACEBOOK_SECRET')
 #Set default values for login, logout, login_redirect_url
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'

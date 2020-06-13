@@ -14,6 +14,7 @@ CURRENCY = get_currencies_tuple()
 
 
 class ModelTestCase(TestCase):
+
     """Test case for models."""
     def setUp(self):
         user = User.objects.create(first_name='Bello',
@@ -145,4 +146,3 @@ class ModelTestCase(TestCase):
         )
         self.assertNotEquals(rating_and_review.customer.user.first_name, 'Bashir')
         self.assertNotEquals(rating_and_review.rating, 'Poor')
-    
