@@ -1,1 +1,1 @@
-web: gunicorn smartcity.wsgi --log-file -
+web: gunicorn --pythonpath smartcity smartcity.wsgi --log-file -
