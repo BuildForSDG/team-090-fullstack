@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load bootstrap4%}
+{% load static %}
+{%block nav-items%}
+<li class="nav-item">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
+        <div class="btn btn-primary">Home</div>
+    </a>
+</li>
+
+<li class="nav-item">
+        <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+            <div class="btn btn-primary">Service</div>
+        </a>
+    </li>
+{%endblock%}
+{% block content %}
+    <!--Left sidebar-->
+    <div class="col-xl-2 col-lg-2 col-sm-12">    
+    </div>
+    <!--Main Area-->
+    <div class="col-xl-8 col-lg-8 col-sm-12">
+        <!--About service provider--->
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="jumbotron bg-primary text-light text-center" style="margin: 1%;">
+                <img class="rounded-circle " src="{{service_provided.picture.url}}" alt="">
+                <h2>{{service_provided.business_name}}</h2>
+                <p class="text-dark lead">Established in {{service_provided.year_of_establishement}}</p>
+                <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
+                    <p class="text-normal lead">{{service_provided.description}}</p>
+                    {% if service_provided.currency %}
+                        <p class="text-warning lead">Offered @ {{service_provided.price}} {{service_provided.currency}}</p>
+                    {% endif %}
+                    <p><i class="fa fa-map-marker" aria-hidden="true"> {{service_provided.street_address}}</i></p>
+                    <p><i class="fa fa-phone" aria-hidden="true"> {{service_provided.phone}}</i></p>
+                    <p><i class="fa fa-email" aria-hidden="true"> {{user.email}}</i></p>    
+                </div> 
+                <p class="text-success">
+                    <i class="fa fa-edit" aria-hidden="true">
+                        <a class="text-success lead text-decoration-none" href="{% url 'fullstack:edit_provider_profile' service_provided.id %}">Edit profile</a>
+                    </i>
+                </p>
+                <div style="margin-top: 2%;">
+                    {% if suspension %}
+                        <p class="text-light lead text-center">Suspended</p>
+                    {% else %}
+                        <p class="text-light lead text-center">Active</p>
+                    {% endif %}
+                </div>   
+            </div>
+        </div>
+
+        <!--Activites statistics-->
+        <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
+                <p class="text-center text-primary bg-warning lead">Statistics</p>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="text-primary lead" style="margin-top: 5%;">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-sm-12"> 
+                       <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">Customer joining rate(CJT)</h6>
+                                <p class="card-text text-warning">{{joining_rate}}</p>     
+                                <p class="card-text text-primary">persons/month</p>
+                            </div>
+                       </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-danger">Customer leaving rate (CLR)</h6>
+                                <p class="card-text text-warning">{{leaving_rate}}</p>     
+                                <p class="card-text text-primary">persons/month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">Subscribed customers</h6>
+                                <p class="card-text text-warning">{{subscriptions|length}}</p>     
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Transaction statistics-->
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="text-primary lead" style="margin-top: 5%;">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-sm-12"> 
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">Customers' rating and reviews</h6>
+                                <p class="card-text text-warning">{{ratings|length}}</p>     
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">Customers' complain</h6>
+                                 <p class="card-text text-warning">{{complain|length}}</p>     
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-sm-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h6 class="card-title text-success">Customers' suggestions</h6>
+                                <p class="card-text text-warning">{{suggestions|length}}</p>     
+                            </div>
+                        </div>       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Bussiness status-->
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="text-primary lead text-center" style="margin-top: 5%;">
+            <p class="text-center text-primary bg-warning lead">Subscribed Customers</p>
+                <div class="row">
+                {% if subscriptions %}
+                    {% for subscription in subscriptions %}
+                    <div class="col-xl-3 col-lg-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                               <img src="{{subscription.customer.picture.url}}" class="rounded-circle" style="width:50%;">
+                                <h4 class="card-tile">{{subscription.customer.user.username}}</h4>
+                                <p class="card-text">
+                                    <li class="fa fa-phone text-center text-warning" aria-hidden="true" style="font-size: small;">
+                                        {{subscription.customer.phone_number}}
+                                    </li>
+                                    <li class="fa fa-map-marker text-info" aria-hidden="true" style="font-size: medium;">
+                                        {{subscription.customer.street_address}}
+                                    </li>
+                                </p>
+                                <p class="card-text text-danger" style="font-size: small;">{{subscription.date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <p class="text-center text-primary lead">No Subscribed Customers.</p>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!--Rating and reviews submited-->
+        <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
+            <p class="text-center text-primary bg-warning lead">Customers' ratings and reviews</p>
+        </div>
+        <div class="row" style="margin: 10%;">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+            {% if ratings %}
+                {% for rating in ratings %}
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <div class="row" style="border: 1px grey solid; border-radius: 10px;">
+                        <div  class="col-xl-4 col-lg-4 col-sm-12">
+                            <img class="rounded-circle" src="{{rating.customer.picture.url}}">
+                        </div>
+                        <div  class="col-xl-8 col-lg-8 col-sm-12">
+                            <div class="card" style="margin:10px">
+                                <div class="card-body">
+                                    <h4 class="card-title text-warning">{{rating.customer.user.username|title}}</h4>
+                                    <p class="text-primary">{{rating.date}}</p>
+                                    <h4 class="card-title">{{rating.rating}}</h4>
+                                    <p class="card-text">{{rating.review}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-xl-12 col-lg-12 col-sm-12">
+                    <p class="text-center text-primary lead">No reviews.</p>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
