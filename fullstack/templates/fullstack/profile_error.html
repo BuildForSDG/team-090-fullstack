@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{%block nav-items%}
+<li class="nav-item">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
+        <div class="btn btn-primary">Home</div>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+        <div class="btn btn-primary">Service</div>
+    </a>
+</li>
+{%endblock%}
+{% block content %}
+    <!--Left sidebar-->
+    <div class="col-xl-4 col-lg-4 col-sm-12">    
+    </div>
+
+    <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 5%;" >
+        <div class="jumbotron text-center text-light bg-primary lead" style="padding:0">
+            <h3>Oops! Subscription failed.</h3> 
+            <h3>You need to login or create profile.</h3>
+            <div class="btn btn-light" style="margin: 5%;">
+                <a class="text-decoration-none text-primary"  href="{% url 'fullstack:create_customer_p' %}">Create profile</a>
+            </div>
+        </div>
+    </div>
+    <!--Right sidebar-->
+    <div class="col-xl-4 col-lg-4 col-sm-12">    
+    </div>
+{% endblock %}
+    

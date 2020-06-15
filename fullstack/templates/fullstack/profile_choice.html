@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+ <!--Left sidebar-->
+ <div class="col-xl-2 col-lg-2 col-sm-12">    
+</div>
+  <!--About service provider--->
+  <div class="col-xl-8 col-lg-8 col-sm-12">
+    <div class="jumbotron text-light text-center" style="margin: 10%; padding: 0;">
+        <div class="jumbotron jumbo-title bg-primary text-light">
+            <h3>Choose profile type</h3>
+        </div>
+        <hr>
+          <!--Customer-->
+          <div class="btn btn-secondary btn-large">
+                <a class="text-decoration-none text-light lead" href="{% url 'fullstack:create_customer_p' %}">Create customer profile</a>     
+            </div>
+            <h2 class="text-primary"><hr></h2>
+            <!--Service provider-->
+            <div class="btn btn-secondary btn-large" style="margin-bottom: 20px;">
+                <a class="text-decoration-none text-light lead" href="{% url 'fullstack:create_provider_p' %}">Create service provider profile</a>      
+            </div>      
+    </div>
+    
+</div>
+<!--Right sidebar-->
+<div class="col-xl-2 col-lg-2 col-sm-12">    
+</div>
+{% endblock %}

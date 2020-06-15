@@ -1,11 +1,11 @@
 language: python
 python: 
-  - "3.6"
+  - "3.6.10"
 install: 
   - pip install -r requirements.txt
 script: 
-  - python smartcity/manage.py test
-  - flake8 smartcity/fullstack/views.py && flake8 smartcity/fullstack/models.py 
-  - flake8 smartcity/fullstack/forms.py
-  - flake8 smartcity/fullstack/admin.py
+  - python manage.py test
+  - flake8 fullstack/views.py && flake8 fullstack/models.py 
+  - flake8 fullstack/forms.py
+  - flake8 fullstack/admin.py
 
