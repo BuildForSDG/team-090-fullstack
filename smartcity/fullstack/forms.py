@@ -8,15 +8,15 @@ from .models import (ServiceProvider,
 
 
 class ServiceProviderProfileForm(ModelForm):
+    """Generate fields from ServiceProvider model."""
     class Meta:
-        """Generate fields from ServiceProvider model."""
         model = ServiceProvider
         exclude = ['approval', 'user']
 
 
 class CustomerProfileForm(ModelForm):
+    """Generate fields from CustomerProfile model."""
     class Meta:
-        """Generate fields from CustomerProfile model."""
         model = CustomerProfile
         exclude = ['user']
 
