@@ -1,5 +1,4 @@
-"""
-WSGI config for smartcity project.
+"""WSGI config for smartcity project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

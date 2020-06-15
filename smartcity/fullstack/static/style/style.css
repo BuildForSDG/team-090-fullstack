@@ -1,29 +1,24 @@
 .cityLogo {
-    font-size: 30px;
-    color:
-      rgba(0, 0, 0, 1);
-    font-family: 'Black Ops One', cursive;
-    padding: 0;
+  font-size: 30px;
+  color: rgba(0, 0, 0, 1);
+  font-family: 'Black Ops One', cursive;
+  padding: 0;
 }
 .nav-items-custom {
-    font-size: 20px;
-    color:rgba(6, 27, 6, 0.1);
-    text-shadow: 3px 2px rgba(0,0,0,0.2);
-    padding: 0;
+  font-size: 20px;
+  color:rgba(6, 27, 6, 0.1);
+  text-shadow: 3px 2px rgba(0,0,0,0.2);
+  padding: 0;
 }
-.header-div {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0), 0 6px 6px 0 rgba(0, 0, 0, 0);
-} 
 .jumbo-title {
-    padding: 10px; 
-    margin: 0,0,10px,0;
+  padding: 10px; 
+  margin: 0,0,10px,0;
 }
  
 hr{
-    color: white;
-    border: 0.5px solid white;
-    margin: 0;
-
+  color: white;
+  border: 0.5px solid white;
+  margin: 0;
 }
 h1, h2, h3, h4, h5, h6 
 {
@@ -31,5 +26,5 @@ h1, h2, h3, h4, h5, h6
 }
 p, li, div 
 {
-        font-family: 'Bellota', cursive;
+  font-family: 'Bellota', cursive;
 }
