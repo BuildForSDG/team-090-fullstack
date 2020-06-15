@@ -4,18 +4,20 @@
   font-family: 'Black Ops One', cursive;
   padding: 0;
 }
+
 .nav-items-custom {
   font-size: 20px;
   color:rgba(6, 27, 6, 0.1);
   text-shadow: 3px 2px rgba(0,0,0,0.2);
   padding: 0;
 }
+
 .jumbo-title {
   padding: 10px; 
   margin: 0,0,10px,0;
 }
  
-hr{
+hr {
   color: white;
   border: 0.5px solid white;
   margin: 0;
@@ -24,6 +26,7 @@ h1, h2, h3, h4, h5, h6
 {
   font-family: 'Piedra', cursive;
 }
+
 p, li, div 
 {
   font-family: 'Bellota', cursive;
