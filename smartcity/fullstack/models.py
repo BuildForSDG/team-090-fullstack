@@ -16,7 +16,6 @@ RATINGS = [
 
 
 class Category(models.Model):
-
     """ Model for service categories."""
     name = models.CharField(max_length=100)
     document_required = models.BooleanField(default=False)
@@ -26,7 +25,6 @@ class Category(models.Model):
 
 
 class Service(models.Model):
-
     """ Model for services rendered."""
     name = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -36,7 +34,6 @@ class Service(models.Model):
 
 
 class Document(models.Model):
-
     """Model for document required from service provicer."""
     name = models.CharField(max_length=150)
 
@@ -45,7 +42,6 @@ class Document(models.Model):
 
 
 class ServiceProvider(models.Model):
-
     """Model for service providers."""
     business_name = models.CharField(max_length=100)
     street_address = models.CharField(max_length=100)
@@ -102,7 +98,6 @@ class Subscription(models.Model):
 
 
 class Suspension(models.Model):
-
     """ Model for suspended service providers due to offense"""
     service_provider = models.ForeignKey(ServiceProvider,
                                          on_delete=models.CASCADE)
@@ -123,7 +118,6 @@ class Suspension(models.Model):
 
 
 class RatingAndReview(models.Model):
-
     """Model for customer's ratings and reviews."""
     customer = models.ForeignKey(CustomerProfile, on_delete=models.CASCADE)
     service_provider = models.ForeignKey(ServiceProvider,
