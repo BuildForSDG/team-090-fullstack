@@ -147,8 +147,7 @@ MEDIA_ROOT =os.path.join(BASE_DIR,'media')
 BOOTSTRAP4 = {
  'include_jquery': True,
  }
-
-if os.getcwd() == '/app':
+'''if os.getcwd() == '/app':
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.config(default='postgres://localhost')
@@ -161,3 +160,4 @@ if os.getcwd() == '/app':
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_ROOT = 'staticfiles'
     STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
+    '''
