@@ -12,7 +12,7 @@ decorator==4.4.2
 defusedxml==0.7.0rc1
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django==3.0.7
+Django==3.0.6
 django-autoslug-iplweb==1.9.4.dev0
 django-bootstrap4==1.1.1
 django-cities-light==3.6.0
@@ -39,6 +39,7 @@ pycparser==2.20
 pyflakes==2.2.0
 PyJWT==1.7.1
 pylint==2.4.4
+python-decouple==3.3
 python-utils==2.4.0
 python3-openid==3.1.0
 pytz==2020.1
@@ -54,6 +55,6 @@ static3==0.7.0
 typed-ast==1.4.0
 Unidecode==1.1.1
 urllib3==1.25.9
-wrapt==1.11.2
 whitenoise==5.1.0
+wrapt==1.11.2
 zipp==3.1.0
