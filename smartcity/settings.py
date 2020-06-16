@@ -26,8 +26,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-#ALLOWED_HOSTS = ['smartcity090.herokuapp.com', '127.0.0.1']
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = ['smartcity090.herokuapp.com', '127.0.0.1']
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -86,17 +86,20 @@ WSGI_APPLICATION = 'smartcity.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if os.getcwd() == '/app':
+    DATABASES = {
+        'default': dj_database_url.config(
+            default = config('DATABASE_URL')
+        )
     }
-}'''
-DATABASES = {
-    'default': dj_database_url.config(
-        default = config('DATABASE_URL')
-    )
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
+
 
 
 # Password validation
