@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'smartcity.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-if os.getcwd() == '/app':    
+if os.getcwd() == '/app':
     DATABASES = {
         'default': dj_database_url.config(
             default = config('DATABASE_URL')
