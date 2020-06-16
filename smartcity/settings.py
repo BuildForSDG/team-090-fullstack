@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+# DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['smartcity090.herokuapp.com', '127.0.0.1']
 #ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
@@ -87,12 +87,14 @@ WSGI_APPLICATION = 'smartcity.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 if os.getcwd() == '/app':
+    DEBUG = False
     DATABASES = {
         'default': dj_database_url.config(
             default = config('DATABASE_URL')
         )
     }
 else:
+    DEBUG = True
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -128,10 +130,11 @@ AUTHENTICATION_BACKENDS=(
 # Facebook app keys
 SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET')
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True 
 #Set default values for login, logout, login_redirect_url
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login/'
+LOGOUT_URL = 'logout/'
+LOGIN_REDIRECT_URL = '/auth/facebook/callback/'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
