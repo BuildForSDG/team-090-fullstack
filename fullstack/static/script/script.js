@@ -36,7 +36,7 @@ if(myLatitude === 0 ){
     myLatitude = 11.83537;
     myLongitude = 13.15166;
 }
-mapboxgl.accessToken = " ";
+mapboxgl.accessToken = "pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg";
 var map = new mapboxgl.Map({
 container: "map",
 style: "mapbox://styles/mapbox/streets-v11",

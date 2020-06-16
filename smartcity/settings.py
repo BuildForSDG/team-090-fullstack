@@ -130,11 +130,11 @@ AUTHENTICATION_BACKENDS=(
 # Facebook app keys
 SOCIAL_AUTH_FACEBOOK_KEY = config('FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('FACEBOOK_SECRET')
-SOCIAL_AUTH_REDIRECT_IS_HTTPS = True 
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 #Set default values for login, logout, login_redirect_url
 LOGIN_URL = 'login/'
 LOGOUT_URL = 'logout/'
-LOGIN_REDIRECT_URL = '/auth/facebook/callback/'
+LOGIN_REDIRECT_URL = '/auth/facebook/callback'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
