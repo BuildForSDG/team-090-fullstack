@@ -3,12 +3,12 @@
 {%block nav-items%}
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
-        <div class="btn btn-primary">Home</div>
+        <div class="btn btn-dark">Home</div>
     </a>
 </li>
 <li class="nav-item">
         <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
-            <div class="btn btn-primary">Service</div>
+            <div class="btn btn-dark">Service</div>
         </a>
     </li>
 {%endblock%}
@@ -19,27 +19,32 @@
     <!--Registration form--->
     <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 1% 0 1% 0;" >
         <div class="text-light lead" style="padding:0; margin: 0;">
-            <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0 0 0 0;">
-                <h4>Sign Up </h4>
+            <div class="jumbotron bg-dark text-light form-island" style="padding: 20px; margin: 0 0 0 0;">
+                <h4 class="text-center">Sign up </h4><hr><br>
+                <form action="{% url 'fullstack:registration' %}" method="POST" class="form" style="margin: 20px;">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                        <button name="submit" class="btn btn-primary-large btn-primary custom-button" style="margin-bottom: 10px;">Send</button>
+                    {% endbuttons %}
+                </form>
             </div>
-            <form action="{% url 'fullstack:registration' %}" method="POST" class="form" style="margin: 20px;">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                {% buttons %}
-                    <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Send</button>
-                {% endbuttons %}
-            </form>
             <hr style="margin: 2%;">
-        <p class="text-light"><a class="text-decoration-none" href="{% url 'fullstack:login' %}">Log in</a> if you have registered.</p>
-        </div>
+        <p class="text-light">
+            <div class="btn btn-primary custom-button">
+                <a class="text-decoration-none text-warning" href="{% url 'fullstack:login' %}">Log in</a>
+            </div>
+        if you have registered.</p>
+            </div>
     </div>
     <!--Right sidebar-->
     <div class="col-xl-4 col-lg-4 col-sm-12">
-        <div class="jumbotron bg-primary text-center text-light" style="margin: 3% 0 1% 0; padding: 10px;">
-            <p class="text-center text-weight-bold"><h4>Login</h4><br>
-                <h6>with</h6>
-            <li class="fa fa-facebook-square fa-lg bg-dark" aria-hidden="True"></li>
-            <a  class="lead text-light" href="{% url 'social:begin' 'facebook' %}"> Facebook</a>
+        <div class="jumbotron bg-dark text-center text-light form-island" style="margin: 3% 0 1% 0; padding: 10px;">
+            <h4 class="text-center text-weight-bold">With</h4><br>
+                <h6><li class="fa fa-facebook-square fa-lg " aria-hidden="True"> Facebook</li></h6>
+            <div class="btn btn-primary custom-button">
+                <a class="lead text-light text-decoration-none" href="{% url 'social:begin' 'facebook' %}">Login</a>
+            </div> 
         </div>
     </div>
 {% endblock %}
