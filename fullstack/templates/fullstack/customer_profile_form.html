@@ -3,13 +3,13 @@
 {%block nav-items%}
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
-        <div class="btn btn-primary">Home</div>
+        <div class="btn btn-dark">Home</div>
     </a>
 </li>
 
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
-        <div class="btn btn-primary">Service</div>
+        <div class="btn btn-dark">Service</div>
     </a>
     </li>
 {%endblock%}
@@ -21,7 +21,7 @@
     <!--About service provider--->
     <div class="col-xl-4 col-lg-4 col-sm-12" style="margin: 1%;" >
         <div class="text-light lead" style="padding:0">
-            <div class="jumbotron bg-primary text-light text-center" style="padding: 20px; margin: 0,0,10px,0;">
+            <div class="jumbotron bg-dark text-light text-center form-island" style="padding: 20px; margin: 0,0,10px,0;">
                 <h4>Customer Profile </h4>
             </div>
             <form action="{% url 'fullstack:create_customer_p' %}" method="POST" class="form" style="margin: 20px;" enctype="multipart/form-data">
@@ -29,7 +29,7 @@
                 {% bootstrap_form form %}
                 
                 {% buttons %}
-                    <button name="submit" class="btn btn-primary-large btn-primary" style="margin-bottom: 10px;">Save</button>
+                    <button name="submit" class="btn btn-primary custom-button" style="margin-bottom: 10px;">Save</button>
                 {% endbuttons %}
             </form>
 

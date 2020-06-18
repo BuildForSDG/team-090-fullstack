@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Piedra&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bellota:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <!--link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}"-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
@@ -18,7 +19,7 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
-<body class="bg-dark">
+<body class="">
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
         <link
         rel="stylesheet"
@@ -28,7 +29,7 @@
         <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <nav class="bg-primary navbar navbar-expand-sm text-dark  header-div navbar-light" style="padding: 0;" >
+    <nav class="bg-dark navbar navbar-expand-sm text-dark  header-div navbar-dark" style="padding: 0;" >
         <!--logo-->
         <a class="navbar-brand" href="{% url 'fullstack:home' %}" > 
             <h3 class="cityLogo">
@@ -45,12 +46,12 @@
                 {% if user.is_authenticated %}
                 <li class="nav-item ">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:customer_profile' %}">
-                        <div class="btn btn-primary lead">My account</div>
+                        <div class="btn btn-dark lead">My account</div>
                     </a>
                     </li>
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:logout' %}">
-                        <div class="btn btn-primary">Logout</div>
+                        <div class="btn btn-dark">Logout</div>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -59,30 +60,40 @@
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link text-decoration-none" href="{% url 'fullstack:login' %}">
-                        <div class="btn btn-primary">Login</div>
+                        <div class="btn btn-dark">Login</div>
                     </a>
                 </li>
                 <li class="nav-item" >
                     <a class="nav-link text-decoration-none " href="{% url 'fullstack:registration' %}">
-                        <div class="btn btn-primary">Sign up</div>
+                        <div class="btn btn-dark">Sign up</div>
                     </a>
                 </li>
                 {% endif %}  
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
+    <div class="container-fluid "  style="background-image: url('{%static "images/wallpaper4.jpg" %}')">
         <!--header-->
-        <div class="page-header text-primary">
+        <div class="page-header text-primary lead">
             {%block header%}{%endblock%}
         </div>
         <!--content-->
-        <div class="row" style="margin: 0%;">
+        <div class="row l-page lead">
             {%block content%}{%endblock%}
         </div>
         <!--footer-->
-        <div class="row">
+        <div class="row footer">
             {%block footer%}{%endblock%}
+            <div class="col-xl-4"></div>
+            <div class="col-xl-4 col-md-4">
+                <div class="text-center text-light">
+                    <i class="fa fa-phone text-primary" aria-hidden="true"></i><span> +234 9030742107</span>
+                </div>
+                <div class="text-center text-light">
+                    <li class="fa fa-envelope text-primary" aria-hidden="true"></li><span> smartcity090@gmail.com</span>
+                </div>
+            </div>
+            <div class="col-xl-4"></div>
         </div>
     </div>
     <link type="text/css" rel="stylesheet" href="{% static 'style/style.css'%}">

@@ -4,12 +4,12 @@
 {%block nav-items%}
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
-        <div class="btn btn-primary">Home</div>
+        <div class="btn btn-dark">Home</div>
     </a>
 </li>
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
-        <div class="btn btn-primary">Service</div>
+        <div class="btn btn-dark">Service</div>
     </a>
 </li>
 {%endblock%}
@@ -17,11 +17,10 @@
     <!--Left sidebar-->
     <div class="col-xl-2 col-lg-2 col-sm-12">    
     </div>
-   
     <div class="col-xl-8 col-lg-8 col-sm-12">
              <!--About service provider--->
             <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="jumbotron bg-primary text-light text-center" style="margin: 1%;">
+            <div class="jumbotron bg-dark text-light text-center form-island" style="margin: 1%;">
                 {% if user_profile.picture %}
                     <img class="rounded-circle" src="{{user_profile.picture.url}}" alt="" style="width: 50%; height: 50%;">
                 {% else %}
@@ -72,7 +71,7 @@
                     {% endif %}
                     </div>
                     <!--Subscribe to a service-->
-                    <div class="btn btn-primary text-light lead" style="margin-bottom: 5%;">
+                    <div class="btn btn-primary text-light custom-button" style="margin-bottom: 5%;">
                         <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Subscribe to a service</a>
                     </div>
                 </div>
@@ -109,7 +108,7 @@
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     <!--New service link-->
-                        <div class="btn btn-primary text-light lead" style="margin-bottom: 5%;">
+                        <div class="btn btn-primary text-light custom-button" style="margin-bottom: 5%;">
                             <a class="text-decoration-none text-light lead" href="{% url 'fullstack:create_provider_p' %}">Provide a service</a>
                         </div>
                     </div>

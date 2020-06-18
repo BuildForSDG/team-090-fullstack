@@ -4,15 +4,15 @@
 {%block nav-items%}
 <li class="nav-item">
     <a class="nav-link text-decoration-none" href="{% url 'fullstack:index' %}">
-        <div class="btn btn-primary">Home</div>
+        <div class="btn btn-dark">Home</div>
     </a>
 </li>
 
 <li class="nav-item">
-        <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
-            <div class="btn btn-primary">Service</div>
-        </a>
-    </li>
+    <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
+        <div class="btn btn-dark">Service</div>
+    </a>
+</li>
 {%endblock%}
 {% block content %}
     <!--Left sidebar-->
@@ -22,10 +22,10 @@
     <div class="col-xl-8 col-lg-8 col-sm-12">
         <!--About service provider--->
         <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="jumbotron bg-primary text-light text-center" style="margin: 1%;">
+            <div class="jumbotron bg-dark form-island text-light text-center" style="margin: 1%;">
                 <img class="rounded-circle " src="{{service_provided.picture.url}}" alt="">
                 <h2>{{service_provided.business_name}}</h2>
-                <p class="text-dark lead">Established in {{service_provided.year_of_establishement}}</p>
+                <p class="text-warning lead">Established in {{service_provided.year_of_establishement}}</p>
                 <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
                     <p class="text-normal lead">{{service_provided.description}}</p>
                     {% if service_provided.currency %}
@@ -49,22 +49,21 @@
                 </div>   
             </div>
         </div>
-
         <!--Activites statistics-->
         <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
-                <p class="text-center text-primary bg-warning lead">Statistics</p>
+            <h4 class="text-center text-dark bg-warning lead">Statistics</h4>
         </div>
         <div class="col-xl-12 col-lg-12 col-sm-12">
             <div class="text-primary lead" style="margin-top: 5%;">
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-sm-12"> 
-                       <div class="card">
+                        <div class="card">
                             <div class="card-body text-center">
                                 <h6 class="card-title text-success">Customer joining rate(CJT)</h6>
                                 <p class="card-text text-warning">{{joining_rate}}</p>     
                                 <p class="card-text text-primary">persons/month</p>
                             </div>
-                       </div>
+                        </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-sm-12">
                         <div class="card">
@@ -86,7 +85,6 @@
                 </div>
             </div>
         </div>
-
         <!--Transaction statistics-->
         <div class="col-xl-12 col-lg-12 col-sm-12">
             <div class="text-primary lead" style="margin-top: 5%;">
@@ -122,7 +120,7 @@
         <!--Bussiness status-->
         <div class="col-xl-12 col-lg-12 col-sm-12">
             <div class="text-primary lead text-center" style="margin-top: 5%;">
-            <p class="text-center text-primary bg-warning lead">Subscribed Customers</p>
+            <h4 class="text-center text-dark bg-warning lead">Subscribed Customers</h4>
                 <div class="row">
                 {% if subscriptions %}
                     {% for subscription in subscriptions %}
@@ -146,7 +144,7 @@
                     {% endfor %}
                 {% else %}
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <p class="text-center text-primary lead">No Subscribed Customers.</p>
+                    <p class="text-center text-light lead">No Subscribed Customers.</p>
                 </div>
                 {% endif %}
                 </div>
@@ -155,7 +153,7 @@
 
         <!--Rating and reviews submited-->
         <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
-            <p class="text-center text-primary bg-warning lead">Customers' ratings and reviews</p>
+            <h4 class="text-center text-dark bg-warning lead">Customers' ratings and reviews</h4>
         </div>
         <div class="row" style="margin: 10%;">
             <div class="col-xl-12 col-lg-12 col-sm-12">
@@ -181,7 +179,7 @@
                 {% endfor %}
             {% else %}
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <p class="text-center text-primary lead">No reviews.</p>
+                    <p class="text-center text-light lead">No reviews.</p>
                 </div>
             {% endif %}
             </div>

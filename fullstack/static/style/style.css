@@ -26,10 +26,42 @@ hr {
   margin: 0;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Piedra', cursive;
+/*font-family: 'Piedra', cursive; 
+  font-family: 'Alfa Slab One', cursive; */
 }
 
 p, li, div 
 {
   font-family: 'Bellota', cursive;
+}
+.custom-button{
+  box-shadow: 1px 2px 2px 1px white;
+  margin: 4px;
+}
+body {
+  opacity: 1;
+  background-color: black;
+}
+.l-page {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1%; 
+}
+.header-bg {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+.header-div {
+  box-shadow: 2px 3px 3px 0.5px rgba(255, 255, 255, 1);
+}
+.form-island {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 1);
+}
+#search-input, #country, #city, #state {
+  border-radius: 2em 2em 2em 2em;
+}
+
+.footer{
+  padding: 5%;
+  background-color: black;
 }
