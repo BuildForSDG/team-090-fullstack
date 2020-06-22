@@ -55,13 +55,13 @@ $(document).ready(function(){
   })
   );
 
-  var marker = new mapboxgl.Marker().setLngLat([myLongitude,myLatitude]).addTo(map);
+  var marker = new mapboxgl.Marker().setLngLat([10,8]).addTo(map);
 
   //Map for service
   var map2 = new mapboxgl.Map({
       container: "smap", // container id
       style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-      center: [myLongitude, myLatitude], // starting position [lng, lat]
+      center: [8, 10], // starting position [lng, lat]
       zoom: 4 // starting zoom
       });
 
@@ -71,5 +71,5 @@ $(document).ready(function(){
       mapboxgl: mapboxgl
       })
   );
-  var marker2 = new mapboxgl.Marker().setLngLat([myLongitude, myLatitude]).addTo(map2);
+  var marker2 = new mapboxgl.Marker().setLngLat([8, 10]).addTo(map2);
 });
