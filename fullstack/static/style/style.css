@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Alfa Slab One', cursive; */
 }
 
-p, li, div 
+p, li, div, #mycity, #myregion, #mycountry
 {
   font-family: 'Bellota', cursive;
 }
@@ -57,7 +57,7 @@ body {
 .form-island {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 1);
 }
-#search-input, #country, #city, #state {
+#search-input, #country, #city, #state, #error-panel, .custom-button {
   border-radius: 2em 2em 2em 2em;
 }
 
@@ -70,3 +70,14 @@ body {
       display: none;
     }
   }
+#mycity{
+  font-size: smaller;
+}
+#search-error {
+  margin-bottom: 2%;
+  border-radius: 2em 2em 2em 2em;
+  padding: 2%;
+}
+#error_panel {
+  padding: 0%;
+}

@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 from django.urls import reverse
 from .models import (ServiceProvider, CustomerProfile,
                      Subscription, Suspension, Service,
-                     Category, RatingAndReview)
+                     Category, RatingAndReview, MyCity)
 from .forms import (ServiceProviderProfileForm,
                     CustomerProfileForm, RatingAndReviewForm)
 from .forms import CustomerRegistration
 from django.contrib.auth import authenticate, logout, login
-from cities_light.models import City, Region, Country
+from cities_light.models import Region, Country
 from django.utils import timezone
+from django.core.serializers import serialize
 
 # Create your views here.
 
@@ -72,6 +73,45 @@ def get_services_and_categories():
     return categories, services
 
 
+def get_states(request):
+    country_id = int(request.GET.get('country', None))
+    states = Region.objects.filter(country_id=country_id).values()
+    data = {
+        'regions':list(states)
+    }
+    return JsonResponse(data)
+
+
+def get_states_by_name(request):
+    """get the countries, states and cities based a country.
+    """
+    country_name = request.GET.get('country', None)
+    state_name = request.GET.get('state', None)
+    city_name = request.GET.get('city', None)
+    country = Country.objects.get(name__iexact=country_name)
+    countries = Country.objects.all().values()
+    state = Region.objects.get(name__iexact=state_name)
+    states = Region.objects.filter(country_id=country.id).values()
+    city = MyCity.objects.get(city=city_name)
+    cities = MyCity.objects.filter(admin_name__iexact=state_name).values()
+    data = {
+        'countries':list(countries),
+        'regions':list(states),
+        'cities':list(cities)
+    }
+    return JsonResponse(data)
+
+
+def get_cities(request):
+    state_id = request.GET.get('state', None)
+    state = Region.objects.get(pk=state_id)
+    cities = MyCity.objects.filter(admin_name__iexact=state.name).values()
+    data = {
+        'cities':list(cities)
+    }
+    return JsonResponse(data)
+
+
 def home(request):
     """Returns context with coutries, regions and cities."""
     template_name = 'fullstack/home.html'
@@ -86,7 +126,7 @@ def home(request):
             customer_profile = None
     country = Country.objects.all()
     region = Region.objects.all()
-    city = City.objects.all()
+    city = MyCity.objects.all()
     categories, services = get_services_and_categories()
     context = {'countries': country, 'regions': region,
                'cities': city, 'services_list': services,
@@ -332,7 +372,7 @@ def search(request):
             if ids is not None:
                 country_id, region_id, city_id = ids
             services_subscribed = get_subscribed_services(request.user.id)
-            # get users profile
+            # get user's profile
             try:
                 customer_profile = CustomerProfile.objects.get(
                   user_id=request.user.id)
@@ -343,7 +383,7 @@ def search(request):
                 keyword, country_id, region_id, city_id)
     country = Country.objects.all()
     region = Region.objects.all()
-    city = City.objects.all()
+    city = MyCity.objects.all()
     categories_list, services_list = get_services_and_categories()
     context = {'services': results, 'countries': country,
                'regions': region, 'cities': city,
