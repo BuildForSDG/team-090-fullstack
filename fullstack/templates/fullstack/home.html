@@ -5,10 +5,10 @@
     <div class="header-bg text-center" style="padding: 2%; margin-bottom: 2%;">
         <h2 class=" text-center text-light"><strong>Search your current location or look up different one..</strong></h2>
         <i class="fa fa-map-marker text-warning">
-            <span class="text-info" id="mycity"></span>
-            <span class="text-warning" id="myregion"></span>
-            <span class="text-success" id="mycountry"></span>
-            <img src="https://ipdata.co/flags/ng.png" alt="Location failed">
+            <span class="text-success" id="mycity">{{location_info.city}}</span>
+            <span class="text-light" id="myregion">{{location_info.region}}</span>
+            <span class="text-success" id="mycountry">{{location_info.country_name}}</span>
+            <img src="{{location_info.flag}}" alt="Location failed">
         </i> 
         <button id="error-panel" class="btn btn-dark text-light custom-button" data-toggle="modal" data-target="#myModal">Change location</button>
         
@@ -61,9 +61,11 @@
                                             <div class="col-md-12">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold" required>
+                                                        <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold">
                                                             {% if customer_profile.country in countries %}
                                                                 <option id="selected-country" value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
+                                                            {% elif location_info.country_name %}
+                                                                <option id="selected-country" value="" disabled selected hidden>{{location_info.country_name}}</option>
                                                             {% else %}
                                                                 <option id="selected-country" value="" disabled selected hidden>Select country</option>
                                                             {% endif %}
@@ -77,9 +79,11 @@
                                                     
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold" required> 
+                                                        <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold"> 
                                                             {% if customer_profile.region in regions %}
                                                             <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
+                                                            {% elif location_info.region%}
+                                                            <option id="selected-region" value="" disabled selected hidden>{{location_info.region}}</option>
                                                             {% else %}
                                                             <option id="selected-region" value="" disabled selected hidden>Select state</option>
                                                             {% endif %}
@@ -91,9 +95,11 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold" required>
+                                                        <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold">
                                                             {% if customer_profile.city in cities %}
                                                             <option id="selected-cities" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
+                                                            {% elif location_info.city %}
+                                                            <option id="selected-cities" value="" disabled selected hidden>{{location_info.city}}</option>
                                                             {% else %}
                                                             <option id="selected-cities" value="" disabled selected hidden>Select city</option>
                                                             {% endif %}
