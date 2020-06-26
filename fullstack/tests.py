@@ -2,8 +2,8 @@ from django.test import TestCase
 from .models import (Service, Category, ServiceProvider,
                      CustomerProfile, Subscription,
                      Suspension, Document,
-                     RatingAndReview)
-from cities_light.models import City, Country, Region
+                     RatingAndReview, MyCity)
+from cities_light.models import Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
@@ -28,8 +28,15 @@ class ModelTestCase(TestCase):
                                        country_id=1,
                                        name='Borno')
 
-        city = City.objects.create(name='Maidugurui',
-                                   country=country)
+        city = MyCity.objects.create(city='Maidugurui',
+                                   city_ascii='Maiduguri',
+                                   admin_name='public',
+                                   capital='Borno',
+                                   iso2='NG',
+                                   iso3='NGN',
+                                   latitude=3.56,
+                                   longitude=4.56,
+                                   country=country.name)
 
         category = Category.objects.create(
                                            name='Fashion',

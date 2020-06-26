@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bellota:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
     <!--link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css'%}"-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
@@ -19,7 +20,7 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
-<body class="">
+<body class="bg-dark l-page" style="background-image: url('{%static "images/wallpaper4.jpg" %}')">
         <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
         <link
         rel="stylesheet"
@@ -29,7 +30,9 @@
         <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-    <nav class="bg-dark navbar navbar-expand-sm text-dark  header-div navbar-dark" style="padding: 0;" >
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+    <nav class="bg-dark navbar navbar-expand-sm text-dark  header-div navbar-dark" style="padding: 0%;">
         <!--logo-->
         <a class="navbar-brand" href="{% url 'fullstack:home' %}" > 
             <h3 class="cityLogo">
@@ -72,28 +75,27 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid "  style="background-image: url('{%static "images/wallpaper4.jpg" %}')">
+    <div class="container-fluid">
         <!--header-->
-        <div class="page-header text-primary lead">
+        <div class="page-header text-primary lead" style="margin:0%;">
             {%block header%}{%endblock%}
         </div>
         <!--content-->
-        <div class="row l-page lead">
+        <div class="row  lead" style="margin: 0% 0% 10% 0%;">
             {%block content%}{%endblock%}
         </div>
         <!--footer-->
-        <div class="row footer">
-            {%block footer%}{%endblock%}
-            <div class="col-xl-4"></div>
-            <div class="col-xl-4 col-md-4">
-                <div class="text-center text-light">
-                    <i class="fa fa-phone text-primary" aria-hidden="true"></i><span> +234 9030742107</span>
-                </div>
-                <div class="text-center text-light">
-                    <li class="fa fa-envelope text-primary" aria-hidden="true"></li><span> smartcity090@gmail.com</span>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 bg-dark fixed-bottom">
+                <div class="text-center col-lg-12 col-md-12 col-lg-offset footer">
+                    <div class="text-center text-light">
+                        <i class="fa fa-phone text-primary" aria-hidden="true"></i><span> +234 9030742107</span>
+                    </div>
+                    <div class="text-center text-light">
+                        <li class="fa fa-envelope text-primary" aria-hidden="true"></li><span> smartcity090@gmail.com</span>
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-4"></div>
         </div>
     </div>
     <link type="text/css" rel="stylesheet" href="{% static 'style/style.css'%}">
@@ -101,6 +103,5 @@
                 <!-- Include all compiled plugins (below), or include individual files as needed --> 
     <!--script src="{% static 'bootstrap/js/bootstrap.min.js'%}"></script-->
     <script src="{% static 'script/script.js'%}"></script>
-
 </body>
 </html>
