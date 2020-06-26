@@ -3,7 +3,7 @@ from .models import (Service, Category, ServiceProvider,
                      CustomerProfile, Subscription,
                      Suspension, Document,
                      RatingAndReview)
-from cities_light.models import City, Country, Region
+from cities_light.models import MyCity, Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
@@ -28,7 +28,7 @@ class ModelTestCase(TestCase):
                                        country_id=1,
                                        name='Borno')
 
-        city = City.objects.create(name='Maidugurui',
+        city = MyCity.objects.create(name='Maidugurui',
                                    country=country)
 
         category = Category.objects.create(
