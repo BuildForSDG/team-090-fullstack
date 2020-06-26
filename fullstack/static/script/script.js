@@ -1,11 +1,4 @@
 $(document).ready(function(){
-  function update_states(data){ 
-    // function to update select element with list of state
-    $("#state, #id_region").html('');
-    for(var i = 0; i < data.regions.length; i++){
-        $("#state, #id_region").append('<option id="selected-state" value="'+ data.regions[i]['id'] +'">'+ data.regions[i]['name'] +'</option>');
-    }
-  }
   // get states for the selected country 
   $("#country, #id_country").change(function(){
       var country = $(this).val();
@@ -48,6 +41,7 @@ $("#state, #id_region").change(function(){
     }
   );
 });
+/*
 function myLocation(){
       $.get("https://api.ipdata.co?api-key=test", function(response) {
       $("#mycity").append(response.city);
@@ -94,17 +88,11 @@ function myLocation(){
 
       var country = $("#mycountry").text();
       var errorPanel = $("#error-panel");
-      /*if(country === ''){
-        $("#error-panel").append("Select country");
-      }
-      else{
-        $("#error-panel").append("Select manually");
-      }
-      */
 
     }, "jsonp");
   }
- myLocation();
+  */
+//myLocation();
   var myLatitude = 0;
   var myLongitude = 0;
   function showPosition(position) {
