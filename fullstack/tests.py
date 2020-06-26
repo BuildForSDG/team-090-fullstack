@@ -28,7 +28,7 @@ class ModelTestCase(TestCase):
                                        country_id=1,
                                        name='Borno')
 
-        city = MyCity.objects.create(name='Maidugurui',
+        city = MyCity.objects.create(city='Maidugurui',
                                    country=country)
 
         category = Category.objects.create(
