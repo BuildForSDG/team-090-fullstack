@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from cities_light.models import City, Region, Country, SubRegion
+from cities_light.models import Region, Country
 from phonenumber_field.modelfields import PhoneNumberField
 from .my_currency import get_currencies_tuple
 

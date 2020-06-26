@@ -91,18 +91,16 @@ function myLocation(){
             }, 
           }
         );
-    
-     // $("#selected-country").text(response.country_name);
-     // $("#selected-region").text(response.region);
-     // $("#selected-city").text(response.city);
+
       var country = $("#mycountry").text();
       var errorPanel = $("#error-panel");
-      if(country === ''){
+      /*if(country === ''){
         $("#error-panel").append("Select country");
       }
       else{
         $("#error-panel").append("Select manually");
       }
+      */
 
     }, "jsonp");
   }

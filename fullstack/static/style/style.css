@@ -40,12 +40,14 @@ p, li, div, #mycity, #myregion, #mycountry
 }
 body {
   opacity: 1;
-  background-color: black;
+  padding-bottom: 70px;
+  /*background-color: black;*/
 }
 .l-page {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   color: white;
-  padding: 1%; 
+  padding: 0%;
+  margin: 0%;
 }
 .header-bg {
   background-color: rgba(0, 0, 0, 0.7);
@@ -62,8 +64,8 @@ body {
 }
 
 .footer{
-  padding: 2%;
-  background-color: black;
+  padding-bottom: 0%;
+  /*background-color: black;*/
 }
 @media (max-width: 481px){
     .side-contents{

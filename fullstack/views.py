@@ -11,9 +11,16 @@ from .forms import CustomerRegistration
 from django.contrib.auth import authenticate, logout, login
 from cities_light.models import Region, Country
 from django.utils import timezone
-from django.core.serializers import serialize
 
 # Create your views here.
+
+
+def clean_states(state):
+    """Function to remove 'State' keyword in some states names."""
+    if 'state' or 'State' in state:
+        return state.split()[0].capitalize()
+    else:
+        return state
 
 
 def get_subscribed_services(user_id):
@@ -77,7 +84,7 @@ def get_states(request):
     country_id = int(request.GET.get('country', None))
     states = Region.objects.filter(country_id=country_id).values()
     data = {
-        'regions':list(states)
+        'regions': list(states)
     }
     return JsonResponse(data)
 
@@ -85,19 +92,17 @@ def get_states(request):
 def get_states_by_name(request):
     """get the countries, states and cities based a country.
     """
+
     country_name = request.GET.get('country', None)
     state_name = request.GET.get('state', None)
-    city_name = request.GET.get('city', None)
     country = Country.objects.get(name__iexact=country_name)
     countries = Country.objects.all().values()
-    state = Region.objects.get(name__iexact=state_name)
     states = Region.objects.filter(country_id=country.id).values()
-    city = MyCity.objects.get(city=city_name)
     cities = MyCity.objects.filter(admin_name__iexact=state_name).values()
     data = {
-        'countries':list(countries),
-        'regions':list(states),
-        'cities':list(cities)
+        'countries': list(countries),
+        'regions': list(states),
+        'cities': list(cities)
     }
     return JsonResponse(data)
 
@@ -107,7 +112,7 @@ def get_cities(request):
     state = Region.objects.get(pk=state_id)
     cities = MyCity.objects.filter(admin_name__iexact=state.name).values()
     data = {
-        'cities':list(cities)
+        'cities': list(cities)
     }
     return JsonResponse(data)
 

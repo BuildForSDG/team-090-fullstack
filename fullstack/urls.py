@@ -34,7 +34,8 @@ urlpatterns = [
     path('subscribe/<int:service_id>/', views.subscribe, name='subscribe'),
     path('ajax/states/', views.get_states, name='get_states'),
     path('ajax/cities/', views.get_cities, name='get_cities'),
-    path('ajax/states/name/', views.get_states_by_name, name='get_states_by_name'),
+    path('ajax/states/name/', views.get_states_by_name,
+         name='get_states_by_name'),
 ]
 
 if settings.DEBUG:
