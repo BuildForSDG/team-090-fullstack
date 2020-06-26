@@ -2,8 +2,16 @@
 {% load bootstrap4 %}
 {% load static %}
 {% block header %}
-    <div class="header-bg" style="padding: 2%; margin-bottom: 0;">
-        <h2 class=" text-center text-light">Search your current location or look up different one..</h2>
+    <div class="header-bg text-center" style="padding: 2%; margin-bottom: 2%;">
+        <h2 class=" text-center text-light"><strong>Search your current location or look up different one..</strong></h2>
+        <i class="fa fa-map-marker text-warning">
+            <span class="text-info" id="mycity"></span>
+            <span class="text-warning" id="myregion"></span>
+            <span class="text-success" id="mycountry"></span>
+            <img src="https://ipdata.co/flags/ng.png" alt="Location failed">
+        </i> 
+        <button id="error-panel" class="btn btn-dark text-light custom-button" data-toggle="modal" data-target="#myModal">Change location</button>
+        
     </div>  
 {% endblock %}
 {% block nav-items %}
@@ -16,7 +24,7 @@
 {% block content %}
     <!--Categories-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
-        <div style="border: 1px solid grey; margin-bottom: 2%;">
+        <div class="side-contents" style="border: 1px solid grey; margin-bottom: 2%;">
             <div class="row" >
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <h4 class="bg-dark text-light text-weight-normal lead text-center">Categories</h4>
@@ -29,59 +37,128 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-8 col-lg-8 col-sm-12" style="border: 1px solid white;border-top: 0; margin-bottom: 1%;">
+    <div class="col-xl-8 col-lg-8 col-sm-12" style="border: 0px solid white;border-top: 0; margin-bottom: 1%;">
         <!--Search Form-->
         <div class="row" style="border-bottom: 0px solid rgb(153, 153, 168); margin: 0 15% 5% 15%; text-align: center;">
             <div class="col-xl-12 col-lg-12 col-sm-12">
                 <form action="{% url 'fullstack:search'%}" method="POST" class="form">
                     {% csrf_token %}
-                    <!--Country, Region and City row-->
-                    <!--div class="row" style="border-bottom: 1px solid rgb(153, 153, 168); margin: 5%; text-align: center;"-->
+
                     <div class="row">
-                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                        <!-- The Modal -->
+				        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content bg-dark text-light">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Select Your location</h4>
+                                    <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+                                    </div>
+                            
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold" required>
+                                                            {% if customer_profile.country in countries %}
+                                                                <option id="selected-country" value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
+                                                            {% else %}
+                                                                <option id="selected-country" value="" disabled selected hidden>Select country</option>
+                                                            {% endif %}
+
+                                                            {% for country in countries %}
+                                                                <option id="selected-country" value="{{country.id}}">{{country.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>      
+                                                </div>
+                                                    
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold" required> 
+                                                            {% if customer_profile.region in regions %}
+                                                            <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
+                                                            {% else %}
+                                                            <option id="selected-region" value="" disabled selected hidden>Select state</option>
+                                                            {% endif %}
+                                                            {% for region in regions %}
+                                                            <option id="selected-state" value="{{region.id}}">{{region.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold" required>
+                                                            {% if customer_profile.city in cities %}
+                                                            <option id="selected-cities" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
+                                                            {% else %}
+                                                            <option id="selected-cities" value="" disabled selected hidden>Select city</option>
+                                                            {% endif %}
+                                                            {% for city in cities %}
+                                                            <option id="selected-city" value="{{city.id}}">{{city.name}}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
                             <div class="form-group">
-                                <select id="country" name="country" class="form-control form-control-md text-success font-weight-bold">
+                                <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold" required>
                                     {% if customer_profile.country in countries %}
-                                        <option value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
+                                        <option id="selected-country" value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
                                     {% else %}
-                                        <option value="" disabled selected hidden>Select country</option>
+                                        <option id="selected-country" value="" disabled selected hidden>Select country</option>
                                     {% endif %}
 
                                     {% for country in countries %}
-                                        <option value="{{country.id}}">{{country.name}}</option>
+                                        <option id="selected-country" value="{{country.id}}">{{country.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                        <div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
                             <div class="form-group">
-                                <select id="state" name="region" class="form-control form-control-md text-warning font-weight-bold">
+                                <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold" required> 
                                     {% if customer_profile.region in regions %}
-                                        <option value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
+                                        <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
                                     {% else %}
-                                        <option value="" disabled selected hidden>Select state</option>
+                                        <option id="selected-region" value="" disabled selected hidden>Select state</option>
                                     {% endif %}
+                                    
                                     {% for region in regions %}
-                                        <option value="{{region.id}}">{{region.name}}</option>
+                                        <option id="selected-state" value="{{region.id}}">{{region.name}}</option>
                                     {% endfor %}
+                                
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4">
+                        <div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
                             <div class="form-group">
-                                <select id="city" name="city" class="form-control form-control-md  text-primary font-weight-bold">
-                                        <option value="" disabled selected hidden>Select city</option>
+                                <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold" required>
                                         {% if customer_profile.city in cities %}
-                                            <option value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
+                                            <option id="selected-cities" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
                                         {% else %}
-                                        <option value="" disabled selected hidden>Select city</option>
+                                            <option id="selected-cities" value="" disabled selected hidden>Select city</option>
                                         {% endif %}
                                         {% for city in cities %}
-                                        <option value="{{city.id}}">{{city.name}}</option>
+                                            <option id="selected-city" value="{{city.id}}">{{city.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
+                        </div-->
                     </div>
                     <!--Search bar row-->
                     <div class="row">
@@ -133,8 +210,8 @@
                     {% endfor %}
                 {% else %}
                     {% if keyword%}
-                    <div class="form-island bg-dark" style="padding: 2%;">
-                        <h6 class="text-light lead text-center" style="margin-bottom: 2%;">Nothing matched  "{{keyword}}"</h6>
+                    <div class="form-island bg-dark" id="search-error">
+                        <h6 class="text-light lead text-center">"{{keyword}}" service not found</h6>
                     </div>
                     {% else %}
                     <div class="row">
@@ -151,7 +228,7 @@
     </div>
     <!--Services-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
-        <div style="border: 1px solid grey; margin-bottom: 2%;">
+        <div class="side-contents" style="border: 1px solid grey; margin-bottom: 2%;">
             <div class="row" >
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                         <h5 class="bg-dark text-light text-weight-normal lead text-center">Services</h5>

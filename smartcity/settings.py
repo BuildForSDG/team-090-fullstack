@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'cities_light',
     'phonenumber_field',
     'bootstrap4',
-    'social_django'
+    'social_django',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'smartcity.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

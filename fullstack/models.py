@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from cities_light.models import City, Region, Country
+from cities_light.models import Region, Country
 from phonenumber_field.modelfields import PhoneNumberField
 from .my_currency import get_currencies_tuple
 
@@ -13,6 +13,23 @@ RATINGS = [
     ('Excellent', 'Excellent')
 ]
 # Create your models here.
+
+
+class MyCity(models.Model):
+    city = models.CharField(max_length=100)
+    city_ascii = models.CharField(max_length=50)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    country = models.CharField(max_length=50)
+    iso2 = models.CharField(max_length=10)
+    iso3 = models.CharField(max_length=10)
+    admin_name = models.CharField(max_length=50, null=True, blank=True)
+    capital = models.CharField(max_length=50, null=True, blank=True)
+    population = models.IntegerField(null=True, blank=True)
+    city_id = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.city}'
 
 
 class Category(models.Model):
@@ -57,7 +74,7 @@ class ServiceProvider(models.Model):
     year_of_establishement = models.DateField(default=timezone.now)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(MyCity, on_delete=models.CASCADE)
     supporting_document = models.FileField(upload_to='documents/', blank=True)
     document_type = models.ForeignKey(Document, on_delete=models.CASCADE,
                                       blank=True, null=True)
@@ -79,7 +96,7 @@ class CustomerProfile(models.Model):
     street_address = models.CharField(max_length=100)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city = models.ForeignKey(MyCity, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to='images/', blank=True)
 
     def __str__(self):
