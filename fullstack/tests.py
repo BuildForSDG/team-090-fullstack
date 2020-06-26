@@ -2,8 +2,8 @@ from django.test import TestCase
 from .models import (Service, Category, ServiceProvider,
                      CustomerProfile, Subscription,
                      Suspension, Document,
-                     RatingAndReview)
-from cities_light.models import MyCity, Country, Region
+                     RatingAndReview, MyCity)
+from cities_light.models import Country, Region
 from django.contrib.auth.models import User
 from django.utils import timezone
 import datetime
