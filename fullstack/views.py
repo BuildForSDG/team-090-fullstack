@@ -12,7 +12,6 @@ from django.contrib.auth import authenticate, logout, login
 from cities_light.models import Region, Country
 from django.utils import timezone
 from ipdata import ipdata
-from pprint import pprint
 from decouple import config
 
 # Create your views here.
@@ -24,16 +23,18 @@ def get_location():
     response = ip.lookup(fields=[
         'country_name', 'latitude',
         'flag', 'region', 'city', 'longitude'])
-    #pprint(response['country_name'])
     return response
 
 
 def clean_states(state):
     """Function to remove 'State' keyword in some states names."""
-    if 'state' or 'State' in state:
-        return state.split()[0].capitalize()
-    else:
+    if state is None:
         return state
+    else:
+        if 'state' or 'State' in state:
+            return state.split()[0].capitalize()
+        else:
+            return None
 
 
 def get_subscribed_services(user_id):
@@ -105,9 +106,9 @@ def get_states(request):
 def get_states_by_name(request):
     """get the countries, states and cities based a country.
     """
-
     country_name = request.GET.get('country', None)
     state_name = request.GET.get('state', None)
+    state_name = clean_states(state_name)
     country = Country.objects.get(name__iexact=country_name)
     countries = Country.objects.all().values()
     states = Region.objects.filter(country_id=country.id).values()
@@ -132,10 +133,11 @@ def get_cities(request):
 
 def home(request):
     """Returns context with coutries, regions and cities."""
-    get_location()
     template_name = 'fullstack/home.html'
     services = None
     categories = None
+    region = None
+    city = None
     customer_profile = None
     if request.user.is_authenticated:
         try:
@@ -143,14 +145,25 @@ def home(request):
               user_id=request.user.id)
         except CustomerProfile.DoesNotExist:
             customer_profile = None
+    location_info = get_location()
     country = Country.objects.all()
-    region = Region.objects.all()
-    city = MyCity.objects.all()
+    # get only regions and cities in the location country.
+    if 'city' and 'region' in location_info:
+        location_country = Country.objects.get(
+            name__iexact=location_info['country_name'])
+        region = Region.objects.filter(
+            country_id=location_country.id)
+        city = MyCity.objects.filter(
+            country=location_info['country_name'])
+    else:
+        region = Region.objects.all()
+        city = MyCity.objects.all()
     categories, services = get_services_and_categories()
     context = {'countries': country, 'regions': region,
                'cities': city, 'services_list': services,
                'categories': categories,
-               'customer_profile': customer_profile}
+               'customer_profile': customer_profile,
+               'location_info': location_info}
     return render(request, template_name, context)
 
 
