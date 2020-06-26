@@ -29,7 +29,14 @@ class ModelTestCase(TestCase):
                                        name='Borno')
 
         city = MyCity.objects.create(city='Maidugurui',
-                                   country=country)
+                                   city_ascii='Maiduguri',
+                                   admin_name='public',
+                                   capital='Borno',
+                                   iso2='NG',
+                                   iso3='NGN',
+                                   latitude=3.56,
+                                   longitude=4.56,
+                                   country=country.name)
 
         category = Category.objects.create(
                                            name='Fashion',
