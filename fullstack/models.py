@@ -17,14 +17,14 @@ RATINGS = [
 
 class MyCity(models.Model):
     city = models.CharField(max_length=100)
-    city_ascii = models.CharField(max_length=50)
+    city_ascii = models.CharField(max_length=100)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    country = models.CharField(max_length=50)
-    iso2 = models.CharField(max_length=10)
-    iso3 = models.CharField(max_length=10)
-    admin_name = models.CharField(max_length=50, null=True, blank=True)
-    capital = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=100)
+    iso2 = models.CharField(max_length=50)
+    iso3 = models.CharField(max_length=50)
+    admin_name = models.CharField(max_length=100, null=True, blank=True)
+    capital = models.CharField(max_length=100, null=True, blank=True)
     population = models.IntegerField(null=True, blank=True)
     city_id = models.IntegerField(null=True, blank=True)
 

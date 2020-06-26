@@ -11,8 +11,21 @@ from .forms import CustomerRegistration
 from django.contrib.auth import authenticate, logout, login
 from cities_light.models import Region, Country
 from django.utils import timezone
+from ipdata import ipdata
+from pprint import pprint
+from decouple import config
 
 # Create your views here.
+
+
+def get_location():
+    """Function to returns location data using IP."""
+    ip = ipdata.IPData(config('IPDATA_KEY'))
+    response = ip.lookup(fields=[
+        'country_name', 'latitude',
+        'flag', 'region', 'city', 'longitude'])
+    #pprint(response['country_name'])
+    return response
 
 
 def clean_states(state):
@@ -119,6 +132,7 @@ def get_cities(request):
 
 def home(request):
     """Returns context with coutries, regions and cities."""
+    get_location()
     template_name = 'fullstack/home.html'
     services = None
     categories = None
