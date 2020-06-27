@@ -166,14 +166,15 @@ def home(request):
         region = Region.objects.all()
         city = MyCity.objects.all()
     categories, services = get_services_and_categories()
-    context = {'countries': country, 'regions': region,
-                'cities': city, 'services_list': services,
-                'categories': categories,
-                'customer_profile': customer_profile,
-                'location_info': location_info,
-                'location_country':loc_country,
-                'location_region': loc_region,
-                'location_city': loc_city
+    context = {
+        'countries': country, 'regions': region,
+        'cities': city, 'services_list': services,
+        'categories': categories,
+        'customer_profile': customer_profile,
+        'location_info': location_info,
+        'location_country': loc_country,
+        'location_region': loc_region,
+        'location_city': loc_city
                }
     return render(request, template_name, context)
 
