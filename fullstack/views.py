@@ -78,8 +78,8 @@ def get_service_from_location(keyword, country_id, region_id, city_id):
                 country_id=country_id,
                 region_id=region_id,
                 city_id=city_id)
-    except CustomerProfile.DoesNotExist:
-        results = None
+    except ServiceProvider.DoesNotExist:
+        pass
     return results
 
 
@@ -146,6 +146,13 @@ def home(request):
         except CustomerProfile.DoesNotExist:
             customer_profile = None
     location_info = get_location()
+    # get entry for country,region and city of the location
+    loc_country = Country.objects.get(
+        name__iexact=location_info['country_name'])
+    loc_region = Region.objects.get(
+        name__iexact=location_info['region'])
+    loc_city = MyCity.objects.get(
+        city__iexact=location_info['city'])
     country = Country.objects.all()
     # get only regions and cities in the location country.
     if 'city' and 'region' in location_info:
@@ -160,10 +167,14 @@ def home(request):
         city = MyCity.objects.all()
     categories, services = get_services_and_categories()
     context = {'countries': country, 'regions': region,
-               'cities': city, 'services_list': services,
-               'categories': categories,
-               'customer_profile': customer_profile,
-               'location_info': location_info}
+                'cities': city, 'services_list': services,
+                'categories': categories,
+                'customer_profile': customer_profile,
+                'location_info': location_info,
+                'location_country':loc_country,
+                'location_region': loc_region,
+                'location_city': loc_city
+               }
     return render(request, template_name, context)
 
 
@@ -382,48 +393,18 @@ def logout_user(request):
     return redirect('fullstack:home')
 
 
-def search(request):
-    """Returns a service from search key-word."""
-    results = None
-    country_id = None
-    region_id = None
-    city_id = None
-    services_subscribed = None
-    keyword = None
-    customer_profile = None
-    template_name = 'fullstack/home.html'
-    if request.method == 'POST':
-        keyword = request.POST['keyword']
-        if 'city' in request.POST:
-            country_id = request.POST['country']
-            region_id = request.POST['region']
-            city_id = request.POST['city']
-        elif request.user.is_authenticated:
-            ids = get_country_region_city_ids_from_user(
-                    request.user.id)
-            if ids is not None:
-                country_id, region_id, city_id = ids
-            services_subscribed = get_subscribed_services(request.user.id)
-            # get user's profile
-            try:
-                customer_profile = CustomerProfile.objects.get(
-                  user_id=request.user.id)
-            except CustomerProfile.DoesNotExist:
-                customer_profile = None
-        if country_id and region_id and city_id:
-            results = get_service_from_location(
-                keyword, country_id, region_id, city_id)
-    country = Country.objects.all()
-    region = Region.objects.all()
-    city = MyCity.objects.all()
-    categories_list, services_list = get_services_and_categories()
-    context = {'services': results, 'countries': country,
-               'regions': region, 'cities': city,
-               'services_subscribed': services_subscribed,
-               'services_list': services_list,
-               'categories': categories_list,
-               'keyword': keyword, 'customer_profile': customer_profile}
-    return render(request, template_name, context)
+def keyword_search(request):
+    keyword = request.GET.get('keyword', None)
+    country_id = request.GET.get('country', None)
+    region_id = request.GET.get('region', None)
+    city_id = request.GET.get('city', None)
+    services = get_service_from_location(
+        keyword, country_id, region_id, city_id
+    )
+    data = {
+        'services': list(services.values())
+    }
+    return JsonResponse(data)
 
 
 def service_details(request, service_id):

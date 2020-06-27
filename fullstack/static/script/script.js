@@ -1,4 +1,41 @@
 $(document).ready(function(){
+// submit search form 
+$("#search-form").submit(function(){
+  var keyword = $("#search-input").val();
+  var country = $("#country").val();
+  var region =  $("#state").val();
+  var city = $("#city").val();
+  $.ajax(
+    {
+      url:"/ajax/keyword_search/",
+      data:{
+        "keyword": keyword,
+        "country": country,
+        "region": region,
+        "city": city
+      },
+      dataType: "json",
+      success: function(data){
+        if(data.services.length == 0){ // if service array is zero 
+            var $searchResult = $("#js-search-result");
+            ($searchResult).html("");
+            ($searchResult).append('<q>'+keyword+'</q>'+' not found');
+        }
+        else{
+          var $searchResult = $("#js-search-result");
+          ($searchResult).html("");
+          $.each(data.services, function(index){
+            ($searchResult).append(data.services[index].business_name);
+          });
+        }
+      },
+      error: function(data){
+        alert("Error");
+      },
+    }
+  );
+  return false;
+});
   // get states for the selected country 
   $("#country, #id_country").change(function(){
       var country = $(this).val();
