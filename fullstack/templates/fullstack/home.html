@@ -5,13 +5,12 @@
     <div class="header-bg text-center" style="padding: 2%; margin-bottom: 2%;">
         <h2 class=" text-center text-light"><strong>Search your current location or look up different one..</strong></h2>
         <i class="fa fa-map-marker text-warning">
-            <span class="text-success" id="mycity">{{location_info.city}}</span>
-            <span class="text-light" id="myregion">{{location_info.region}}</span>
+            <span class="text-success" id="mycity">{{location_info.city}}</span>/
+            <span class="text-light" id="myregion">{{location_info.region}}</span>/
             <span class="text-success" id="mycountry">{{location_info.country_name}}</span>
             <img src="{{location_info.flag}}" alt="Location failed">
         </i> 
         <button id="error-panel" class="btn btn-dark text-light custom-button" data-toggle="modal" data-target="#myModal">Change location</button>
-        
     </div>  
 {% endblock %}
 {% block nav-items %}
@@ -41,9 +40,8 @@
         <!--Search Form-->
         <div class="row" style="border-bottom: 0px solid rgb(153, 153, 168); margin: 0 15% 5% 15%; text-align: center;">
             <div class="col-xl-12 col-lg-12 col-sm-12">
-                <form action="{% url 'fullstack:search'%}" method="POST" class="form">
+                <form action="" method="POST" class="form" id="search-form">
                     {% csrf_token %}
-
                     <div class="row">
                         <!-- The Modal -->
 				        <div class="modal" id="myModal">
@@ -64,8 +62,8 @@
                                                         <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold">
                                                             {% if customer_profile.country in countries %}
                                                                 <option id="selected-country" value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
-                                                            {% elif location_info.country_name %}
-                                                                <option id="selected-country" value="" disabled selected hidden>{{location_info.country_name}}</option>
+                                                            {% elif location_country %}
+                                                                <option id="selected-country" value="{{location_country.id}}" selected hidden>{{location_country.name}}</option>
                                                             {% else %}
                                                                 <option id="selected-country" value="" disabled selected hidden>Select country</option>
                                                             {% endif %}
@@ -82,8 +80,8 @@
                                                         <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold"> 
                                                             {% if customer_profile.region in regions %}
                                                             <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
-                                                            {% elif location_info.region%}
-                                                            <option id="selected-region" value="" disabled selected hidden>{{location_info.region}}</option>
+                                                            {% elif location_region%}
+                                                            <option id="selected-region" value="{{location_region.id}}" selected hidden>{{location_region.name}}</option>
                                                             {% else %}
                                                             <option id="selected-region" value="" disabled selected hidden>Select state</option>
                                                             {% endif %}
@@ -97,11 +95,11 @@
                                                     <div class="form-group">
                                                         <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold">
                                                             {% if customer_profile.city in cities %}
-                                                            <option id="selected-cities" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
-                                                            {% elif location_info.city %}
-                                                            <option id="selected-cities" value="" disabled selected hidden>{{location_info.city}}</option>
+                                                            <option id="selected-city" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
+                                                            {% elif location_city %}
+                                                            <option id="selected-city" value="{{location_city.id}}" selected hidden>{{location_city.city}}</option>
                                                             {% else %}
-                                                            <option id="selected-cities" value="" disabled selected hidden>Select city</option>
+                                                            <option id="" value="" disabled selected hidden>Select city</option>
                                                             {% endif %}
                                                             {% for city in cities %}
                                                             <option id="selected-city" value="{{city.id}}">{{city.name}}</option>
@@ -120,57 +118,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!--div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
-                            <div class="form-group">
-                                <select id="country" name="country" class="form-control form-control-sm text-success font-weight-bold" required>
-                                    {% if customer_profile.country in countries %}
-                                        <option id="selected-country" value="{{customer_profile.country.id}}" disabled selected hidden>{{customer_profile.country.name}}</option>
-                                    {% else %}
-                                        <option id="selected-country" value="" disabled selected hidden>Select country</option>
-                                    {% endif %}
-
-                                    {% for country in countries %}
-                                        <option id="selected-country" value="{{country.id}}">{{country.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
-                            <div class="form-group">
-                                <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold" required> 
-                                    {% if customer_profile.region in regions %}
-                                        <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
-                                    {% else %}
-                                        <option id="selected-region" value="" disabled selected hidden>Select state</option>
-                                    {% endif %}
-                                    
-                                    {% for region in regions %}
-                                        <option id="selected-state" value="{{region.id}}">{{region.name}}</option>
-                                    {% endfor %}
-                                
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4" style="margin: 0;">
-                            <div class="form-group">
-                                <select id="city" name="city" class="form-control form-control-sm  text-primary font-weight-bold" required>
-                                        {% if customer_profile.city in cities %}
-                                            <option id="selected-cities" value="{{customer_profile.city.id}}" disabled selected hidden>{{customer_profile.city.name}}</option>
-                                        {% else %}
-                                            <option id="selected-cities" value="" disabled selected hidden>Select city</option>
-                                        {% endif %}
-                                        {% for city in cities %}
-                                            <option id="selected-city" value="{{city.id}}">{{city.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div-->
                     </div>
                     <!--Search bar row-->
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-sm-12">
                             <div class="form-group">
-                                <input class="form-control form-control-lg text-center" id="search-input" type="search" name="keyword" placeholder="Enter service or provider's name..">
+                                <input class="form-control form-control-lg text-center" id="search-input" type="search" autofocus name="keyword" placeholder="Enter service or provider's name..">
                             </div>
                         </div>
                     </div>
@@ -179,7 +132,8 @@
         </div> 
         <!--Search Results-->
         <div class="row">
-            <div class="col-xl-12 col-lg-12 col-sm-12" style="text-align: center; margin-bottom: 10%;">
+            <div class="col-xl-12 col-lg-12 col-sm-12" style="text-align: center; margin-bottom: 10%;" id="js-search-result">
+                <!--Show search result-->
                 {% if services %}
                 <h6 class="text-light lead text-center" style="margin-bottom: 2%;">Search result for "{{keyword}}"</h6>
                     {% for service in services %}
@@ -190,7 +144,6 @@
                                 <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
                                 <div class="card-body">
                                     <h6 class="card-title text-dark">{{service.business_name|title}}</h6>
-                                    <!--p class="card-text">{{service.description}}</p-->
                                     <hr>
                                     <li class="fa fa-map-marker"> {{service.street_address}}</li>
                                     <p class="text-warning">{{service.price}} {{service.currency}}</p>
@@ -204,7 +157,6 @@
                                 <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
                                 <div class="card-body">
                                     <h6 class="card-title text-dark">{{service.business_name|title}}</h6>
-                                    <!--p class="card-text">{{service.description}}</p-->
                                     <hr>
                                     <li class="fa fa-map-marker"> {{service.street_address}}</li>
                                     <p class="text-warning">{{service.price}} {{service.currency}}</p>
@@ -217,7 +169,7 @@
                 {% else %}
                     {% if keyword%}
                     <div class="form-island bg-dark" id="search-error">
-                        <h6 class="text-light lead text-center">"{{keyword}}" service not found</h6>
+                        <h6 class="text-light lead text-center" id="search-not-found">"{{keyword}}" service not found</h6>
                     </div>
                     {% else %}
                     <div class="row">
