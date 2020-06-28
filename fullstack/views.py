@@ -25,7 +25,7 @@ def get_location():
             'country_name', 'latitude',
             'flag', 'region', 'city', 'longitude'])
         return response
-    except:
+    except ConnectionError:
         return None
 
 
@@ -155,8 +155,8 @@ def home(request):
     location_info = get_location()
     country = Country.objects.all()
     if location_info:
-    # get entry for country,region and city in the location
-    # returned from ipdata API
+        # get entry for country,region and city in the location
+        # returned from ipdata API
         loc_country = Country.objects.get(
             name__iexact=location_info['country_name'])
         loc_region = Region.objects.get(
@@ -171,7 +171,7 @@ def home(request):
                 country_id=location_country.id)
             city = MyCity.objects.filter(
                 country=location_info['country_name'])
-    else: 
+    else:
         # get all regions and cities if location_info is None.
         region = Region.objects.all()
         city = MyCity.objects.all()
