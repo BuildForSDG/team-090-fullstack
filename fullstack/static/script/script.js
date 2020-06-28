@@ -1,4 +1,22 @@
 $(document).ready(function(){
+
+// if city, Region and Country are not detected show some texts
+var cityName = $("#mycity").html();
+if(cityName === ""){
+   $("#mycity").html("City");
+} 
+// for Region
+var regionName = $("#myregion").html();
+if(regionName === ""){
+   $("#myregion").html("Region");
+}
+
+// for Country
+var countryName = $("#mycountry").html();
+if(countryName === ""){
+   $("#mycountry").html("Country");
+}
+
 // submit search form 
 $("#search-form").submit(function(){
   var keyword = $("#search-input").val();

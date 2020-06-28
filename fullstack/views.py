@@ -19,11 +19,14 @@ from decouple import config
 
 def get_location():
     """Function to returns location data using IP."""
-    ip = ipdata.IPData(config('IPDATA_KEY'))
-    response = ip.lookup(fields=[
-        'country_name', 'latitude',
-        'flag', 'region', 'city', 'longitude'])
-    return response
+    try:
+        ip = ipdata.IPData(config('IPDATA_KEY'))
+        response = ip.lookup(fields=[
+            'country_name', 'latitude',
+            'flag', 'region', 'city', 'longitude'])
+        return response
+    except:
+        return None
 
 
 def clean_states(state):
@@ -138,31 +141,38 @@ def home(request):
     categories = None
     region = None
     city = None
+    location_info = None
+    loc_country = None
+    loc_region = None
+    loc_city = None
     customer_profile = None
     if request.user.is_authenticated:
         try:
             customer_profile = CustomerProfile.objects.get(
               user_id=request.user.id)
         except CustomerProfile.DoesNotExist:
-            customer_profile = None
+            pass
     location_info = get_location()
-    # get entry for country,region and city of the location
-    loc_country = Country.objects.get(
-        name__iexact=location_info['country_name'])
-    loc_region = Region.objects.get(
-        name__iexact=location_info['region'])
-    loc_city = MyCity.objects.get(
-        city__iexact=location_info['city'])
     country = Country.objects.all()
-    # get only regions and cities in the location country.
-    if 'city' and 'region' in location_info:
-        location_country = Country.objects.get(
+    if location_info:
+    # get entry for country,region and city in the location
+    # returned from ipdata API
+        loc_country = Country.objects.get(
             name__iexact=location_info['country_name'])
-        region = Region.objects.filter(
-            country_id=location_country.id)
-        city = MyCity.objects.filter(
-            country=location_info['country_name'])
-    else:
+        loc_region = Region.objects.get(
+            name__iexact=location_info['region'])
+        loc_city = MyCity.objects.get(
+            city__iexact=location_info['city'])
+        # get only regions and cities in the location country.
+        if 'city' and 'region' in location_info:
+            location_country = Country.objects.get(
+                name__iexact=location_info['country_name'])
+            region = Region.objects.filter(
+                country_id=location_country.id)
+            city = MyCity.objects.filter(
+                country=location_info['country_name'])
+    else: 
+        # get all regions and cities if location_info is None.
         region = Region.objects.all()
         city = MyCity.objects.all()
     categories, services = get_services_and_categories()
