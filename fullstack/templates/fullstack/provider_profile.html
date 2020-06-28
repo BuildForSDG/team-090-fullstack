@@ -31,9 +31,9 @@
                     {% if service_provided.currency %}
                         <p class="text-warning lead">Offered @ {{service_provided.price}} {{service_provided.currency}}</p>
                     {% endif %}
-                    <p><i class="fa fa-map-marker" aria-hidden="true"> {{service_provided.street_address}}</i></p>
+                    <p class=" lead"><i class="fa fa-map-marker" aria-hidden="true"> {{service_provided.street_address}}</i></p>
                     <p><i class="fa fa-phone" aria-hidden="true"> {{service_provided.phone}}</i></p>
-                    <p><i class="fa fa-email" aria-hidden="true"> {{user.email}}</i></p>    
+                    <p><i class="fa fa-envelope" aria-hidden="true"> {{user.email}}</i></p>    
                 </div> 
                 <p class="text-success">
                     <i class="fa fa-edit" aria-hidden="true">
@@ -51,88 +51,96 @@
         </div>
         <!--Activites statistics-->
         <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
-            <h4 class="text-center text-dark bg-warning lead">Statistics</h4>
+            <h4 class="text-center text-dark bg-warning"><strong>Analysis</strong></h4>
         </div>
         <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="text-primary lead" style="margin-top: 5%;">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-sm-12"> 
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Customer joining rate(CJT)</h6>
-                                <p class="card-text text-warning">{{joining_rate}}</p>     
-                                <p class="card-text text-primary">persons/month</p>
+                <div class="text-primary lead" style="margin-top: 5%;">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-sm-12"> 
+                           <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Customer joining rate(CJT)</h6>
+                                    <p class="card-text text-light">{{joining_rate}}</p>     
+                                    <p class="card-text text-light">persons/month</p>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Customer leaving rate (CLR)</h6>
+                                    <p class="card-text text-light">{{leaving_rate}}</p>     
+                                    <p class="card-text text-light">persons/month</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-sm-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-danger">Customer leaving rate (CLR)</h6>
-                                <p class="card-text text-warning">{{leaving_rate}}</p>     
-                                <p class="card-text text-primary">persons/month</p>
-                            </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Subscribed customers</h6>
+                                    <p class="card-text text-light">
+                                        <span class="badge badge-pill badge-success">{{subscription|length}}</span>
+                                    </p>     
+                                </div>
+                            </div>   
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-sm-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Subscribed customers</h6>
-                                <p class="card-text text-warning">{{subscriptions|length}}</p>     
-                            </div>
-                        </div>   
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Transaction statistics-->
-        <div class="col-xl-12 col-lg-12 col-sm-12">
-            <div class="text-primary lead" style="margin-top: 5%;">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-sm-12"> 
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Customers' rating and reviews</h6>
-                                <p class="card-text text-warning">{{ratings|length}}</p>     
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-sm-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Customers' complain</h6>
-                                 <p class="card-text text-warning">{{complain|length}}</p>     
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-sm-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h6 class="card-title text-success">Customers' suggestions</h6>
-                                <p class="card-text text-warning">{{suggestions|length}}</p>     
-                            </div>
-                        </div>       
+    
+            <!--Transaction statistics-->
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                <div class="text-primary lead" style="margin-top: 5%;">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-sm-12"> 
+                            <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Customers' rating and reviews</h6>
+                                    <p class="card-text text-light">
+                                        <span class="badge badge-pill badge-success">{{ratings|length}}</span>   
+                                    </p>     
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Customers' complain</h6>
+                                     <p class="card-text text-light">
+                                        <span class="badge badge-pill badge-success">{{complain|length}}</span>
+                                     </p>     
+                                </div>
+                            </div>  
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="card bg-dark">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title text-light">Customers' suggestions</h6>
+                                    <p class="card-text text-light">
+                                        <span class="badge badge-pill badge-success">{{suggestions|length}}</span>
+                                    </p>     
+                                </div>
+                            </div>       
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
+            </div>      
         <!--Bussiness status-->
         <div class="col-xl-12 col-lg-12 col-sm-12">
             <div class="text-primary lead text-center" style="margin-top: 5%;">
-            <h4 class="text-center text-dark bg-warning lead">Subscribed Customers</h4>
+                <h4 class="text-center text-dark bg-warning"><strong>Subscribed Customers</strong></h4>
                 <div class="row">
                 {% if subscriptions %}
                     {% for subscription in subscriptions %}
                     <div class="col-xl-3 col-lg-3 col-sm-6">
-                        <div class="card">
+                        <div class="card bg-dark">
                             <div class="card-body">
                                <img src="{{subscription.customer.picture.url}}" class="rounded-circle" style="width:50%;">
-                                <h4 class="card-tile">{{subscription.customer.user.username}}</h4>
+                                <h4 class="card-tile font-weight-bold">{{subscription.customer.user.username}}</h4>
                                 <p class="card-text">
-                                    <li class="fa fa-phone text-center text-warning" aria-hidden="true" style="font-size: small;">
+                                    <li class="fa fa-phone text-center text-light" aria-hidden="true" style="font-size: small;">
                                         {{subscription.customer.phone_number}}
-                                    </li>
+                                    </li><br>
                                     <li class="fa fa-map-marker text-info" aria-hidden="true" style="font-size: medium;">
                                         {{subscription.customer.street_address}}
                                     </li>
@@ -153,10 +161,10 @@
 
         <!--Rating and reviews submited-->
         <div class="col-xl-12 col-lg-12 col-sm-" style="margin-top: 5%;">
-            <h4 class="text-center text-dark bg-warning lead">Customers' ratings and reviews</h4>
+            <h4 class="text-center text-dark bg-warning"><strong>Customers' ratings and reviews</strong></h4>
         </div>
-        <div class="row" style="margin: 10%;">
-            <div class="col-xl-12 col-lg-12 col-sm-12">
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="row bg-dark" style="margin: 0% 0% 5% 0%;">
             {% if ratings %}
                 {% for rating in ratings %}
                 <div class="col-xl-12 col-lg-12 col-sm-12">
