@@ -22,10 +22,26 @@ $("#search-form").submit(function(){
             ($searchResult).append('<q>'+keyword+'</q>'+' not found');
         }
         else{
+          $("#search-form").append("<span class='badge badge-pill badge-success'>"+data.services.length+' Results'+"</span> ");
           var $searchResult = $("#js-search-result");
           ($searchResult).html("");
           $.each(data.services, function(index){
-            ($searchResult).append(data.services[index].business_name);
+            // create service items
+            var $cardTitle = $("<h6 class='card-title text-dark font-weight-bold'></h6>").html(data.services[index].business_name);
+            $cardTitle.append("<hr>");
+            var $address = $("<li class='fa fa-map-marker text-info'></li>").text(" "+data.services[index].street_address);
+            var $price = $("<p class='text-warning'></p>");
+            $price.text(data.services[index].price+" "+data.services[index].currency);
+            var $detailButton = $('<a class="btn btn-primary card-link stretched-link" href="/servicedetails/'+data.services[index].id+'/'+'">More...</a>');
+            var $cardBody = $("<div class='card-body'></div");
+            var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6'></div>");
+            ($cardTitle).append($address).append($price).append($detailButton);
+            $cardBody.html($cardTitle);
+            var $card = $("<div class='card'></div>");
+            var $cardImage = $("<img src='"+"/media/"+data.services[index].picture+"' class='card-img-top rounded-circle'>");
+            $card.html($cardImage).append($cardBody);
+            $col.html($card);
+            ($searchResult).html($col);
           });
         }
       },

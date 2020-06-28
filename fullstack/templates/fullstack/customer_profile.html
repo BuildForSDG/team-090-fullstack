@@ -51,7 +51,7 @@
                     {% if services_subscribed %}
                         <div class="row" style="margin-bottom: 5%;">
                         {% for service_subscribed in services_subscribed %}
-                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="col-xl-4 col-lg-4 col-sm-6">
                                 <div class="card">
                                     <img src="{{service_subscribed.service_provider.picture.url}}" class="card-img-top rounded-circle">
                                     <div class="card-body">
@@ -87,7 +87,7 @@
                     {% if services_provided %}
                     <div class="row" style="margin-bottom: 5%;">
                     {% for service_provided in services_provided %}
-                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                        <div class="col-xl-4 col-lg-4 col-sm-6">
                             <div class="card">
                                 <img src="{{service_provided.picture.url}}" class="card-img-top rounded-circle">
                                 <div class="card-body">
