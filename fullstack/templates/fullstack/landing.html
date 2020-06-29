@@ -2,23 +2,11 @@
 {% load bootstrap4 %}
 {% load static %}
 {% block header %}
-    <!--div class="jumbotron bg-light" style="padding: 0; margin: 0;">
-        <h4 class="text-center text-warning">Loking for or wanting to provide services in a specific location?</h4>
-    </div>
-    <div style="background-image: url('{%static "images/wallpaper4.jpg" %}')">
-        <div> 
-         <h4 class="text-center text-warning">Looking for or wanting to provide services in a specific location?</h4>
-         <h2 class="text-center text-light">
-             <span class="text-danger">Welcome</span> to <span class="text-success">SmartCities</span>
-        </h2>
-        </div>
-        <hr>
-    </div-->
 {% endblock %}
 {% block nav-items %}
 <li class="nav-item">
         <a class="nav-link text-decoration-none" href="{% url 'fullstack:home' %}">
-            <div class="btn btn-dark">Service</div>
+            <div class="btn btn-dark">Services</div>
         </a>
     </li>
 {% endblock %}
@@ -28,29 +16,20 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-sm-12">
             <div style="margin: 5% 15% 5% 15%; border-radius: 0%; padding: 3% 0 0 0;" class="text-light text-center  l-page">
-                <h3 class=""><strong>You are in need of a service and you are not sure who can provide it better?</strong></h3>
+                <h3 class=""><strong>Are you in need of a service and not sure who can  better provide it?</strong></h3>
                 <div style="text-align: center;">
                     <div class="btn btn-dark text-light custom-button">
-                        <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Search for a service provider here...</a>
+                        <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Search for a service provider</a>
                     </div>
                 </div><br>
                 <h1 style="text-align: center;">OR</h1><br>
                 <div class="">
-                    <h3 class=""><strong>want to provide a service required in a your location?</strong> </h3>
+                    <h3 class=""><strong>You wish to render a service needed in a your location?</strong> </h3>
                     <button class="btn btn-dark custom-button">
-                        <a class="text-decoration-none text-light lead" href="{% url 'fullstack:registration' %}">Create service profile ...</a>
+                        <a class="text-decoration-none text-light lead" href="{% url 'fullstack:registration' %}">Create service profile</a>
                     </button>
                 </div>
                 <br><br>
-                <!--h4 class="text-info">What problem do we solve?</h4>
-                <div class="">Our service addresses these key issues:
-                    <ul style="list-style:none; font-size: large;" >
-                        <li>Accessiblity</li>
-                        <li>Service quality</li>
-                        <li>Service provider and customer relationship</li>
-                        <li>Regulation of services</li>
-                    </ul>
-                </div-->
             </div>
             </div>
         </div>

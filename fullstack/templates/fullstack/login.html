@@ -22,32 +22,33 @@
                 {%csrf_token%}
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter username">
+                    <input class="form-control form-control-lg" type="text" name="username" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control form-control-lg" type="password" name="password"  placeholder="Enter password">
+                    <input class="form-control form-control-lg" type="password" name="password"  placeholder="Enter your password">
                 </div>
                 <div class="form-group text-danger">
                     {% for message in messages %}
                         {{message}}
                     {%endfor%}
                 </div>
-                    <button class="btn btn-primary custom-button" type="submit">Send</button>
+                    <button class="btn btn-primary custom-button" type="submit">Sign in</button>
             </form>
         </div>
         <br>
         <h1 class="text-center text-weight-bold">OR</h1>
         <div class="jumbotron bg-dark text-center text-light form-island" style="margin: 1% 0 1% 0;padding: 0 0 1% 0;">
-            <h4 class="text-center text-weight-bold">With<br></h4>
+            <h4 class="text-center text-weight-bold">Sign in with<br></h4>
                 <h6><li class="fa fa-facebook-square fa-lg " aria-hidden="True"> Facebook</li></h6>
             <div class="btn btn-primary custom-button">
-                <a class="lead text-light text-decoration-none" href="{% url 'social:begin' 'facebook' %}">Login</a>
+                <a class="lead text-light text-decoration-none" href="{% url 'social:begin' 'facebook' %}">FB Sign in</a>
             </div> 
         </div>
         <hr style="margin: 2%;">
         <p class="text-light">
-            <div class="btn btn-primary custom-button">
+            <div class="btn btn-primary custom-button" style="margin: 1% 0 1% 0;padding: 0 0 1% 0;">
+            Have no account yet?
                 <a class="text-decoration-none text-warning" href="{% url 'fullstack:registration' %}">Sign up</a> 
             </div>
         </p>
