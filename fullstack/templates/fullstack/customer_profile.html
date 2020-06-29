@@ -26,13 +26,13 @@
                 {% else %}
                     <img class="rounded-circle" src="{% static 'images/avatar.jpg' %}" alt="">
                 {% endif %}
-                <h2>{{user.username}}</h2>
-                <div class="text-normal lead" style="margin: 5%;padding-bottom: 5%;">
+                <h2 class="text-info"><strong>{{user.username}}</strong></h2>
+                <div class="" style="margin: 5%;padding-bottom: 5%;">
                 {% if user_profile %}
-                    <p><i class="fa fa-map-marker" aria-hidden="true"> {{user_profile.street_address}}</i></p>
-                    <p><i class="fa fa-phone" aria-hidden="true"> {{user_profile.phone_number}}</i></p>
+                    <p><i class="fa fa-map-marker lead" aria-hidden="true"> {{user_profile.street_address}}</i></p>
+                    <p><i class="fa fa-phone lead" aria-hidden="true"> {{user_profile.phone_number}}</i></p>
                 {% endif %}
-                    <p><i class="fa fa-email" aria-hidden="true"> {{user.email}}</i></p>
+                    <p><i class="fa fa-envelope lead" aria-hidden="true"> {{user.email}}</i></p>
                 </div> 
                 <p class="text-success">
                     <i class="fa fa-edit" aria-hidden="true">
@@ -45,8 +45,7 @@
             <div class="text-primary text-center" style="margin-top: 5%;padding-bottom: 5%;">
                     <!--Services subscribed by customer-->
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <h5 class="text-normal lead text-center bold bg-warning">Subscribed services</h5>
-            
+                    <h5 class="text-normal text-center bold bg-warning"><strong>Subscribed services</strong></h5>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     {% if services_subscribed %}
                         <div class="row" style="margin-bottom: 5%;">
@@ -60,18 +59,21 @@
                                         <hr>
                                         <li class="fa fa-map-marker"> {{service_subscribed.service_provider.street_address}}</li>
                                         <p class="text-warning">{{service_subscribed.service_provider.price}} {{service_subscribed.service_provider.currency}}</p>
-                                        <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service_subscribed.id %}">Details</a>
+                                        <a class="btn btn-primary card-link custom-button" href="{% url 'fullstack:service_details' service_subscribed.service_provider_id %}">Details</a>
+                                    </div>
+                                    <div class="btn btn-dark custom-button">
+                                        <a class="text-decoration-none lead text-light" href="{% url 'fullstack:unsubscribe' service_subscribed.service_provider_id %}">Unsubscribe</a>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
                         </div>
                     {% else %}
-                        <p>You have not subscribed to any service</p>
+                        <p class="bg-dark text-light">You have not subscribed to any service</p>
                     {% endif %}
                     </div>
                     <!--Subscribe to a service-->
-                    <div class="btn btn-primary text-light custom-button" style="margin-bottom: 5%;">
+                    <div class="btn btn-dark text-light custom-button" style="margin-bottom: 5%;">
                         <a class="text-decoration-none text-light lead" href="{% url 'fullstack:home' %}">Subscribe to a service</a>
                     </div>
                 </div>
@@ -81,7 +83,7 @@
             <div class="text-primary text-center" style="margin-bottom: 5%;padding-bottom: 5%;" >
                     <!--Services offered -->
                     <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <h5 class="text-normal lead text-center bold bg-warning">Services provided</h5>
+                        <h5 class="text-normal text-center bg-warning"><strong>Services provided</strong></h5>
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     {% if services_provided %}
@@ -103,12 +105,12 @@
                     {% endfor %}
                     </div>
                     {% else %}
-                        <p>You are not providing any service</p>
+                        <p class="bg-dark text-light">You are not providing any service</p>
                     {% endif %}
                     </div>
                     <div class="col-xl-12 col-lg-12 col-sm-12">
                     <!--New service link-->
-                        <div class="btn btn-primary text-light custom-button" style="margin-bottom: 5%;">
+                        <div class="btn btn-dark text-light custom-button" style="margin-bottom: 5%;">
                             <a class="text-decoration-none text-light lead" href="{% url 'fullstack:create_provider_p' %}">Provide a service</a>
                         </div>
                     </div>

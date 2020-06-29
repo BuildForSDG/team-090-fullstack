@@ -59,7 +59,7 @@ body {
 .form-island {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 1);
 }
-#search-input, #country, #city, #state, #error-panel, .custom-button {
+#search-input, #country, #city, #state, #error-panel, .custom-button, #alert{
   border-radius: 2em 2em 2em 2em;
 }
 
