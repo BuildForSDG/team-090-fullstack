@@ -19,14 +19,15 @@ from decouple import config
 
 def get_location():
     """Function to returns location data using IP."""
+    response = None
     try:
         ip = ipdata.IPData(config('IPDATA_KEY'))
         response = ip.lookup(fields=[
             'country_name', 'latitude',
             'flag', 'region', 'city', 'longitude'])
-        return response
     except ConnectionError:
-        return None
+        pass
+    return response
 
 
 def clean_states(state):
@@ -152,17 +153,24 @@ def home(request):
               user_id=request.user.id)
         except CustomerProfile.DoesNotExist:
             pass
-    location_info = get_location()
+    try:
+        location_info = get_location()
+    except ConnectionError:
+        pass
     country = Country.objects.all()
     if location_info:
         # get entry for country,region and city in the location
         # returned from ipdata API
-        loc_country = Country.objects.get(
-            name__iexact=location_info['country_name'])
-        loc_region = Region.objects.get(
-            name__iexact=location_info['region'])
-        loc_city = MyCity.objects.get(
-            city__iexact=location_info['city'])
+        try:
+            loc_country = Country.objects.get(
+                name__iexact=location_info['country_name'])
+            loc_region = Region.objects.get(
+                name__iexact=clean_states(location_info['region']))
+            loc_city = MyCity.objects.get(
+                city__iexact=location_info['city'])
+        except (Country.DoesNotExist, 
+                Region.DoesNotExist, MyCity.DoesNotExist):
+                pass
         # get only regions and cities in the location country.
         if 'city' and 'region' in location_info:
             location_country = Country.objects.get(
@@ -463,3 +471,16 @@ def subscribe(request, service_id):
                 date=timezone.now())
         return redirect('fullstack:customer_profile')
     return render(request, 'fullstack/profile_error.html')
+
+
+def unsubscribe(request, service_id):
+    """Function to unsubcribe a customer from a service"""
+    customer = None
+    try:
+        customer = CustomerProfile.objects.get(user_id=request.user.id)
+        Subscription.objects.get(
+            customer_id=customer.id, service_provider_id=service_id).delete()
+    except (CustomerProfile.DoesNotExist, Subscription.DoesNotExist):
+        pass
+    return redirect('fullstack:customer_profile')
+    

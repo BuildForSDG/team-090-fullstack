@@ -23,51 +23,68 @@ $("#search-form").submit(function(){
   var country = $("#country").val();
   var region =  $("#state").val();
   var city = $("#city").val();
-  $.ajax(
-    {
-      url:"/ajax/keyword_search/",
-      data:{
-        "keyword": keyword,
-        "country": country,
-        "region": region,
-        "city": city
-      },
-      dataType: "json",
-      success: function(data){
-        if(data.services.length == 0){ // if service array is zero 
+  if(keyword === ""){
+    $("#alert").attr("class","alert alert-danger text-info").show().text("Enter a keyword").delay(700).hide(400);
+  }
+  if(country === ""){
+      $("#alert").attr("class","alert alert-danger text-info").show().text("Country not selected").delay(700).hide(400);
+  }
+  if(region === ""){
+      $("#alert").attr("class","alert alert-danger text-info").show().text("Region not selected").delay(700).hide(400);
+  }
+  if(city === ""){
+    $("#alert").attr("class","alert alert-danger text-info").show().text("City not selected").delay(700).hide(400);
+  }
+  else if(city !=="" && region !=="" && country !=="" && keyword !==""){
+    $.ajax(
+      {
+        url:"/ajax/keyword_search/",
+        data:{
+          "keyword": keyword,
+          "country": country,
+          "region": region,
+          "city": city
+        },
+        dataType: "json",
+        success: function(data){
+          $("#search-result-size").html(" ");
+          if(data.services.length == 0){ // if service array is zero 
+              var $searchResult = $("#js-search-result");
+              ($searchResult).html("");
+              ($searchResult).append('<q>'+keyword+'</q>'+' not found');
+          }
+          else{
+            $("#search-result-size").html("<span class='badge badge-pill badge-success'>"+data.services.length+"</span> ").append(" Results");
             var $searchResult = $("#js-search-result");
             ($searchResult).html("");
-            ($searchResult).append('<q>'+keyword+'</q>'+' not found');
-        }
-        else{
-          $("#search-form").append("<span class='badge badge-pill badge-success'>"+data.services.length+' Results'+"</span> ");
-          var $searchResult = $("#js-search-result");
-          ($searchResult).html("");
-          $.each(data.services, function(index){
-            // create service items
-            var $cardTitle = $("<h6 class='card-title text-dark font-weight-bold'></h6>").html(data.services[index].business_name);
-            $cardTitle.append("<hr>");
-            var $address = $("<li class='fa fa-map-marker text-info'></li>").text(" "+data.services[index].street_address);
-            var $price = $("<p class='text-warning'></p>");
-            $price.text(data.services[index].price+" "+data.services[index].currency);
-            var $detailButton = $('<a class="btn btn-primary card-link stretched-link" href="/servicedetails/'+data.services[index].id+'/'+'">More...</a>');
-            var $cardBody = $("<div class='card-body'></div");
-            var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6'></div>");
-            ($cardTitle).append($address).append($price).append($detailButton);
-            $cardBody.html($cardTitle);
-            var $card = $("<div class='card'></div>");
-            var $cardImage = $("<img src='"+"/media/"+data.services[index].picture+"' class='card-img-top rounded-circle'>");
-            $card.html($cardImage).append($cardBody);
-            $col.html($card);
-            ($searchResult).html($col);
-          });
-        }
-      },
-      error: function(data){
-        alert("Error");
-      },
-    }
-  );
+            $.each(data.services, function(index){
+              // create service items
+              var $cardTitle = $("<h6 class='card-title text-dark font-weight-bold'></h6>").html(data.services[index].business_name);
+              $cardTitle.append("<hr>");
+              var $address = $("<li class='fa fa-map-marker text-info'></li>").text(" "+data.services[index].street_address);
+              var $price = $("<p class='text-warning'></p>");
+              $price.text(data.services[index].price+" "+data.services[index].currency);
+              var $detailButton = $('<a class="btn btn-primary card-link stretched-link" href="/servicedetails/'+data.services[index].id+'/'+'">More...</a>');
+              var $cardBody = $("<div class='card-body'></div");
+              var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6'></div>");
+              ($cardTitle).append($address).append($price).append($detailButton);
+              $cardBody.html($cardTitle);
+              var $card = $("<div class='card'></div>");
+              var $cardImage = $("<img src='"+"/media/"+data.services[index].picture+"' class='card-img-top rounded-circle'>");
+              $card.html($cardImage).append($cardBody);
+              $col.html($card);
+              ($searchResult).html($col);
+            });
+          }
+        },
+        error: function(data){
+          alert("Error");
+        },
+      }
+    );
+
+  }
+  
   return false;
 });
   // get states for the selected country 

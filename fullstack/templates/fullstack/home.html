@@ -26,7 +26,9 @@
         <div class="side-contents" style="border: 1px solid grey; margin-bottom: 2%;">
             <div class="row" >
                 <div class="col-xl-12 col-lg-12 col-sm-12">
-                    <h4 class="bg-dark text-light text-weight-normal lead text-center">Categories</h4>
+                    <h4 class="bg-dark text-light text-weight-normal lead text-center">Categories
+                        <span class="badge badge-pill badge-success">{{categories|length}}</span>
+                    </h4>
                     <hr style="border: 2px solid burlywood;">
                     {% for category in categories %}
                         <p class="text-center lead text-warning" style="margin:0;">{{category.name|title}}</p>
@@ -39,6 +41,11 @@
     <div class="col-xl-8 col-lg-8 col-sm-12" style="border: 0px solid white;border-top: 0; margin-bottom: 1%;">
         <!--Search Form-->
         <div class="row" style="border-bottom: 0px solid rgb(153, 153, 168); margin: 0 15% 5% 15%; text-align: center;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="alert">
+
+                </div>
+            </div>
             <div class="col-xl-12 col-lg-12 col-sm-12">
                 <form action="" method="POST" class="form" id="search-form">
                     {% csrf_token %}
@@ -130,6 +137,11 @@
                 </form>
             </div>
         </div> 
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+                 <div id="search-result-size" class="text-center"></div>
+            </div>
+        </div>
         <!--Search Results-->
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-sm-12" style="text-align: center; margin-bottom: 10%;" id="js-search-result">
@@ -185,7 +197,9 @@
         <div class="side-contents" style="border: 1px solid grey; margin-bottom: 2%;">
             <div class="row" >
                     <div class="col-xl-12 col-lg-12 col-sm-12">
-                        <h5 class="bg-dark text-light text-weight-normal lead text-center">Services</h5>
+                        <h5 class="bg-dark text-light text-weight-normal lead text-center">Services
+                            <span class="badge badge-pill badge-success">{{services_list|length}}</span>
+                        </h5>
                         <hr style="border: 2px solid burlywood;">
                         {% for service in services_list %}
                             <p class="text-center lead text-warning" style="margin:0">{{service.name|title}}</p><hr>
