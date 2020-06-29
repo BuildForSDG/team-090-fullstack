@@ -168,9 +168,9 @@ def home(request):
                 name__iexact=clean_states(location_info['region']))
             loc_city = MyCity.objects.get(
                 city__iexact=location_info['city'])
-        except (Country.DoesNotExist, 
+        except (Country.DoesNotExist,
                 Region.DoesNotExist, MyCity.DoesNotExist):
-                pass
+            pass
         # get only regions and cities in the location country.
         if 'city' and 'region' in location_info:
             location_country = Country.objects.get(
@@ -483,4 +483,3 @@ def unsubscribe(request, service_id):
     except (CustomerProfile.DoesNotExist, Subscription.DoesNotExist):
         pass
     return redirect('fullstack:customer_profile')
-    
