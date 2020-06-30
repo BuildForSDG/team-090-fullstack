@@ -37,9 +37,10 @@ urlpatterns = [
          name='get_states_by_name'),
      path('ajax/keyword_search/', views.keyword_search, name='keyword_search')
 ]
-
+'''
 if settings.DEBUG:
      urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)
      urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+'''
