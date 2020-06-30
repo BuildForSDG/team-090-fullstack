@@ -78,7 +78,7 @@ $("#search-form").submit(function(){
           }
         },
         error: function(data){
-          alert("Error");
+          $("#alert").attr("class","alert alert-danger text-info").show().text("Unknown Error occured.").delay(700).hide(400);
         },
       }
     );
