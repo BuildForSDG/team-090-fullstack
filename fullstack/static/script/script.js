@@ -70,7 +70,7 @@ $("#search-form").submit(function(){
               ($cardTitle).append($address).append($price).append($detailButton);
               $cardBody.html($cardTitle);
               var $card = $("<div class='card'></div>");
-              var $cardImage = $("<img src='"+"/media/"+data.services[index].picture+"' class='card-img-top rounded-circle'>");
+              var $cardImage = $("<img src='"+"https://smartcity090.s3.amazonaws.com/media/"+data.services[index].picture+"' class='card-img-top rounded-circle' alt='photo'>");
               $card.html($cardImage).append($cardBody);
               $col.html($card);
               ($searchResult).html($col);
@@ -135,65 +135,12 @@ $("#state, #id_region").change(function(){
     }
   );
 });
-/*
-function myLocation(){
-      $.get("https://api.ipdata.co?api-key=test", function(response) {
-      $("#mycity").append(response.city);
-      $("#myregion").append(response.region);
-      $("#mycountry").append(response.country_name);
-      //send ajax request
-       
-        $.ajax(
-          {
-            url:"/ajax/states/name/",
-            data:{
-              "country":response.country_name,
-              "state":response.region,
-              "city":response.city,
-            },
-            dataType: "json",
-            success: function(data){
-              $("#country").html("");
-              for(var i = 0; i < data.countries.length; i++){
-                if(data.countries[i]["name"] === response.country_name){
-                  $("#country").append('<option id="selected-country" value="'+ data.countries[i]['id'] +'" disabled selected hidden>'+ data.countries[i]['name'] +'</option>');
-                }
-                $("#country").append('<option id="selected-country" value="'+ data.countries[i]['id'] +'">'+ data.countries[i]['name'] +'</option>');
-              }
-              // update state list
-              $("#state").html("");
-              for(var i = 0; i < data.regions.length; i++){
-                if(data.regions[i]["name"] === response.region){
-                  $("#state").append('<option id="selected-state" value="'+ data.regions[i]['id'] +'" disabled selected hidden>'+ data.regions[i]['name'] +'</option>');
-                }
-                $("#state").append('<option id="selected-state" value="'+ data.regions[i]['id'] +'">'+ data.regions[i]['name'] +'</option>');
-              }
-              //update city list
-              $("#city").html("");
-              for(var i = 0; i < data.cities.length; i++){
-                if(data.cities[i]["city"] === response.city){
-                  $("#city").append('<option id="selected-city" value="'+ data.cities[i]['id'] +'" disabled selected hidden>'+ data.cities[i]['city'] +'</option>');
-                }
-                $("#city").append('<option id="selected-city" value="'+ data.cities[i]['id'] +'">'+ data.cities[i]['city'] +'</option>');
-              }
-            }, 
-          }
-        );
-
-      var country = $("#mycountry").text();
-      var errorPanel = $("#error-panel");
-
-    }, "jsonp");
-  }
-  */
-//myLocation();
   var myLatitude = 0;
   var myLongitude = 0;
   function showPosition(position) {
     myLatitude = position.coords.latitude;
     myLongitude = position.coords.longitude; 
   }
-  //var x = document.getElementById("error");
   var x = $("#error");
   function getLocation() {
       if (navigator.geolocation) {
@@ -222,20 +169,17 @@ function myLocation(){
       }
     }
   getLocation();
-  /*
   if(myLatitude === 0 ){
       myLatitude = 11.83537;
       myLongitude = 13.15166;
   }
-  */
-  /*mapboxgl.accessToken = "pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg";
+  mapboxgl.accessToken = "pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg";
   var map = new mapboxgl.Map({
-  container: "smap",
+  container: "map",
   style: "mapbox://styles/mapbox/streets-v11",
   center: [myLongitude, myLatitude],
   zoom: 4
   });
-   
   map.addControl(
   new MapboxGeocoder({
   accessToken: mapboxgl.accessToken,
@@ -243,23 +187,5 @@ function myLocation(){
   })
   );
 
-  var marker = new mapboxgl.Marker().setLngLat([10,8]).addTo(map);
-
-  //Map for service
-  var map2 = new mapboxgl.Map({
-      container: "smap", // container id
-      style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
-      center: [8, 10], // starting position [lng, lat]
-      zoom: 4 // starting zoom
-      });
-
-  map2.addControl(
-      new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl
-      })
-  );
-  var marker2 = new mapboxgl.Marker().setLngLat([8, 10]).addTo(map2);
-  */
-
+  var marker = new mapboxgl.Marker().setLngLat([myLongitude,myLatitude]).addTo(map);
 });

@@ -26,8 +26,8 @@ hr {
   margin: 0;
 }
 h1, h2, h3, h4, h5, h6 {
-/*font-family: 'Piedra', cursive; 
-  font-family: 'Alfa Slab One', cursive; */
+  /*font-family: 'Piedra', cursive; */
+  font-family: 'Alfa Slab One', cursive; 
 }
 
 p, li, div, #mycity, #myregion, #mycountry
@@ -56,6 +56,9 @@ body {
 .header-div {
   box-shadow: 2px 3px 3px 0.5px rgba(255, 255, 255, 1);
 }
+.foot{
+  border-top: 2px solid white;
+}
 .form-island {
   box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 1);
 }
@@ -65,11 +68,13 @@ body {
 
 .footer{
   padding-bottom: 0%;
-  /*background-color: black;*/
 }
 @media (max-width: 481px){
     .side-contents{
       display: none;
+    }
+    h2, h3, h4 {
+      font-size: small;
     }
   }
 #mycity{
