@@ -25,12 +25,15 @@ hr {
 
   margin: 0;
 }
-h1, h2, h3, h4, h5, h6 {
-  /*font-family: 'Piedra', cursive; */
+h1, h2, h3 {
+  font-family: 'Piedra', cursive;
+  /*font-family: 'Alfa Slab One', cursive; 
+  */
+}
+h1 {
   font-family: 'Alfa Slab One', cursive; 
 }
-
-p, li, div, #mycity, #myregion, #mycountry
+p, li, div, #mycity, #myregion, #mycountry, h5, h6, h4
 {
   font-family: 'Bellota', cursive;
 }

@@ -3,7 +3,7 @@
 {% load static %}
 {% block header %}
     <div class="header-bg text-center" style="padding: 2%; margin-bottom: 2%;">
-        <h2 class=" text-center text-light"><strong>Search your current location or look up different one..</strong></h2>
+        <h3 class=" text-center text-light">Search your current location or look up different one..</h3>
         <i class="fa fa-map-marker text-warning">
             <span class="text-success" id="mycity">{{location_info.city}}</span>/
             <span class="text-light" id="myregion">{{location_info.region}}</span>/
@@ -24,7 +24,7 @@
     <!--Categories-->
     <div class="col-xl-2 col-lg-2 col-sm-0">
         <div class="side-contents" style="border: 1px solid grey; margin-bottom: 2%;">
-            <div class="row" >
+            <div class="row">
                 <div class="col-xl-12 col-lg-12 col-sm-12">
                     <h4 class="bg-dark text-light text-weight-normal lead text-center">Categories
                         <span class="badge badge-pill badge-success">{{categories|length}}</span>

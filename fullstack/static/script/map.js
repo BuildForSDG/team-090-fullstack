@@ -17,15 +17,10 @@ function getLongitudeLatitude(){
                     myLongitude = data.longitude;
                     myLongitude = data.latitude;
                     gotten = true;
-                },
-                error: function(data){
-                    $("#alert").attr("class","alert alert-danger text-info").show().text("Map error.").delay(700).hide(400);
                 }
+              
             }
         );
-    }
-    else{
-        alert('failed');
     }
 }
 getLongitudeLatitude();
