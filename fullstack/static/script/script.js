@@ -90,21 +90,27 @@ $("#search-form").submit(function(){
   // get states for the selected country 
   $("#country, #id_country").change(function(){
       var country = $(this).val();
-      $.ajax(
-        {
-          url:"/ajax/states/",
-          data:{
-            "country":country,
-          },
-          dataType: 'json',
-          success:function(data){
-            $("#state, #id_region").html('');
-            for(var i = 0; i < data.regions.length; i++){
-              $("#state, #id_region").append('<option id="selected-state" value="'+ data.regions[i]['id'] +'">'+ data.regions[i]['name'] +'</option>');
+      if(country !==''){
+        $.ajax(
+          {
+            url:"/ajax/states/",
+            data:{
+              "country":country,
+            },
+            dataType: 'json',
+            success:function(data){
+              $("#state, #id_region").html('');
+              for(var i = 0; i < data.regions.length; i++){
+                $("#state, #id_region").append('<option id="selected-state" value="'+ data.regions[i]['id'] +'">'+ data.regions[i]['name'] +'</option>');
+              }
             }
           }
-        }
-      );
+        );
+      }
+      else{
+        $("#alert").attr("class","alert alert-danger text-info").show().text("Select a country.").delay(700).hide(400);
+      }
+      
   });
 
 // get cities for the selected state
