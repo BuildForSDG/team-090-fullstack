@@ -33,7 +33,8 @@
                     {% if service_provided.currency %}
                         <p class="text-warning lead">{{service_provided.price}} {{service_provided.currency}}</p>
                     {% endif %}
-                    <p><i class="fa fa-map-marker address" aria-hidden="true"> {{service_provided.street_address}}</i></p>
+                    <p><i class="fa fa-map-marker" aria-hidden="true"> {{service_provided.street_address}}</i></p>
+                    <p><i class="fa fa-city text-success" aria-hidden="true">{{service_provided.city.city}} city</i></p>
                     <p><i class="fa fa-phone" aria-hidden="true"> {{service_provided.phone}}</i></p>
                     <p><i class="fa fa-envelope" aria-hidden="true"> {{service_provided.user.email}}</i></p>
                 </div>

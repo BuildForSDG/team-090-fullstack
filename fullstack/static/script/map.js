@@ -1,6 +1,34 @@
 $(document).ready(function(){ 
 var myLatitude = 0;
 var myLongitude = 0;
+//get address
+var gotten = false;
+function getLongitudeLatitude(){
+    if(gotten===false){
+        var city = $(".fa-city").text();
+        $.ajax(
+            {
+                url: '/ajax/service_address/',
+                dataType: "json",
+                data:{
+                    "city":city,
+                },
+                success: function(data){
+                    myLongitude = data.longitude;
+                    myLongitude = data.latitude;
+                    gotten = true;
+                },
+                error: function(data){
+                    $("#alert").attr("class","alert alert-danger text-info").show().text("Map error.").delay(700).hide(400);
+                }
+            }
+        );
+    }
+    else{
+        alert('failed');
+    }
+}
+getLongitudeLatitude();
 function showPosition(position) {
   myLatitude = position.coords.latitude;
   myLongitude = position.coords.longitude; 
@@ -33,10 +61,6 @@ function getLocation() {
     }
   }
 getLocation();
-if(myLatitude === 0 ){
-    myLatitude = 11.83537;
-    myLongitude = 13.15166;
-}
 mapboxgl.accessToken = "pk.eyJ1IjoiYXJkZXNwIiwiYSI6ImNrYjZsY25pYjBwdXoyeHF2MXJoYzh5Z2YifQ.0l2qyChIYTHzZSTL0umdAg";
 var map = new mapboxgl.Map({
 container: "map",

@@ -37,6 +37,7 @@ urlpatterns = [
          name='get_states_by_name'),
      path('ajax/keyword_search/', views.keyword_search, name='keyword_search'),
      path('unsubscribe/<int:service_id>', views.unsubscribe, name='unsubscribe'),
+     path('ajax/service_address/', views.get_service_address, name='service_address'),
 ]
 '''
 if settings.DEBUG:

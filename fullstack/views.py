@@ -483,3 +483,23 @@ def unsubscribe(request, service_id):
     except (CustomerProfile.DoesNotExist, Subscription.DoesNotExist):
         pass
     return redirect('fullstack:customer_profile')
+
+
+def get_service_address(request):
+    latitude = 0
+    longitude = 0
+    city = request.GET.get('city', None)
+    try:
+        service_city = MyCity.objects.get(
+            city__icontains=city
+            )
+        latitude = service_city.latitude
+        longitude = service_city.longitude
+    except ServiceProvider.DoesNotExist:
+        pass
+    data = {
+        'latitude': latitude,
+        'longitude': longitude
+    }
+    print(latitude, longitude)
+    return JsonResponse(data)
