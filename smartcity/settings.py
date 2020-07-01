@@ -155,7 +155,7 @@ USE_TZ = True
 # AWS S3 set up
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME') 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_LOCATION = 'static'
 AWS_DEFAULT_ACL = None
@@ -179,17 +179,3 @@ MEDIA_ROOT =os.path.join(BASE_DIR,'media')
 BOOTSTRAP4 = {
  'include_jquery': True,
  }
-'''if os.getcwd() == '/app':
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.config(default='postgres://localhost')
-    }
-    # Honor the 'X-Forwarded-Proto' heaer for request.is_secure()
-    SECURE_PROXY_SSL_HEADER=('HTT_X_FORWARDED_PROTO', 'https')
-    # Allow all host headers.
-    ALLOWED_HOSTS = ['*']
-    # Static asset configuration.
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    STATIC_ROOT = 'staticfiles'
-    STATICFILES_DIR = (os.path.join(BASE_DIR, 'static'),)
-    '''
