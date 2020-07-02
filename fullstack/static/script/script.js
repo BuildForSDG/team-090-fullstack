@@ -56,6 +56,7 @@ $("#search-form").submit(function(){
           else{
             $("#search-result-size").html("<span class='badge badge-pill badge-success'>"+data.services.length+"</span> ").append(" Results");
             var $searchResult = $("#js-search-result");
+            //var $searcher = $("<div class='col-xl-12 col-lg-12 col-sm-12' ></div>");
             ($searchResult).html("");
             $.each(data.services, function(index){
               // create service items
@@ -66,15 +67,18 @@ $("#search-form").submit(function(){
               $price.text(data.services[index].price+" "+data.services[index].currency);
               var $detailButton = $('<a class="btn btn-primary card-link stretched-link" href="/servicedetails/'+data.services[index].id+'/'+'">More...</a>');
               var $cardBody = $("<div class='card-body'></div");
-              var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6'></div>");
+              var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6' id='service-item'></div>");
               ($cardTitle).append($address).append($price).append($detailButton);
               $cardBody.html($cardTitle);
               var $card = $("<div class='card'></div>");
               var $cardImage = $("<img src='"+"https://smartcity090.s3.amazonaws.com/media/"+data.services[index].picture+"' class='card-img-top rounded-circle' alt='photo'>");
               $card.html($cardImage).append($cardBody);
               $col.html($card);
-              ($searchResult).html($col);
+              ($searchResult).append($col);
             });
+            //var $mainContainer = $("<div class='col-xl-12 col-lg-12 col-sm-12' style='text-align: center; margin-bottom: 10%;' ></div>");
+            //($mainContainer).html($searcher);
+            //($searchResult).html($mainContainer);
           }
         },
         error: function(data){
