@@ -83,7 +83,7 @@
                                                     
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <select id="state" name="region" class="form-control form-control-sm text-warning font-weight-bold"> 
+                                                        <select id="state" name="region" class="form-control form-control-sm text-info font-weight-bold"> 
                                                             {% if customer_profile.region in regions %}
                                                             <option id="selected-region" value="{{customer_profile.region.id}}" disabled selected hidden>{{customer_profile.region.name}}</option>
                                                             {% elif location_region%}
@@ -145,53 +145,6 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-sm-12" style="text-align: center; margin-bottom: 10%;" id="js-search-result">
                 <!--Show search result-->
-                {% if services %}
-                <h6 class="text-light lead text-center" style="margin-bottom: 2%;">Search result for "{{keyword}}"</h6>
-                    {% for service in services %}
-                        {% if service is services_subscribed %}
-                        <div class="col-xl-3 col-lg-3 col-sm-6">
-                            <div class="card">
-                                <p class="card-text text-success">Subscribed</p>
-                                <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
-                                <div class="card-body">
-                                    <h6 class="card-title text-dark">{{service.business_name|title}}</h6>
-                                    <hr>
-                                    <li class="fa fa-map-marker"> {{service.street_address}}</li>
-                                    <p class="text-warning">{{service.price}} {{service.currency}}</p>
-                                    <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service.id %}">More...</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% else %}
-                        <div class="col-xl-3 col-lg-3 col-sm-6">
-                            <div class="card">
-                                <img src="{{service.picture.url}}" class="card-img-top rounded-circle">
-                                <div class="card-body">
-                                    <h6 class="card-title text-dark">{{service.business_name|title}}</h6>
-                                    <hr>
-                                    <li class="fa fa-map-marker"> {{service.street_address}}</li>
-                                    <p class="text-warning">{{service.price}} {{service.currency}}</p>
-                                    <a class="btn btn-primary card-link stretched-link" href="{% url 'fullstack:service_details' service.id %}">More...</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    {% if keyword%}
-                    <div class="form-island bg-dark" id="search-error">
-                        <h6 class="text-light lead text-center" id="search-not-found">"{{keyword}}" service not found</h6>
-                    </div>
-                    {% else %}
-                    <div class="row">
-                        <!--div class="col-xl-12 col-lg-12 col-sm-12">
-                            <div id="map" style="width: 100%; height:400px; border: 2px solid blue; border-radius: 10px;">Your location</div> 
-                            <p class="text-center lead text-danger" id="error"></p> 
-                        </div-->
-                    </div>
-                    <p class="text-danger lead" id="error"></p>
-                    {% endif %}
-                {% endif %}
             </div>
         </div>
     </div>
