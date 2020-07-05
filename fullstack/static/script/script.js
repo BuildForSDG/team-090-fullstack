@@ -51,34 +51,36 @@ $("#search-form").submit(function(){
           if(data.services.length == 0){ // if service array is zero 
               var $searchResult = $("#js-search-result");
               ($searchResult).html("");
-              ($searchResult).append('<q>'+keyword+'</q>'+' not found');
+              $("#search-result-size").html('<q>'+keyword+'</q>'+' not found');
           }
           else{
             $("#search-result-size").html("<span class='badge badge-pill badge-success'>"+data.services.length+"</span> ").append(" Results");
             var $searchResult = $("#js-search-result");
-            //var $searcher = $("<div class='col-xl-12 col-lg-12 col-sm-12' ></div>");
             ($searchResult).html("");
             $.each(data.services, function(index){
               // create service items
-              var $cardTitle = $("<h6 class='card-title text-dark font-weight-bold'></h6>").html(data.services[index].business_name);
-              $cardTitle.append("<hr>");
+              var $cardTitle = $("<h6 class='card-title text-dark font-weight-bold'></h6>").text(data.services[index].business_name);
+             // $cardTitle.append("<hr>");
               var $address = $("<li class='fa fa-map-marker text-info'></li>").text(" "+data.services[index].street_address);
               var $price = $("<p class='text-warning'></p>");
               $price.text(data.services[index].price+" "+data.services[index].currency);
               var $detailButton = $('<a class="btn btn-primary card-link stretched-link" href="/servicedetails/'+data.services[index].id+'/'+'">More...</a>');
               var $cardBody = $("<div class='card-body'></div");
-              var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6' id='service-item'></div>");
+              var $col = $("<div class='col-xl-3 col-lg-3 col-sm-6 js-service-item'></div>");
               ($cardTitle).append($address).append($price).append($detailButton);
-              $cardBody.html($cardTitle);
+              ($cardBody).html($cardTitle);
               var $card = $("<div class='card'></div>");
               var $cardImage = $("<img src='"+"https://smartcity090.s3.amazonaws.com/media/"+data.services[index].picture+"' class='card-img-top rounded-circle' alt='photo'>");
-              $card.html($cardImage).append($cardBody);
+              //($cardImage).append($cardBody);
+              ($card).html($cardImage).append($cardBody);
               $col.html($card);
-              ($searchResult).append($col);
+              if (($searchResult).html() === ""){
+                ($searchResult).html($col);
+              }
+              else{
+                ($searchResult).append($col);
+              }
             });
-            //var $mainContainer = $("<div class='col-xl-12 col-lg-12 col-sm-12' style='text-align: center; margin-bottom: 10%;' ></div>");
-            //($mainContainer).html($searcher);
-            //($searchResult).html($mainContainer);
           }
         },
         error: function(data){
