@@ -12,7 +12,7 @@ decorator==4.4.2
 defusedxml==0.7.0rc1
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django==3.0.7
+Django==3.1.13
 django-autoslug-iplweb==1.9.4.dev0
 django-bootstrap4==1.1.1
 django-cities-light==3.6.0
