@@ -41,7 +41,7 @@ pycodestyle==2.6.0
 pycountry==19.8.18
 pycparser==2.20
 pyflakes==2.2.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.4.4
 python-decouple==3.3
 python-utils==2.4.0
